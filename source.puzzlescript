@@ -1,0 +1,3445 @@
+title Furniture Science 0.1.113
+author vexorian
+homepage vexorian.com
+(debug)
+(verbose_logging)
+again_interval 0.03
+(again_interval 0.3)
+run_rules_on_level_start
+realtime_interval 0.25
+
+(
+zlib License
+
+Copyright (c) 2021, Victor Hugo Soliz Kuncar
+
+This software is provided 'as-is', without any express or implied
+warranty. In no event will the authors be held liable for any damages
+arising from the use of this software.
+
+Permission is granted to anyone to use this software for any purpose,
+including commercial applications, and to alter it and redistribute it
+freely, subject to the following restrictions:
+
+1. The origin of this software must not be misrepresented; you must not
+   claim that you wrote the original software. If you use this software
+   in a product, an acknowledgment in the product documentation would be
+   appreciated but is not required.
+2. Altered source versions must be plainly marked as such, and must not be
+   misrepresented as being the original software.
+3. This notice may not be removed or altered from any source distribution.
+
+)
+
+
+( Some comments here
+
+
+1. I really wanted to make logic for when you push a portal against a block, it would teleport the block through the other portal. But this
+has proven really difficult for puzzle script, so for now pushing portals towards other objects won't allow them to push
+
+2. There's some stuff thati wish was possible but also seem beyond my ps skills, for example this:
+
+  
+  
+    Right-facing Portal | block |  < player | Left-facing portal
+    
+    It would be great if this turned into 
+    
+    Right-facing Portal | < player  |  block | Left-facing portal
+
+
+    But how to do cycles in ps?
+)
+
+
+========
+OBJECTS
+========
+
+Background
+#333333
+
+GroundTop
+#3F3F3F
+00000
+.....
+.....
+.....
+.....
+
+GroundLeft
+#3F3F3F
+0....
+0....
+0....
+0....
+0....
+
+GroundRight
+#292929
+....0
+....0
+....0
+....0
+....0
+
+GroundBottom
+#292929
+.....
+.....
+.....
+.....
+00000
+
+
+
+Wall
+#e0e0e0 #efefef #a0a0a0
+11111
+10002
+10002
+10002
+22222
+
+WhiteWallTop
+#ffffff
+00000
+.....
+.....
+.....
+.....
+
+WhiteWallLeft
+#ffffff
+0....
+0....
+0....
+0....
+0....
+
+WhiteWallRight
+#181818
+....0
+....0
+....0
+....0
+....0
+
+WhiteWallBottom
+#181818
+.....
+.....
+.....
+.....
+00000
+
+
+
+
+DarkWall
+#222222 #242424 #262626 #282828
+00000
+03010
+00000
+03020
+00000
+
+(
+#222222 #242424 #262626 #282828
+00331
+00130
+31301
+03210
+01232)
+
+(DarkWallSprite1
+#222222 #242424 #262626 #282828
+30022
+22311
+31220
+02012
+22212
+
+DarkWallSprite2
+#222222 #242424 #262626 #282828
+23201
+20201
+03123
+10302
+21222
+
+DarkWallSprite3
+#222222 #242424 #262626 #282828
+01200
+22020
+11002
+22223
+01312)
+
+
+DarkWallSprite1
+#222222 #242424 #262626 #282828
+00000
+01020
+00000
+03010
+00000
+
+DarkWallSprite2
+#222222 #242424 #262626 #282828
+00000
+02020
+00000
+03010
+00000
+
+DarkWallSprite3
+#222222 #242424 #262626 #282828
+00000
+02030
+00000
+01030
+00000
+
+DarkWallSprite4
+transparent
+
+DarkWallTop
+#454545
+00000
+.....
+.....
+.....
+.....
+
+DarkWallLeft
+#454545
+0....
+0....
+0....
+0....
+0....
+
+DarkWallRight
+#101010
+....0
+....0
+....0
+....0
+....0
+
+DarkWallBottom
+#101010
+.....
+.....
+.....
+.....
+00000
+
+Portal1RS1
+#1A4FDF #073CCF
+....1
+...01
+...01
+...01
+....1
+Portal1R
+#1541B7 #1D57F7
+....1
+...01
+...01
+...01
+....1
+Portal1RS2
+transparent
+Portal1RS3
+#285BE6 #4B79F9
+....1
+...01
+...01
+...01
+....1
+Portal1RS4
+transparent
+
+Portal1LS1
+#1A4FDF #073CCF
+1....
+10...
+10...
+10...
+1....
+Portal1L
+#1541B7 #1D57F7
+1....
+10...
+10...
+10...
+1....
+Portal1LS2
+transparent
+Portal1LS3
+#285BE6 #4B79F9
+1....
+10...
+10...
+10...
+1....
+Portal1LS4
+transparent
+
+Portal1DS1
+#1A4FDF #073CCF
+.....
+.....
+.....
+.000.
+11111
+Portal1D
+#1541B7 #1D57F7
+.....
+.....
+.....
+.000.
+11111
+Portal1DS2
+transparent
+Portal1DS3
+#285BE6 #4B79F9
+.....
+.....
+.....
+.000.
+11111
+Portal1DS4
+transparent
+
+Portal1US1
+#1A4FDF #073CCF
+11111
+.000.
+.....
+.....
+.....
+Portal1U
+#1541B7 #1D57F7
+11111
+.000.
+.....
+.....
+.....
+Portal1US2
+transparent
+Portal1US3
+#285BE6 #4B79F9
+11111
+.000.
+.....
+.....
+.....
+Portal1US4
+transparent
+
+
+Portal2RS1
+#DF6D1A #CF5B07
+....1
+...01
+...01
+...01
+....1
+Portal2R
+#B75915 #F7791D
+....1
+...01
+...01
+...01
+....1
+Portal2RS2
+transparent
+Portal2RS3
+#E67828 #F9944B
+....1
+...01
+...01
+...01
+....1
+Portal2RS4
+transparent
+
+Portal2LS1
+#DF6D1A #CF5B07
+1....
+10...
+10...
+10...
+1....
+Portal2L
+#B75915 #F7791D
+1....
+10...
+10...
+10...
+1....
+Portal2LS2
+transparent
+Portal2LS3
+#E67828 #F9944B
+1....
+10...
+10...
+10...
+1....
+Portal2LS4
+transparent
+
+Portal2DS1
+#DF6D1A #CF5B07
+.....
+.....
+.....
+.000.
+11111
+Portal2D
+#B75915 #F7791D
+.....
+.....
+.....
+.000.
+11111
+Portal2DS2
+transparent
+Portal2DS3
+#E67828 #F9944B
+.....
+.....
+.....
+.000.
+11111
+Portal2DS4
+transparent
+
+Portal2US1
+#DF6D1A #CF5B07
+11111
+.000.
+.....
+.....
+.....
+Portal2U
+#B75915 #F7791D
+11111
+.000.
+.....
+.....
+.....
+Portal2US2
+transparent
+Portal2US3
+#E67828 #F9944B
+11111
+.000.
+.....
+.....
+.....
+Portal2US4
+transparent
+
+
+
+
+
+Target
+#FFE012
+.....
+.....
+..0..
+.....
+.....
+
+TargetBorderTop
+#FFE012
+.000.
+.....
+.....
+.....
+.....
+TargetBorderBottom
+#FFE012
+.....
+.....
+.....
+.....
+.000.
+
+TargetBorderLeft
+#FFE012
+.....
+0....
+0....
+0....
+.....
+
+TargetBorderRight
+#FFE012
+.....
+....0
+....0
+....0
+.....
+
+
+BluePlayerN
+black #DF60E2 #2A0B25 #45113D white blue
+.000.
+.010.
+.054.
+.000.
+.3.3.
+
+BluePlayerL
+black #DF60E2 #2A0B25 #45113D white blue
+..000
+00010
+54002
+00002
+..3.3
+
+
+BluePlayerR
+black #DF60E2 #2A0B25 #45113D white blue
+000..
+01000
+20045
+20000
+3.3..
+
+BluePlayerU
+black #DF60E2 #2A0B25 #45113D white blue
+00050
+00040
+0200.
+020..
+3.3..
+
+
+BluePlayerD
+black #DF60E2 #2A0B25 #45113D white blue
+222..
+000..
+0100.
+00040
+3.050
+
+OrangePlayerN
+black #DF60E2 #2A0B25 #45113D white Orange
+.000.
+.010.
+0540.
+0000.
+.3.3.
+
+OrangePlayerL
+black #DF60E2 #2A0B25 #45113D white Orange
+..000
+00010
+54002
+00002
+..3.3
+
+
+OrangePlayerR
+black #DF60E2 #2A0B25 #45113D white Orange
+000..
+01000
+20045
+20000
+3.3..
+
+OrangePlayerU
+black #DF60E2 #2A0B25 #45113D white Orange
+00050
+00040
+0200.
+020..
+3.3..
+
+
+OrangePlayerD
+black #DF60E2 #2A0B25 #45113D white Orange
+222..
+000..
+0100.
+00040
+3.050
+
+
+
+
+
+
+SinkingPlayerSprite1
+#0F3318 #3DD162
+.000.
+.000.
+.000.
+.000.
+.0.0.
+
+SinkingPlayerSprite2
+#0F3318 #3DD162
+..0..
+.000.
+..0..
+..00.
+.0...
+
+SinkingPlayerSprite3
+#0F3318 #3DD162
+..0..
+.0.0.
+.....
+..0..
+.0...
+
+BlackPlayerN
+black #DF60E2 #2A0B25 #45113D
+.000.
+.010.
+.000.
+.000.
+.3.3.
+
+
+
+BlackPlayerL
+black #DF60E2 #2A0B25 #45113D
+.000.
+.010.
+00002
+.0002
+.3.3.
+
+
+BlackPlayerR
+black #DF60E2 #2A0B25 #45113D
+.000.
+.010.
+20000
+2000.
+.3.3.
+
+
+BlackPlayerU
+black #DF60E2 #2A0B25 #45113D
+.000.
+.000.
+.020.
+.020.
+.3.3.
+
+
+BlackPlayerD
+black #DF60E2 #2A0B25 #45113D
+.222.
+.000.
+.010.
+.000.
+.3.3.
+
+
+PortalGunTM
+black blue orange white
+..0.. 
+0.1.0
+.020.
+.030.
+..0..
+
+
+BlueShotR
+blue
+.....
+...0.
+....0
+...0.
+.....
+
+Shot1ParticleSprite1L
+blue
+.....
+0....
+.....
+0....
+.....
+
+Shot1ParticleSprite2L
+blue
+0....
+.....
+.....
+.....
+0....
+
+
+BlueShotL
+blue
+.....
+.0...
+0....
+.0...
+.....
+
+Shot1ParticleSprite1R
+blue
+.....
+....0
+.....
+....0
+.....
+
+Shot1ParticleSprite2R
+blue
+....0
+.....
+.....
+.....
+....0
+
+
+BlueShotU
+blue
+..0..
+.0.0.
+.....
+.....
+.....
+
+
+Shot1ParticleSprite1D
+blue
+.....
+.....
+.....
+.....
+.0.0.
+
+Shot1ParticleSprite2D
+blue
+.....
+.....
+.....
+.....
+0...0
+
+
+BlueShotD
+blue
+.....
+.....
+.....
+.0.0.
+..0..
+
+Shot1ParticleSprite1U
+blue
+.0.0.
+.....
+.....
+.....
+.....
+
+Shot1ParticleSprite2U
+blue
+0...0
+.....
+.....
+.....
+.....
+
+
+BlueShotFR
+blue
+.....
+...0.
+....0
+...0.
+.....
+
+BlueShotFL
+blue
+.....
+.0...
+0....
+.0...
+.....
+
+
+BlueShotFU
+blue
+..0..
+.0.0.
+.....
+.....
+.....
+
+BlueShotFD
+blue
+.....
+.....
+.....
+.0.0.
+..0..
+
+
+
+
+OrangeShotR
+Orange
+.....
+...0.
+....0
+...0.
+.....
+
+Shot2ParticleSprite1L
+Orange
+.....
+0....
+.....
+0....
+.....
+
+Shot2ParticleSprite2L
+Orange
+0....
+.....
+.....
+.....
+0....
+
+
+OrangeShotL
+Orange
+.....
+.0...
+0....
+.0...
+.....
+
+Shot2ParticleSprite1R
+Orange
+.....
+....0
+.....
+....0
+.....
+
+Shot2ParticleSprite2R
+Orange
+....0
+.....
+.....
+.....
+....0
+
+
+OrangeShotU
+Orange
+..0..
+.0.0.
+.....
+.....
+.....
+
+
+Shot2ParticleSprite1D
+Orange
+.....
+.....
+.....
+.....
+.0.0.
+
+Shot2ParticleSprite2D
+Orange
+.....
+.....
+.....
+.....
+0...0
+
+
+OrangeShotD
+Orange
+.....
+.....
+.....
+.0.0.
+..0..
+
+Shot2ParticleSprite1U
+Orange
+.0.0.
+.....
+.....
+.....
+.....
+
+Shot2ParticleSprite2U
+Orange
+0...0
+.....
+.....
+.....
+.....
+
+
+OrangeShotFR
+Orange
+.....
+...0.
+....0
+...0.
+.....
+
+OrangeShotFL
+Orange
+.....
+.0...
+0....
+.0...
+.....
+
+
+OrangeShotFU
+Orange
+..0..
+.0.0.
+.....
+.....
+.....
+
+OrangeShotFD
+Orange
+.....
+.....
+.....
+.0.0.
+..0..
+
+
+
+
+
+
+
+Water
+#1D7C6B #83867A
+00000
+10000
+00000
+00010
+00000
+
+WaterSprite1
+#1D7C6B #83867A
+00000
+00100
+00000
+01000
+00000
+
+WaterSprite2
+#1D7C6B #83867A
+00000
+00010
+00000
+00100
+00000
+
+WaterSprite3
+#1D7C6B #83867A
+00010
+00000
+00000
+01000
+00000
+
+WaterSprite4
+transparent
+
+YellowBlock____
+#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138
+.000.
+01412
+04342
+01412
+.222.
+
+YellowBlock___R
+#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138
+.0000
+01411
+04341
+01411
+.2222
+
+
+YellowBlock__L_
+#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138
+0000.
+11412
+14342
+11412
+2222.
+
+YellowBlock__LR
+#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138
+00000
+11411
+14341
+11411
+22222
+
+
+YellowBlock_D__
+#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138
+.000.
+01412
+04342
+01412
+01112
+
+
+YellowBlock_D_R_1
+#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138
+.0000
+01411
+04341
+01411
+01112
+
+
+YellowBlock_D_R_2
+#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138
+.0000
+01411
+04341
+01411
+01111
+
+YellowBlock_DL__1
+#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138
+0000.
+11412
+14342
+11412
+11112
+
+
+YellowBlock_DL__2
+#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138
+0000.
+11412
+14342
+11412
+11112
+
+
+YellowBlock_DLR
+#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138
+00000
+11411
+14341
+11411
+11112
+
+YellowBlockU___
+#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138
+01112
+01412
+04342
+01412
+.222.
+
+YellowBlockU__R_1
+#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138
+01112
+01411
+04341
+01411
+.2222
+
+YellowBlockU__R_2
+#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138
+01111
+01411
+04341
+01411
+.2222
+
+YellowBlockU_L__1
+#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138
+01112
+11412
+14342
+11412
+2222.
+
+
+YellowBlockU_L__2
+#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138
+11112
+11412
+14342
+11412
+2222.
+
+YellowBlockU_LR
+#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138
+01112
+11411
+14341
+11411
+22222
+
+YellowBlockUD__
+#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138
+01112
+01412
+04342
+01412
+01112
+
+
+YellowBlockUD_R
+#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138
+01112
+01411
+04341
+01411
+01112
+
+YellowBlockUDL_
+#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138
+01112
+11412
+14342
+11412
+21112
+
+
+
+YellowBlockUDLR_1
+#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138
+21110
+11411
+14341
+11411
+01112
+
+
+YellowBlockUDLR_2
+#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138
+11111
+11411
+14341
+11411
+11111
+
+
+WhiteBlock____
+#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0
+.000.
+01412
+04342
+01412
+.222.
+
+WhiteBlock___R
+#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0
+.0000
+01411
+04341
+01411
+.2222
+
+
+WhiteBlock__L_
+#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0
+0000.
+11412
+14342
+11412
+2222.
+
+WhiteBlock__LR
+#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0
+00000
+11411
+14341
+11411
+22222
+
+
+WhiteBlock_D__
+#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0
+.000.
+01412
+04342
+01412
+01112
+
+
+WhiteBlock_D_R_1
+#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0
+.0000
+01411
+04341
+01411
+01112
+
+
+WhiteBlock_D_R_2
+#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0
+.0000
+01411
+04341
+01411
+01111
+
+WhiteBlock_DL__1
+#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0
+0000.
+11412
+14342
+11412
+11112
+
+
+WhiteBlock_DL__2
+#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0
+0000.
+11412
+14342
+11412
+11112
+
+
+WhiteBlock_DLR
+#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0
+00000
+11411
+14341
+11411
+11112
+
+WhiteBlockU___
+#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0
+01112
+01412
+04342
+01412
+.222.
+
+WhiteBlockU__R_1
+#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0
+01112
+01411
+04341
+01411
+.2222
+
+WhiteBlockU__R_2
+#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0
+01111
+01411
+04341
+01411
+.2222
+
+WhiteBlockU_L__1
+#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0
+01112
+11412
+14342
+11412
+2222.
+
+
+WhiteBlockU_L__2
+#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0
+11112
+11412
+14342
+11412
+2222.
+
+WhiteBlockU_LR
+#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0
+01112
+11411
+14341
+11411
+22222
+
+WhiteBlockUD__
+#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0
+01112
+01412
+04342
+01412
+01112
+
+
+WhiteBlockUD_R
+#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0
+01112
+01411
+04341
+01411
+01112
+
+WhiteBlockUDL_
+#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0
+01112
+11412
+14342
+11412
+21112
+
+
+
+WhiteBlockUDLR_1
+#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0
+21110
+11411
+14341
+11411
+01112
+
+
+WhiteBlockUDLR_2
+#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0
+11111
+11411
+14341
+11411
+11111
+
+
+WhiteBridge____
+#72F1DA #68DCC7 #63D1BD #1D7C6B #1B7162
+34443
+40004
+40124
+42224
+34443
+
+WhiteBridge___R
+#72F1DA #68DCC7 #63D1BD #1D7C6B #1B7162
+34444
+40000
+40112
+42222
+34444
+
+
+WhiteBridge__L_
+#72F1DA #68DCC7 #63D1BD #1D7C6B #1B7162
+44443
+00004
+11124
+22224
+44443
+
+
+WhiteBridge__LR
+#72F1DA #68DCC7 #63D1BD #1D7C6B #1B7162
+44444
+00000
+11111
+22222
+44444
+
+
+
+WhiteBridge_D__
+#72F1DA #68DCC7 #63D1BD #1D7C6B #1B7162
+34443
+40004
+40124
+40124
+40124
+
+
+
+WhiteBridge_D_R_1
+#72F1DA #68DCC7 #63D1BD #1D7C6B #1B7162
+34444
+40000
+40111
+40112
+40124
+
+
+
+WhiteBridge_D_R_2
+#72F1DA #68DCC7 #63D1BD #1D7C6B #1B7162
+34444
+40000
+40111
+40111
+40111
+
+WhiteBridge_DL__1
+#72F1DA #68DCC7 #63D1BD #1D7C6B #1B7162
+44443
+00004
+11124
+21124
+40124
+
+
+WhiteBridge_DL__2
+#72F1DA #68DCC7 #63D1BD #1D7C6B #1B7162
+44443
+00004
+11124
+11124
+11124
+
+
+WhiteBridge_DLR
+#B66F26 #A46422 #9C5F20 #1D7C6B
+00000
+11111
+11111
+11111
+21112
+
+WhiteBridgeU___
+#72F1DA #68DCC7 #63D1BD #1D7C6B #1B7162
+40124
+40124
+40124
+42224
+34443
+
+
+WhiteBridgeU__R_1
+#72F1DA #68DCC7 #63D1BD #1D7C6B #1B7162
+40124
+40110
+40111
+42222
+34444
+
+WhiteBridgeU__R_2
+#72F1DA #68DCC7 #63D1BD #1D7C6B #1B7162
+40111
+40111
+40111
+42222
+34444
+
+WhiteBridgeU_L__1
+#72F1DA #68DCC7 #63D1BD #1D7C6B #1B7162
+40124
+00124
+11124
+22224
+44443
+
+
+WhiteBridgeU_L__2
+#72F1DA #68DCC7 #63D1BD #1D7C6B #1B7162
+11124
+11124
+11124
+22224
+44443
+
+WhiteBridgeU_LR
+#B66F26 #A46422 #9C5F20 #1D7C6B
+01112
+11111
+11111
+11111
+22222
+
+WhiteBridgeUD__
+#72F1DA #68DCC7 #63D1BD #1D7C6B #1B7162
+40124
+40124
+40124
+40124
+40124
+
+
+
+WhiteBridgeUD_R
+#B66F26 #A46422 #9C5F20 #1D7C6B
+01112
+01111
+01111
+01111
+01112
+
+WhiteBridgeUDL_
+#B66F26 #A46422 #9C5F20 #1D7C6B
+01112
+11112
+11112
+11112
+21112
+
+
+
+WhiteBridgeUDLR_1
+#B66F26 #A46422 #9C5F20 #1D7C6B
+21110
+11111
+11111
+11111
+01112
+
+
+WhiteBridgeUDLR_2
+#72F1DA #68DCC7 #63D1BD #1D7C6B #1B7162
+11111
+11111
+11111
+11111
+11111
+
+
+
+
+Bridge____
+#4EE874 #38E864 #34D95D #1D7C6B #1B7162
+34443
+40004
+40124
+42224
+34443
+
+Bridge___R
+#4EE874 #38E864 #34D95D #1D7C6B #1B7162
+34444
+40000
+40112
+42222
+34444
+
+
+Bridge__L_
+#4EE874 #38E864 #34D95D #1D7C6B #1B7162
+44443
+00004
+11124
+22224
+44443
+
+
+Bridge__LR
+#4EE874 #38E864 #34D95D #1D7C6B #1B7162
+44444
+00000
+11111
+22222
+44444
+
+
+
+Bridge_D__
+#4EE874 #38E864 #34D95D #1D7C6B #1B7162
+34443
+40004
+40124
+40124
+40124
+
+
+
+Bridge_D_R_1
+#4EE874 #38E864 #34D95D #1D7C6B #1B7162
+34444
+40000
+40111
+40112
+40124
+
+
+
+Bridge_D_R_2
+#4EE874 #38E864 #34D95D #1D7C6B #1B7162
+34444
+40000
+40111
+40111
+40111
+
+Bridge_DL__1
+#4EE874 #38E864 #34D95D #1D7C6B #1B7162
+44443
+00004
+11124
+21124
+40124
+
+
+Bridge_DL__2
+#4EE874 #38E864 #34D95D #1D7C6B #1B7162
+44443
+00004
+11124
+11124
+11124
+
+
+Bridge_DLR
+#B66F26 #A46422 #9C5F20 #1D7C6B
+00000
+11111
+11111
+11111
+21112
+
+BridgeU___
+#4EE874 #38E864 #34D95D #1D7C6B #1B7162
+40124
+40124
+40124
+42224
+34443
+
+
+BridgeU__R_1
+#4EE874 #38E864 #34D95D #1D7C6B #1B7162
+40124
+40110
+40111
+42222
+34444
+
+BridgeU__R_2
+#4EE874 #38E864 #34D95D #1D7C6B #1B7162
+40111
+40111
+40111
+42222
+34444
+
+BridgeU_L__1
+#4EE874 #38E864 #34D95D #1D7C6B #1B7162
+40124
+00124
+11124
+22224
+44443
+
+
+BridgeU_L__2
+#4EE874 #38E864 #34D95D #1D7C6B #1B7162
+11124
+11124
+11124
+22224
+44443
+
+BridgeU_LR
+#B66F26 #A46422 #9C5F20 #1D7C6B
+01112
+11111
+11111
+11111
+22222
+
+BridgeUD__
+#4EE874 #38E864 #34D95D #1D7C6B #1B7162
+40124
+40124
+40124
+40124
+40124
+
+
+
+BridgeUD_R
+#B66F26 #A46422 #9C5F20 #1D7C6B
+01112
+01111
+01111
+01111
+01112
+
+BridgeUDL_
+#B66F26 #A46422 #9C5F20 #1D7C6B
+01112
+11112
+11112
+11112
+21112
+
+
+
+BridgeUDLR_1
+#B66F26 #A46422 #9C5F20 #1D7C6B
+21110
+11111
+11111
+11111
+01112
+
+
+BridgeUDLR_2
+#4EE874 #38E864 #34D95D #1D7C6B #1B7162
+11111
+11111
+11111
+11111
+11111
+
+
+WantL
+red blue
+.....
+.....
+.01..
+.....
+.....
+
+
+WantR
+red blue
+.....
+.....
+..10.
+.....
+.....
+
+
+WantU
+red blue
+.....
+..0..
+..1..
+.....
+.....
+
+
+WantD
+red blue
+.....
+.....
+..1..
+..0..
+.....
+
+
+Error
+black
+.....
+.0.0.
+..0..
+.0.0.
+.....
+
+PostError
+red
+.....
+..0..
+.0.0.
+..0..
+.....
+
+
+(
+
+WantL
+transparent
+
+WantR
+transparent
+
+WantU
+transparent
+
+WantD
+transparent
+
+Error
+transparent
+
+PostError
+transparent
+
+
+)
+
+MightSink
+transparent
+
+
+OriginL
+transparent
+
+OriginR
+transparent
+
+OriginU
+transparent
+
+OriginD
+transparent
+
+PortalExit1R
+transparent
+
+PortalExit1L
+transparent
+
+PortalExit1U
+transparent
+
+PortalExit1D
+transparent
+
+PortalExit2R
+transparent
+
+PortalExit2L
+transparent
+
+PortalExit2U
+transparent
+
+PortalExit2D
+transparent
+
+ActiveRightPortal
+transparent
+
+ActiveLeftPortal
+transparent
+
+ActiveUpPortal
+transparent
+ActiveDownPortal
+transparent
+
+
+RotateRR
+transparent
+
+RotateRL
+transparent
+
+RotateRU
+transparent
+
+RotateRD
+transparent
+
+RotateLR
+transparent
+
+RotateLL
+transparent
+
+RotateLU
+transparent
+
+RotateLD
+transparent
+
+RotateUR
+transparent
+
+RotateUL
+transparent
+
+RotateUU
+transparent 
+
+RotateUD
+transparent
+
+RotateDR
+transparent
+
+RotateDL
+transparent
+
+RotateDU
+transparent
+
+RotateDD
+transparent
+
+
+
+
+OkRigidL
+transparent
+
+OkRigidR
+transparent
+
+OkRigidD
+transparent
+
+OkRigidU
+transparent
+
+RigidEnteringPortal1
+transparent
+
+RigidLeavingPortal1
+transparent
+
+RigidEnteringPortal2
+transparent
+
+RigidLeavingPortal2
+transparent
+
+
+BPEnteringPortal1
+transparent
+
+BPEnteringPortal2
+transparent
+
+BPLeavingPortal1
+transparent
+
+BPLeavingPortal2
+transparent
+
+NoPortal1
+transparent
+
+NoPortal2
+transparent
+
+ColorToggle
+transparent
+
+GotGun
+transparent
+
+Skip1
+transparent
+Skip2
+transparent
+
+HasCellU
+transparent
+
+HasCellD
+transparent
+
+HasCellL
+transparent
+
+HasCellR
+transparent
+
+RealTimeTick
+transparent
+
+U0
+#424242
+.....
+.....
+.....
+.000.
+.0.0.
+
+D0
+#424242
+.0.0.
+.0.0.
+.000.
+.....
+.....
+
+U1
+#424242
+.....
+.....
+.....
+..0..
+.00..
+
+D1
+#424242
+..0..
+..0..
+.000.
+.....
+.....
+
+U2
+#424242
+.....
+.....
+.....
+.000.
+...0.
+
+D2
+#424242
+.000.
+.0...
+.000.
+.....
+.....
+
+U3
+#424242
+.....
+.....
+.....
+.000.
+...0.
+
+D3
+#424242
+.000.
+...0.
+.000.
+.....
+.....
+
+U4
+#424242
+.....
+.....
+.....
+.0.0.
+.0.0.
+
+D4
+#424242
+.000.
+...0.
+...0.
+.....
+.....
+
+U5
+#424242
+.....
+.....
+.....
+.000.
+.0...
+
+D5
+#424242
+.000.
+...0.
+.000.
+.....
+.....
+
+U6
+#424242
+.....
+.....
+.....
+.000.
+.0...
+
+D6
+#424242
+.000.
+.0.0.
+.000.
+.....
+.....
+
+
+U7
+#424242
+.....
+.....
+.....
+.000.
+...0.
+
+D7
+#424242
+...0.
+...0.
+...0.
+.....
+.....
+
+U8
+#424242
+.....
+.....
+.....
+.000.
+.0.0.
+
+D8
+#424242
+.000.
+.0.0.
+.000.
+.....
+.....
+
+U9
+#424242
+.....
+.....
+.....
+.000.
+.0.0.
+
+D9
+#424242
+.000.
+...0.
+.000.
+.....
+.....
+
+
+
+=======
+LEGEND
+=======
+
+. = Background
+# = Wall
+% = DarkWall
+! = BluePlayerN and Background
+¡ = BlackPlayerN and Background
+
+0 = YellowBlock____
+1 = YellowBlock___R
+2 = YellowBlock__L_
+3 = YellowBlock__LR
+4 = YellowBlock_D__
+5 = YellowBlock_D_R_1
+6 = YellowBlock_DL__1
+7 = YellowBlock_DLR
+8 = YellowBlockU___
+9 = YellowBlockU__R_1
+A = YellowBlockU_L__1
+B = YellowBlockU_LR
+C = YellowBlockUD__
+D = YellowBlockUD_R
+E = YellowBlockUDL_
+F = YellowBlockUDLR_1
+
+S = YellowBlock_D_R_2
+G = YellowBlock_DL__2
+P = YellowBlockU__R_2
+N = YellowBlockU_L__2
+K = YellowBlockUDLR_2
+
+} = WhiteBlock____
+“ = WhiteBlock___R
+» = WhiteBlock__L_
+· = WhiteBlock__LR
+µ = WhiteBlock_D__
+½ = WhiteBlock_D_R_1
+¬ = WhiteBlock_DL__1
+{ = WhiteBlock_DLR
+¶ = WhiteBlockU___
+\ = WhiteBlockU__R_1
+æ = WhiteBlockU_L__1
+” = WhiteBlockU_LR
+¢ = WhiteBlockUD__
+ð = WhiteBlockUD_R
+€ = WhiteBlockUDL_
+đ = WhiteBlockUDLR_1
+ß = WhiteBlock_D_R_2
+ŋ = WhiteBlock_DL__2
+þ = WhiteBlockU__R_2
+ł = WhiteBlockU_L__2
+ĸ = WhiteBlockUDLR_2
+
+
+~ = Water
+
+@ = Target
+H = PortalGunTM
+
+o = u0
+① = u1
+② = u2
+③ = u3
+④ = u4
+⑤ = u5
+⑥ = u6
+⑦ = u7
+⑧ = u8
+⑨ = u9
+
+ö = d0
+⑴ = d1
+⑵ = d2
+⑶ = d3
+⑷ = d4
+⑸ = d5
+⑹ = d6
+⑺ = d7
+⑻ = d8
+⑼ = d9
+
+
+
+
+Block____ = YellowBlock____ or WhiteBlock____
+Block___R = YellowBlock___R or WhiteBlock___R
+Block__L_ = YellowBlock__L_ or WhiteBlock__L_
+Block__LR = YellowBlock__LR or WhiteBlock__LR
+Block_D__ = YellowBlock_D__ or WhiteBlock_D__
+Block_D_R_1 = YellowBlock_D_R_1 or WhiteBlock_D_R_1
+Block_DL__1 = YellowBlock_DL__1 or WhiteBlock_DL__1
+Block_DLR = YellowBlock_DLR or WhiteBlock_DLR
+BlockU___ = YellowBlockU___ or WhiteBlockU___
+BlockU__R_1 = YellowBlockU__R_1 or WhiteBlockU__R_1
+BlockU_L__1 = YellowBlockU_L__1 or WhiteBlockU_L__1
+BlockU_LR = YellowBlockU_LR or WhiteBlockU_LR
+BlockUD__ = YellowBlockUD__ or WhiteBlockUD__
+BlockUD_R = YellowBlockUD_R or WhiteBlockUD_R
+BlockUDL_ = YellowBlockUDL_ or WhiteBlockUDL_
+BlockUDLR_1 = YellowBlockUDLR_1 or WhiteBlockUDLR_1
+Block_D_R_2 = YellowBlock_D_R_2 or WhiteBlock_D_R_2
+Block_DL__2 = YellowBlock_DL__2 or WhiteBlock_DL__2
+BlockU__R_2 = YellowBlockU__R_2 or WhiteBlockU__R_2
+BlockU_L__2 = YellowBlockU_L__2 or WhiteBlockU_L__2
+BlockUDLR_2 = YellowBlockUDLR_2 or WhiteBlockUDLR_2
+
+Block_D_R = Block_D_R_1 or Block_D_R_2
+Block_DL_ = Block_DL__1 or Block_DL__2
+BlockU__R = BlockU__R_1 or BlockU__R_2
+BlockU_L_ = BlockU_L__1 or BlockU_L__2
+BlockUDLR = BlockUDLR_1 or BlockUDLR_2
+
+
+Bridge = Bridge____ or Bridge___R or Bridge__L_ or Bridge__LR or Bridge_D__ or Bridge_D_R_1 or Bridge_D_R_2 or Bridge_DL__1 or Bridge_DL__2 or Bridge_DLR or BridgeU___ or BridgeU__R_1 or BridgeU__R_2 or BridgeU_L__1 or BridgeU_L__2 or BridgeU_LR or BridgeUD__ or BridgeUD_R or BridgeUDL_ or BridgeUDLR_1 or BridgeUDLR_2 or WhiteBridge____ or WhiteBridge___R or WhiteBridge__L_ or WhiteBridge__LR or WhiteBridge_D__ or WhiteBridge_D_R_1 or WhiteBridge_D_R_2 or WhiteBridge_DL__1 or WhiteBridge_DL__2 or WhiteBridge_DLR or WhiteBridgeU___ or WhiteBridgeU__R_1 or WhiteBridgeU__R_2 or WhiteBridgeU_L__1 or WhiteBridgeU_L__2 or WhiteBridgeU_LR or WhiteBridgeUD__ or WhiteBridgeUD_R or WhiteBridgeUDL_ or WhiteBridgeUDLR_1 or WhiteBridgeUDLR_2
+
+BluePlayer = BluePlayerN or BluePlayerR or BluePlayerL or BluePlayerU or BluePlayerD
+OrangePlayer = OrangePlayerN or OrangePlayerR or OrangePlayerL or OrangePlayerU or OrangePlayerD
+BlackPlayer = BlackPlayerN or BlackPlayerR or BlackPlayerL or BlackPlayerU or BlackPlayerD
+Player = BluePlayer or OrangePlayer or BlackPlayer
+
+
+WithL = Block__L_ or Block__LR or Block_DL_ or Block_DLR or  BlockU_L_ or  BlockU_LR or BlockUDL_ or BlockUDLR
+WithR = Block___R or Block__LR or Block_D_R or Block_DLR or BlockU__R or BlockU_LR or BlockUD_R or BlockUDLR
+WithU = BlockU___ or BlockU__R or BlockU_L_ or BlockU_LR or BlockUD__ or BlockUD_R or BlockUDL_ or BlockUDLR
+WithD = Block_D__  or Block_D_R  or Block_DL_  or Block_DLR  or BlockUD__  or BlockUD_R  or BlockUDL_  or BlockUDLR
+
+
+Block = WithL or WithR or WithU or WithD or Block____
+WithCollision = Block or Player or Wall or DarkWall
+
+BlockPlayer = Block or Player
+
+Want = WantL or WantR or WantU or WantD
+WantH = WantL or WantR
+WantV = WantD or WantU
+Origin = OriginL or OriginR or OriginD or OriginU
+
+Portal1 = Portal1R or Portal1L or Portal1U or Portal1D
+Portal2 = Portal2R or Portal2L or Portal2U or Portal2D
+Portal = Portal1 or Portal2
+
+PortalExit = PortalExit1R or PortalExit1L or PortalExit1U or PortalExit1D or PortalExit2R or PortalExit2L or PortalExit2U or PortalExit2D
+
+
+ActivePortal = ActiveRightPortal or ActiveLeftPortal or ActiveUpPortal or ActiveDownPortal
+
+
+RotateCW  = RotateLU or RotateUR or RotateRD or RotateDL
+RotateCNW = RotateUL or RotateRU or RotateDR or RotateLD
+RotatePerpendicular = RotateCW or RotateCNW
+FlipVertical = RotateUU or RotateDD
+FlipHorizontal = RotateLL or RotateRR
+Rotate = RotateRR or RotateRL or RotateRU or RotateRD or RotateLR or RotateLL or RotateLU or RotateLD or RotateUR or RotateUL or RotateUU or RotateUD or RotateDR or RotateDL or RotateDU or RotateDD
+
+
+OkRigid = OkRigidL or OkRigidD or OkRigidR or OkRigidU
+
+Portal1OrNothing = Portal1  or NoPortal1
+Portal2OrNothing = Portal2  or NoPortal2
+
+BlueShot = BlueShotR or BlueShotL or BlueShotU or BlueShotD
+OrangeShot = OrangeShotR or OrangeShotL or OrangeShotU or OrangeShotD
+
+WhiteBlock = WhiteBlock____ or WhiteBlock___R or WhiteBlock__L_ or WhiteBlock__LR or WhiteBlock_D__ or WhiteBlock_D_R_1 or WhiteBlock_DL__1 or WhiteBlock_DLR or WhiteBlockU___ or WhiteBlockU__R_1 or WhiteBlockU_L__1 or WhiteBlockU_LR or WhiteBlockUD__ or WhiteBlockUD_R or WhiteBlockUDL_ or WhiteBlockUDLR_1 or WhiteBlock_D_R_2 or WhiteBlock_DL__2 or WhiteBlockU__R_2 or WhiteBlockU_L__2 or WhiteBlockUDLR_2
+
+WithWhite = Wall or WhiteBlock
+
+PlayerN = BlackPlayerN or BluePlayerN or OrangePlayerN
+WaterOrBridge = Water or Bridge
+DarkWallSprite = DarkWallSprite1 or DarkWallSprite2 or DarkWallSprite3 or DarkWallSprite4
+WaterSprite = WaterSprite1 or WaterSprite2 or WaterSprite3 or WaterSprite4
+
+Portal1SPrite = Portal1RS1 or Portal1RS2 or Portal1RS3 or Portal1RS4 or Portal1LS1 or Portal1LS2 or Portal1LS3 or Portal1LS4 or Portal1US1 or Portal1US2 or Portal1US3 or Portal1US4 or Portal1DS1 or Portal1DS2 or Portal1DS3 or Portal1DS4
+Portal2SPrite = Portal2RS1 or Portal2RS2 or Portal2RS3 or Portal2RS4 or Portal2LS1 or Portal2LS2 or Portal2LS3 or Portal2LS4 or Portal2US1 or Portal2US2 or Portal2US3 or Portal2US4 or Portal2DS1 or Portal2DS2 or Portal2DS3 or Portal2DS4
+
+
+
+=======
+SOUNDS
+=======
+
+SFX0 49156503 (skip)
+SFX1 33053303 (portal gun)
+sfx2 59657701 (shoot)
+sfx3 57950702 (open portal)
+sfx4 45276302 (teleport)
+sfx5 24968106 (error)
+sfx6 50609104 (sink)
+sfx7 38799704 (player sink)
+sfx8 22930307
+
+ (push)
+
+
+================
+COLLISIONLAYERS
+================
+
+Background
+GroundTop
+GroundLeft
+GroundRight
+GroundBottom
+
+D0, D1, D2, D3, D4, D5, D6, D7, D8, D9, U0, U1, U2, U3, U4, U5, U6, U7, U8, U9,
+
+TargetBorderLeft
+TargetBorderRight
+TargetBorderTop
+TargetBorderBottom
+
+Water
+WaterSprite
+Bridge
+SinkingPlayerSprite1, SinkingPlayerSprite2, SinkingPlayerSprite3
+Player, Wall, Block , DarkWall , PortalGunTM
+DarkWallSprite
+
+Target
+DarkWallTop
+DarkWallLeft
+DarkWallRight
+DarkWallBottom
+WhiteWallTop
+WhiteWallLeft
+WhiteWallRight
+WhiteWallBottom
+
+Shot1ParticleSprite1L, Shot1ParticleSprite2L, Shot1ParticleSprite1U, Shot1ParticleSprite2U, Shot1ParticleSprite1D, Shot1ParticleSprite2D, Shot1ParticleSprite1R, Shot1ParticleSprite2R, Shot2ParticleSprite1L, Shot2ParticleSprite2L, Shot2ParticleSprite1U, Shot2ParticleSprite2U, Shot2ParticleSprite1D, Shot2ParticleSprite2D, Shot2ParticleSprite1R, Shot2ParticleSprite2R  
+
+WantL
+WantR
+WantD
+WantU
+Error
+PostError
+MightSink
+OriginL
+OriginR
+OriginD
+OriginU
+Portal1
+Portal1Sprite
+Portal2
+Portal2Sprite
+PortalExit1L, PortalExit1R, PortalExit1U, PortalExit1D
+PortalExit2L, PortalExit2R, PortalExit2U, PortalExit2D
+ActiveRightPortal
+ActiveLeftPortal
+ActiveDownPortal
+ActiveUpPortal
+Rotate
+OkRigidL
+OkRigidR
+OkRigidD
+OkRigidU
+RigidEnteringPortal1 , RigidLeavingPortal1
+RigidEnteringPortal2 , RigidLeavingPortal2
+BPEnteringPortal1, BPLeavingPortal1
+BPEnteringPortal2, BPLeavingPortal2
+NoPortal1
+NoPortal2
+BlueShotR, BlueShotL, BlueShotU, BlueShotD, BlueShotFR, BlueShotFL, BlueShotFU, BlueShotFD, OrangeShotR, OrangeShotL, OrangeShotU, OrangeShotD, OrangeShotFR, OrangeShotFL, OrangeShotFU, OrangeShotFD
+ColorToggle
+GotGun
+Skip1, Skip2
+HasCellU
+HasCellD
+HasCellR
+HasCellL
+RealTimeTick
+
+======
+RULES
+======
+
+[ RealTimeTick ] -> []
+[ stationary Player ] -> [ Player RealTimeTick ]
+
+(skip )
+[ action PlayerN ][skip2] -> win sfx0
+[ action PlayerN ][skip1] -> [ PlayerN ][ skip2 ] sfx0
+[ action PlayerN ] -> [ PlayerN skip1 ]           sfx0
+
+( some decorative stuff )
+  [RealTimeTick][ Shot1ParticleSprite2R ] ->  [RealTimeTick][  ]
+  [RealTimeTick][ Shot1ParticleSprite2L ] ->  [RealTimeTick][  ]
+  [RealTimeTick][ Shot1ParticleSprite2U ] ->  [RealTimeTick][  ]
+  [RealTimeTick][ Shot1ParticleSprite2D ] ->  [RealTimeTick][  ]
+  [RealTimeTick][ Shot2ParticleSprite2R ] ->  [RealTimeTick][  ]
+  [RealTimeTick][ Shot2ParticleSprite2L ] ->  [RealTimeTick][  ]
+  [RealTimeTick][ Shot2ParticleSprite2U ] ->  [RealTimeTick][  ]
+  [RealTimeTick][ Shot2ParticleSprite2D ] ->  [RealTimeTick][  ]
+  
+  [RealTimeTick][ Shot1ParticleSprite1R ] ->  [RealTimeTick][ Shot1ParticleSprite2R ]
+  [RealTimeTick][ Shot1ParticleSprite1L ] ->  [RealTimeTick][ Shot1ParticleSprite2L ]
+  [RealTimeTick][ Shot1ParticleSprite1U ] ->  [RealTimeTick][ Shot1ParticleSprite2U ]
+  [RealTimeTick][ Shot1ParticleSprite1D ] ->  [RealTimeTick][ Shot1ParticleSprite2D ]
+  [RealTimeTick][ Shot2ParticleSprite1R ] ->  [RealTimeTick][ Shot2ParticleSprite2R ]
+  [RealTimeTick][ Shot2ParticleSprite1L ] ->  [RealTimeTick][ Shot2ParticleSprite2L ]
+  [RealTimeTick][ Shot2ParticleSprite1U ] ->  [RealTimeTick][ Shot2ParticleSprite2U ]
+  [RealTimeTick][ Shot2ParticleSprite1D ] ->  [RealTimeTick][ Shot2ParticleSprite2D ]
+  
+( / some decorative stuff )
+
+
+left [ > BluePlayerL ] -> [ stationary BluePlayerL WantL OriginL ]
+left [ > OrangePlayerL ] -> [ stationary OrangePlayerL WantL OriginL ]
+left [ > BlackPlayerL ] -> [ stationary BlackPlayerL WantL OriginL ]
+left [ > BluePlayer ] -> [ stationary BluePlayerL  ]
+left [ > OrangePlayer ] -> [ stationary OrangePlayerL ]
+left [ > BlackPlayer ] -> [ stationary BlackPlayerL ]
+
+right [ > BluePlayerR ] -> [ stationary BluePlayerR WantR OriginR ]
+right [ > OrangePlayerR ] -> [ stationary OrangePlayerR WantR OriginR ]
+right [ > BlackPlayerR ] -> [ stationary BlackPlayerR WantR OriginR ]
+right [ > BluePlayer ] -> [ stationary BluePlayerR  ]
+right [ > OrangePlayer ] -> [ stationary OrangePlayerR ]
+right [ > BlackPlayer ] -> [ stationary BlackPlayerR ]
+
+up    [ > BluePlayerU ] -> [ stationary BluePlayerU WantU OriginU ]
+up    [ > OrangePlayerU ] -> [ stationary OrangePlayerU WantU OriginU ]
+up    [ > BlackPlayerU ] -> [ stationary BlackPlayerU WantU OriginU ]
+up    [ > BluePlayer ] -> [ stationary BluePlayerU  ]
+up    [ > OrangePlayer ] -> [ stationary OrangePlayerU ]
+up    [ > BlackPlayer ] -> [ stationary BlackPlayerU ]
+
+down  [ > BluePlayerD ] -> [ stationary BluePlayerD WantD OriginD ]
+down  [ > OrangePlayerD ] -> [ stationary OrangePlayerD WantD OriginD ]
+down  [ > BlackPlayerD ] -> [ stationary BlackPlayerD WantD OriginD ]
+down  [ > BluePlayer ] -> [ stationary BluePlayerD  ]
+down  [ > OrangePlayer ] -> [ stationary OrangePlayerD ]
+down  [ > BlackPlayer ] -> [ stationary BlackPlayerD ]
+
+left  [ BlackPlayerL Origin WantL | PortalGunTM ] -> [ | BlackPlayerN GotGun ] sfx1
+right [ BlackPlayerR Origin WantR | PortalGunTM ] -> [ | BlackPlayerN GotGun ] sfx1
+down  [ BlackPlayerD Origin WantD | PortalGunTM ] -> [ | BlackPlayerN GotGun ] sfx1
+up    [ BlackPlayerU Origin WantU | PortalGunTM ] -> [ | BlackPlayerN GotGun ] sfx1
+
+[ BlackPlayerN GotGun ] -> [ BluePlayerN ] checkpoint message After aiming, press 'X' to shoot
+
+
+
+[ BlueShotFL ] -> [ BlueShotL ]
+[ BlueShotFR ] -> [ BlueShotR ]
+[ BlueShotFD ] -> [ BlueShotD ]
+[ BlueShotFU ] -> [ BlueShotU ]
+[ OrangeShotFL ] -> [ OrangeShotL ]
+[ OrangeShotFR ] -> [ OrangeShotR ]
+[ OrangeShotFD ] -> [ OrangeShotD ]
+[ OrangeShotFU ] -> [ OrangeShotU ]
+
+[ action BluePlayerL ] -> [ BluePlayerL BlueShotL ] sfx2
+[ action BluePlayerR ] -> [ BluePlayerR BlueShotR ] sfx2
+[ action BluePlayerU ] -> [ BluePlayerU BlueShotU ] sfx2
+[ action BluePlayerD ] -> [ BluePlayerD BlueShotD ] sfx2
+[ action OrangePlayerL ] -> [ OrangePlayerL OrangeShotL ] sfx2
+[ action OrangePlayerR ] -> [ OrangePlayerR OrangeShotR ] sfx2
+[ action OrangePlayerU ] -> [ OrangePlayerU OrangeShotU ] sfx2
+[ action OrangePlayerD ] -> [ OrangePlayerD OrangeShotD ] sfx2
+
+
+[ BlueShot ][ RealTimeTick ] -> [ BlueShot ][ ]
+[ OrangeShot ][ RealTimeTick ] -> [ OrangeShot ][ ]
+[ BlueShot ][ Portal1 ] -> [ BlueShot ][ ]
+[ OrangeShot ][ Portal2 ] -> [ OrangeShot ][ ]
+
+
+left   [ BlueShotL | no WithCollision ] -> [ | BlueShotFL ] again
+right  [ BlueShotR | no WithCollision ] -> [ | BlueShotFR ] again
+down   [ BlueShotD | no WithCollision ] -> [ | BlueShotFD ] again
+up     [ BlueShotU | no WithCollision ] -> [ | BlueShotFU ] again
+left   [ OrangeShotL | no WithCollision ] -> [ | OrangeShotFL ] again
+right  [ OrangeShotR | no WithCollision ] -> [ | OrangeShotFR ] again
+down   [ OrangeShotD | no WithCollision ] -> [ | OrangeShotFD ] again
+up     [ OrangeShotU | no WithCollision ] -> [ | OrangeShotFU ] again
+
+
+left  [ BlueShotL | WithWhite ] -> [ ColorToggle | Portal1R WithWhite ] sfx3
+right [ BlueShotR | WithWhite ] -> [ ColorToggle | Portal1L WithWhite ] sfx3
+up    [ BlueShotU | WithWhite ] -> [ ColorToggle | Portal1D WithWhite ] sfx3
+down  [ BlueShotD | WithWhite ] -> [ ColorToggle | Portal1U WithWhite ] sfx3
+
+left  [ OrangeShotL | WithWhite ] -> [ ColorToggle | Portal2R WithWhite ] sfx3
+right [ OrangeShotR | WithWhite ] -> [ ColorToggle | Portal2L WithWhite ] sfx3
+up    [ OrangeShotU | WithWhite ] -> [ ColorToggle | Portal2D WithWhite ] sfx3
+down  [ OrangeShotD | WithWhite ] -> [ ColorToggle | Portal2U WithWhite ] sfx3
+
+
+( Prevent overlapping portals )
+[ Portal1L Portal2L ][ BluePlayer   ] -> [ Portal1L ][ BluePlayer ]
+[ Portal1L Portal2L ][ OrangePlayer ] -> [ Portal2L ][ OrangePlayer ]
+[ Portal1R Portal2R ][ BluePlayer   ] -> [ Portal1R ][ BluePlayer ]
+[ Portal1R Portal2R ][ OrangePlayer ] -> [ Portal2R ][ OrangePlayer ]
+[ Portal1D Portal2D ][ BluePlayer   ] -> [ Portal1D ][ BluePlayer ]
+[ Portal1D Portal2D ][ OrangePlayer ] -> [ Portal2D ][ OrangePlayer ]
+[ Portal1U Portal2U ][ BluePlayer   ] -> [ Portal1U ][ BluePlayer ]
+[ Portal1U Portal2U ][ OrangePlayer ] -> [ Portal2U ][ OrangePlayer ]
+
+left  [ BlueShotL | WithCollision ] -> [ | Shot1ParticleSprite1R WithCollision ]
+right [ BlueShotR | WithCollision ] -> [ | Shot1ParticleSprite1L WithCollision ]
+up    [ BlueShotU | WithCollision ] -> [ | Shot1ParticleSprite1D WithCollision ]
+down  [ BlueShotD | WithCollision ] -> [ | Shot1ParticleSprite1U WithCollision ]
+left  [ OrangeShotL | WithCollision ] -> [ | Shot2ParticleSprite1R WithCollision ]
+right [ OrangeShotR | WithCollision ] -> [ | Shot2ParticleSprite1L WithCollision ]
+up    [ OrangeShotU | WithCollision ] -> [ | Shot2ParticleSprite1D WithCollision ]
+down  [ OrangeShotD | WithCollision ] -> [ | Shot2ParticleSprite1U WithCollision ]
+
+
+[ ColorToggle ][ BluePlayerN ] -> [ ][ OrangePlayerN ]
+[ ColorToggle ][ BluePlayerR ] -> [ ][ OrangePlayerR ]
+[ ColorToggle ][ BluePlayerL ] -> [ ][ OrangePlayerL ]
+[ ColorToggle ][ BluePlayerU ] -> [ ][ OrangePlayerU ]
+[ ColorToggle ][ BluePlayerD ] -> [ ][ OrangePlayerD ]
+[ ColorToggle ][ OrangePlayerN ] -> [ ][ BluePlayerN ]
+[ ColorToggle ][ OrangePlayerR ] -> [ ][ BluePlayerR ]
+[ ColorToggle ][ OrangePlayerL ] -> [ ][ BluePlayerL ]
+[ ColorToggle ][ OrangePlayerU ] -> [ ][ BluePlayerU ]
+[ ColorToggle ][ OrangePlayerD ] -> [ ][ BluePlayerD ]
+
+(Prepare portal helpers)
+right [ Portal1R | No PortalExit1R ] -> [ Portal1R | PortalExit1R ] 
+left  [ Portal1L | No PortalExit1L ] -> [ Portal1L | PortalExit1L ]
+up    [ Portal1U | No PortalExit1U ] -> [ Portal1U | PortalExit1U ]
+down  [ Portal1D | No PortalExit1D ] -> [ Portal1D | PortalExit1D ]
+
+right [ Portal2R | No PortalExit2R ] -> [ Portal2R | PortalExit2R ] 
+left  [ Portal2L | No PortalExit2L ] -> [ Portal2L | PortalExit2L ]
+up    [ Portal2U | No PortalExit2U ] -> [ Portal2U | PortalExit2U ]
+down  [ Portal2D | No PortalExit2D ] -> [ Portal2D | PortalExit2D ]
+
+
+[ Portal1R ][ Portal2 ] -> [ Portal1R ActiveRightPortal ][ Portal2 ]
+[ Portal1L ][ Portal2 ] -> [ Portal1L ActiveLeftPortal  ][ Portal2 ]
+[ Portal1U ][ Portal2 ] -> [ Portal1U ActiveUpPortal    ][ Portal2 ]
+[ Portal1D ][ Portal2 ] -> [ Portal1D ActiveDownPortal  ][ Portal2 ]
+[ Portal2R ][ Portal1 ] -> [ Portal2R ActiveRightPortal ][ Portal1 ]
+[ Portal2L ][ Portal1 ] -> [ Portal2L ActiveLeftPortal  ][ Portal1 ]
+[ Portal2U ][ Portal1 ] -> [ Portal2U ActiveUpPortal    ][ Portal1 ]
+[ Portal2D ][ Portal1 ] -> [ Portal2D ActiveDownPortal  ][ Portal1 ]
+
+(  spread  )
+startloop
+
+
+
+  left [ BlockPlayer WantL  | Block No WantL No ActiveRightPortal ] -> [ BlockPlayer WantL | Block WantL ]
+  right [ BlockPlayer WantR  | Block No WantR No ActiveLeftPortal ] -> [ BlockPlayer WantR | Block WantR ]
+  down [ BlockPlayer WantD | Block No WantD No ActiveUpPortal ] -> [ BlockPlayer WantD | Block WantD ]
+  up [ BlockPlayer WantU | Block No WantU No ActiveDownPortal ] -> [ BlockPlayer WantU | Block WantU ]
+
+
+  left  [ Want WithL | WithR no Want ] -> [ Want WithL | WithR Want ]
+  right  [ Want WithR | WithL no Want ] -> [ Want WithR | WithL Want ]
+  up  [ Want WithU | WithD no Want ] -> [ Want WithU | WithD Want ]
+  down  [ Want WithD | WithU no Want ] -> [ Want WithD | WithU Want ]
+
+  ( Spread rigidity through portals )
+  right [ Portal1R | WantR WithL no RigidLeavingPortal1 ] -> [ Portal1R | WantR WithL RigidLeavingPortal1 ]
+  left  [ Portal1L | WantL WithR no RigidLeavingPortal1 ] -> [ Portal1L | WantL WithR RigidLeavingPortal1 ]
+  up    [ Portal1U | WantU WithD no RigidLeavingPortal1 ] -> [ Portal1U | WantU WithD RigidLeavingPortal1 ]
+  down  [ Portal1D | WantD WithU no RigidLeavingPortal1 ] -> [ Portal1D | WantD WithU RigidLeavingPortal1 ]
+  right [ Portal2R | WantR WithL no RigidLeavingPortal2 ] -> [ Portal2R | WantR WithL RigidLeavingPortal2 ]
+  left  [ Portal2L | WantL WithR no RigidLeavingPortal2 ] -> [ Portal2L | WantL WithR RigidLeavingPortal2 ]
+  up    [ Portal2U | WantU WithD no RigidLeavingPortal2 ] -> [ Portal2U | WantU WithD RigidLeavingPortal2 ]
+  down  [ Portal2D | WantD WithU no RigidLeavingPortal2 ] -> [ Portal2D | WantD WithU RigidLeavingPortal2 ]
+  
+  right [ Portal1R | WantL WithL no RigidEnteringPortal1] -> [ Portal1R | WantL WithL RigidEnteringPortal1]
+  left  [ Portal1L | WantR WithR no RigidEnteringPortal1] -> [ Portal1L | WantR WithR RigidEnteringPortal1]
+  up    [ Portal1U | WantD WithD no RigidEnteringPortal1] -> [ Portal1U | WantD WithD RigidEnteringPortal1]
+  down  [ Portal1D | WantU WithU no RigidEnteringPortal1] -> [ Portal1D | WantU WithU RigidEnteringPortal1]
+  right [ Portal2R | WantL WithL no RigidEnteringPortal2] -> [ Portal2R | WantL WithL RigidEnteringPortal2]
+  left  [ Portal2L | WantR WithR no RigidEnteringPortal2] -> [ Portal2L | WantR WithR RigidEnteringPortal2]
+  up    [ Portal2U | WantD WithD no RigidEnteringPortal2] -> [ Portal2U | WantD WithD RigidEnteringPortal2]
+  down  [ Portal2D | WantU WithU no RigidEnteringPortal2] -> [ Portal2D | WantU WithU RigidEnteringPortal2]  
+  
+  right [ Portal1R | WithL no WantR ][ RigidEnteringPortal2 ] -> [ Portal1R | WithL WantR ][ RigidEnteringPortal2 ]
+  left  [ Portal1L | WithR no WantL ][ RigidEnteringPortal2 ] -> [ Portal1L | WithR WantL ][ RigidEnteringPortal2 ]
+  up    [ Portal1U | WithD no WantU ][ RigidEnteringPortal2 ] -> [ Portal1U | WithD WantU ][ RigidEnteringPortal2 ]
+  down  [ Portal1D | WithU no WantD ][ RigidEnteringPortal2 ] -> [ Portal1D | WithU WantD ][ RigidEnteringPortal2 ]
+  right [ Portal2R | WithL no WantR ][ RigidEnteringPortal1 ] -> [ Portal2R | WithL WantR ][ RigidEnteringPortal1 ]
+  left  [ Portal2L | WithR no WantL ][ RigidEnteringPortal1 ] -> [ Portal2L | WithR WantL ][ RigidEnteringPortal1 ]
+  up    [ Portal2U | WithD no WantU ][ RigidEnteringPortal1 ] -> [ Portal2U | WithD WantU ][ RigidEnteringPortal1 ]
+  down  [ Portal2D | WithU no WantD ][ RigidEnteringPortal1 ] -> [ Portal2D | WithU WantD ][ RigidEnteringPortal1 ]
+
+  right [ Portal1R | WithL no WantL ][ RigidLeavingPortal2  ] -> [ Portal1R | WithL WantL ][ RigidLeavingPortal2  ]
+  left  [ Portal1L | WithR no WantR ][ RigidLeavingPortal2  ] -> [ Portal1L | WithR WantR ][ RigidLeavingPortal2  ]
+  up    [ Portal1U | WithD no WantD ][ RigidLeavingPortal2  ] -> [ Portal1U | WithD WantD ][ RigidLeavingPortal2  ]
+  down  [ Portal1D | WithU no WantU ][ RigidLeavingPortal2  ] -> [ Portal1D | WithU WantU ][ RigidLeavingPortal2  ]
+  right [ Portal2R | WithL no WantL ][ RigidLeavingPortal1  ] -> [ Portal2R | WithL WantL ][ RigidLeavingPortal1  ]
+  left  [ Portal2L | WithR no WantR ][ RigidLeavingPortal1  ] -> [ Portal2L | WithR WantR ][ RigidLeavingPortal1  ]
+  up    [ Portal2U | WithD no WantD ][ RigidLeavingPortal1  ] -> [ Portal2U | WithD WantD ][ RigidLeavingPortal1  ]
+  down  [ Portal2D | WithU no WantU ][ RigidLeavingPortal1  ] -> [ Portal2D | WithU WantU ][ RigidLeavingPortal1  ]
+  
+  ( BlockPlayer pushing through portal )
+  right [ Portal1R | BlockPlayer WantL no BPEnteringPortal1 ] -> [ Portal1R | BlockPlayer WantL BPEnteringPortal1 ]
+  left  [ Portal1L | BlockPlayer WantR no BPEnteringPortal1 ] -> [ Portal1L | BlockPlayer WantR BPEnteringPortal1 ]
+  up    [ Portal1U | BlockPlayer WantD no BPEnteringPortal1 ] -> [ Portal1U | BlockPlayer WantD BPEnteringPortal1 ]
+  down  [ Portal1D | BlockPlayer WantU no BPEnteringPortal1 ] -> [ Portal1D | BlockPlayer WantU BPEnteringPortal1 ]
+  right [ Portal2R | BlockPlayer WantL no BPEnteringPortal2 ] -> [ Portal2R | BlockPlayer WantL BPEnteringPortal2 ]
+  left  [ Portal2L | BlockPlayer WantR no BPEnteringPortal2 ] -> [ Portal2L | BlockPlayer WantR BPEnteringPortal2 ]
+  up    [ Portal2U | BlockPlayer WantD no BPEnteringPortal2 ] -> [ Portal2U | BlockPlayer WantD BPEnteringPortal2 ]
+  down  [ Portal2D | BlockPlayer WantU no BPEnteringPortal2 ] -> [ Portal2D | BlockPlayer WantU BPEnteringPortal2 ]
+  
+  right [ Portal1R | BlockPlayer No WantR ][ BPEnteringPortal2 ] -> [ Portal1R | BlockPlayer WantR ][ BPEnteringPortal2 ]
+  left  [ Portal1L | BlockPlayer No WantL ][ BPEnteringPortal2 ] -> [ Portal1L | BlockPlayer WantL ][ BPEnteringPortal2 ]
+  up    [ Portal1U | BlockPlayer No WantU ][ BPEnteringPortal2 ] -> [ Portal1U | BlockPlayer WantU ][ BPEnteringPortal2 ]
+  down  [ Portal1D | BlockPlayer No WantD ][ BPEnteringPortal2 ] -> [ Portal1D | BlockPlayer WantD ][ BPEnteringPortal2 ]
+  right [ Portal2R | BlockPlayer No WantR ][ BPEnteringPortal1 ] -> [ Portal2R | BlockPlayer WantR ][ BPEnteringPortal1 ]
+  left  [ Portal2L | BlockPlayer No WantL ][ BPEnteringPortal1 ] -> [ Portal2L | BlockPlayer WantL ][ BPEnteringPortal1 ]
+  up    [ Portal2U | BlockPlayer No WantU ][ BPEnteringPortal1 ] -> [ Portal2U | BlockPlayer WantU ][ BPEnteringPortal1 ]
+  down  [ Portal2D | BlockPlayer No WantD ][ BPEnteringPortal1 ] -> [ Portal2D | BlockPlayer WantD ][ BPEnteringPortal1 ]
+
+endloop
+
+(  detect error )
+
+startloop
+
+  (   hit something then add error)
+  left  [ WantL No Error | WithCollision no WantL no ActiveRightPortal ] -> [ WantL Error PostError | WithCollision ]
+  right [ WantR No Error | WithCollision no WantR no ActiveLeftPortal  ] -> [ WantR Error PostError | WithCollision ]
+  down  [ WantD No Error | WithCollision no WantD no ActiveUpPortal    ] -> [ WantD Error PostError | WithCollision ]
+  up    [ WantU No Error | WithCollision no WantU no ActiveDownPortal  ] -> [ WantU Error PostError | WithCollision ]
+  
+  
+  ( Contradiction, then add error )
+  [ WantL WantU ] -> [ WantL WantU Error ]
+  [ WantL WAntR ] -> [ WantL WantR Error ]
+  [ WantL WAntD ] -> [ WantL WantD Error ]
+  [ WantR WAntU ] -> [ WantR WantU Error ]
+  [ WantR WAntD ] -> [ WantR WantD Error ]
+  [ WantU WAntD ] -> [ WantU WantD Error ]
+
+  (   hit error , then add error)
+  left [ WantL No Error | WithCollision Error ] -> [ WantL Error PostError | WithCollision Error ]
+  right [ WantR No Error | WithCollision Error ] -> [ WantR Error PostError | WithCollision Error ]
+  down [ WantD No Error | WithCollision Error ] -> [ WantD Error PostError | WithCollision Error ]
+  up [ WantU No Error | WithCollision Error ] -> [ WantU Error PostError | WithCollision Error ]
+
+
+  (   player attempting to push error, then add error)
+  left [ BlockPlayer WantL no Error | Block WantL Error ] -> [  BlockPlayer WantL Error | Block WantL Error ]
+  right [  BlockPlayer WantR no Error | Block WantR Error ] -> [  BlockPlayer WantR Error | Block WantR Error ]
+  down [  BlockPlayer WantD no Error | Block WantD Error ] -> [  BlockPlayer WantD Error | Block WantD Error ]
+  up [  BlockPlayer WantU no Error | Block WantU Error ] -> [  BlockPlayer WantU Error | Block WantU Error ]
+
+
+  (   contiguous to error, then add error)
+  left  [ Want WithL Error | WithR Want no Error ] -> [ Want WithL Error | WithR Want Error ]
+  right  [ Want WithR Error | WithL Want no Error ] -> [ Want WithR Error | WithL Want Error ]
+  down  [ Want WithD Error | WithU Want no Error ] -> [ Want WithD Error | WithU Want Error ]
+  up  [ Want WithU Error | WithD Want no Error ] -> [ Want WithU Error | WithD Want Error ]
+
+  ( Portal attempting to enter another portl )
+  right [ Portal1 wantR | Portal2L ] -> [ Portal1 wantR Error | Portal2L ]
+  left  [ Portal1 wantL | Portal2R ] -> [ Portal1 wantL Error | Portal2R ]
+  up    [ Portal1 wantU | Portal2D ] -> [ Portal1 wantU Error | Portal2D ]
+  down  [ Portal1 wantD | Portal2U ] -> [ Portal1 wantD Error | Portal2U ]
+  right [ Portal2 wantR | Portal1L ] -> [ Portal2 wantR Error | Portal1L ]
+  left  [ Portal2 wantL | Portal1R ] -> [ Portal2 wantL Error | Portal1R ]
+  up    [ Portal2 wantU | Portal1D ] -> [ Portal2 wantU Error | Portal1D ]
+  down  [ Portal2 wantD | Portal1U ] -> [ Portal2 wantD Error | Portal1U ]
+
+  ( > spread errors through portals )
+  right [ Portal1R | BlockPlayer WantR no BPLeavingPortal1 ] -> [ Portal1R | BlockPlayer WantR BPLeavingPortal1 ]
+  left  [ Portal1L | BlockPlayer WantL no BPLeavingPortal1 ] -> [ Portal1L | BlockPlayer WantL BPLeavingPortal1 ]
+  up    [ Portal1U | BlockPlayer WantU no BPLeavingPortal1 ] -> [ Portal1U | BlockPlayer WantU BPLeavingPortal1 ]
+  down  [ Portal1D | BlockPlayer WantD no BPLeavingPortal1 ] -> [ Portal1D | BlockPlayer WantD BPLeavingPortal1 ]
+  right [ Portal2R | BlockPlayer WantR no BPLeavingPortal2 ] -> [ Portal2R | BlockPlayer WantR BPLeavingPortal2 ]
+  left  [ Portal2L | BlockPlayer WantL no BPLeavingPortal2 ] -> [ Portal2L | BlockPlayer WantL BPLeavingPortal2 ]
+  up    [ Portal2U | BlockPlayer WantU no BPLeavingPortal2 ] -> [ Portal2U | BlockPlayer WantU BPLeavingPortal2 ]
+  down  [ Portal2D | BlockPlayer WantD no BPLeavingPortal2 ] -> [ Portal2D | BlockPlayer WantD BPLeavingPortal2 ]
+  
+  [ BPEnteringPortal1 no Error ][ BPLeavingPortal2 Error ] -> [ BPEnteringPortal1 Error ][ BPLeavingPortal2 Error ]
+  [ BPEnteringPortal2 no Error ][ BPLeavingPortal1 Error ] -> [ BPEnteringPortal2 Error ][ BPLeavingPortal1 Error ]
+  
+
+endloop
+
+[ RigidEnteringPortal1 ] -> []
+[ RigidEnteringPortal2 ] -> []
+[ RigidLeavingPortal1 ] -> []
+[ RigidLeavingPortal2 ] -> []
+[ BPEnteringPortal1 ] -> []
+[ BPEnteringPortal2 ] -> []
+[ BPLeavingPortal1 ] -> []
+[ BPLeavingPortal2 ] -> []
+
+
+
+( Remove wants)
+[ Want ] -> [  ]
+
+( Spread Wants again , but this time can't spread through errors)
+
+[ OriginL no Error ] -> [WantL]
+[ OriginR no Error ] -> [WantR]
+[ OriginD no Error ] -> [WantD]
+[ OriginU no Error ] -> [WantU]
+
+[ Origin Error ] -> []
+[ Origin ] -> []
+
+
+(  spread again, blocked by errors )
+startloop
+
+
+
+  left [ BlockPlayer WantL | Block No WantL No Error No ActiveRightPortal ] -> [ BlockPlayer WantL | Block WantL ]
+  right [ BlockPlayer WantR | Block No WantR No Error No ActiveLeftPortal ] -> [ BlockPlayer WantR | Block WantR ]
+  down [ BlockPlayer WantD | Block No WantD no Error No ACtiveUpPortal ] -> [ BlockPlayer WantD | Block WantD ]
+  up [ BlockPlayer WantU | Block No WantU no Error No ActiveDownPortal ] -> [ BlockPlayer WantU | Block WantU ]
+
+
+  left  [ Want WithL | WithR no Want no Error ] -> [ Want WithL | WithR Want ]
+  right  [ Want WithR | WithL no Want no Error ] -> [ Want WithR | WithL Want ]
+  up  [ Want WithU | WithD no Want no Error ] -> [ Want WithU | WithD Want ]
+  down  [ Want WithD | WithU no Want no Error ] -> [ Want WithD | WithU Want ]
+ 
+  ( Spread rigidity through portals minus error )
+  right [ Portal1R | WantR WithL no RigidLeavingPortal1 ] -> [ Portal1R | WantR WithL RigidLeavingPortal1 ]
+  left  [ Portal1L | WantL WithR no RigidLeavingPortal1 ] -> [ Portal1L | WantL WithR RigidLeavingPortal1 ]
+  up    [ Portal1U | WantU WithD no RigidLeavingPortal1 ] -> [ Portal1U | WantU WithD RigidLeavingPortal1 ]
+  down  [ Portal1D | WantD WithU no RigidLeavingPortal1 ] -> [ Portal1D | WantD WithU RigidLeavingPortal1 ]
+  right [ Portal2R | WantR WithL no RigidLeavingPortal2 ] -> [ Portal2R | WantR WithL RigidLeavingPortal2 ]
+  left  [ Portal2L | WantL WithR no RigidLeavingPortal2 ] -> [ Portal2L | WantL WithR RigidLeavingPortal2 ]
+  up    [ Portal2U | WantU WithD no RigidLeavingPortal2 ] -> [ Portal2U | WantU WithD RigidLeavingPortal2 ]
+  down  [ Portal2D | WantD WithU no RigidLeavingPortal2 ] -> [ Portal2D | WantD WithU RigidLeavingPortal2 ]
+  
+  right [ Portal1R | WantL WithL no RigidEnteringPortal1] -> [ Portal1R | WantL WithL RigidEnteringPortal1]
+  left  [ Portal1L | WantR WithR no RigidEnteringPortal1] -> [ Portal1L | WantR WithR RigidEnteringPortal1]
+  up    [ Portal1U | WantD WithD no RigidEnteringPortal1] -> [ Portal1U | WantD WithD RigidEnteringPortal1]
+  down  [ Portal1D | WantU WithU no RigidEnteringPortal1] -> [ Portal1D | WantU WithU RigidEnteringPortal1]
+  right [ Portal2R | WantL WithL no RigidEnteringPortal2] -> [ Portal2R | WantL WithL RigidEnteringPortal2]
+  left  [ Portal2L | WantR WithR no RigidEnteringPortal2] -> [ Portal2L | WantR WithR RigidEnteringPortal2]
+  up    [ Portal2U | WantD WithD no RigidEnteringPortal2] -> [ Portal2U | WantD WithD RigidEnteringPortal2]
+  down  [ Portal2D | WantU WithU no RigidEnteringPortal2] -> [ Portal2D | WantU WithU RigidEnteringPortal2]  
+  
+  right [ Portal1R | WithL no WantR no Error ][ RigidEnteringPortal2 ] -> [ Portal1R | WithL WantR ][ RigidEnteringPortal2 ]
+  left  [ Portal1L | WithR no WantL no Error ][ RigidEnteringPortal2 ] -> [ Portal1L | WithR WantL ][ RigidEnteringPortal2 ]
+  up    [ Portal1U | WithD no WantU no Error ][ RigidEnteringPortal2 ] -> [ Portal1U | WithD WantU ][ RigidEnteringPortal2 ]
+  down  [ Portal1D | WithU no WantD no Error ][ RigidEnteringPortal2 ] -> [ Portal1D | WithU WantD ][ RigidEnteringPortal2 ]
+  right [ Portal2R | WithL no WantR no Error ][ RigidEnteringPortal1 ] -> [ Portal2R | WithL WantR ][ RigidEnteringPortal1 ]
+  left  [ Portal2L | WithR no WantL no Error ][ RigidEnteringPortal1 ] -> [ Portal2L | WithR WantL ][ RigidEnteringPortal1 ]
+  up    [ Portal2U | WithD no WantU no Error ][ RigidEnteringPortal1 ] -> [ Portal2U | WithD WantU ][ RigidEnteringPortal1 ]
+  down  [ Portal2D | WithU no WantD no Error ][ RigidEnteringPortal1 ] -> [ Portal2D | WithU WantD ][ RigidEnteringPortal1 ]
+
+  right [ Portal1R | WithL no WantL no Error ][ RigidLeavingPortal2  ] -> [ Portal1R | WithL WantL ][ RigidLeavingPortal2  ]
+  left  [ Portal1L | WithR no WantR no Error ][ RigidLeavingPortal2  ] -> [ Portal1L | WithR WantR ][ RigidLeavingPortal2  ]
+  up    [ Portal1U | WithD no WantD no Error ][ RigidLeavingPortal2  ] -> [ Portal1U | WithD WantD ][ RigidLeavingPortal2  ]
+  down  [ Portal1D | WithU no WantU no Error ][ RigidLeavingPortal2  ] -> [ Portal1D | WithU WantU ][ RigidLeavingPortal2  ]
+  right [ Portal2R | WithL no WantL no Error ][ RigidLeavingPortal1  ] -> [ Portal2R | WithL WantL ][ RigidLeavingPortal1  ]
+  left  [ Portal2L | WithR no WantR no Error ][ RigidLeavingPortal1  ] -> [ Portal2L | WithR WantR ][ RigidLeavingPortal1  ]
+  up    [ Portal2U | WithD no WantD no Error ][ RigidLeavingPortal1  ] -> [ Portal2U | WithD WantD ][ RigidLeavingPortal1  ]
+  down  [ Portal2D | WithU no WantU no Error ][ RigidLeavingPortal1  ] -> [ Portal2D | WithU WantU ][ RigidLeavingPortal1  ]
+  
+  ( BlockPlayer pushing through portal, no error )
+  right [ Portal1R | BlockPlayer WantL no BPEnteringPortal1 ] -> [ Portal1R | BlockPlayer WantL BPEnteringPortal1 ]
+  left  [ Portal1L | BlockPlayer WantR no BPEnteringPortal1 ] -> [ Portal1L | BlockPlayer WantR BPEnteringPortal1 ]
+  up    [ Portal1U | BlockPlayer WantD no BPEnteringPortal1 ] -> [ Portal1U | BlockPlayer WantD BPEnteringPortal1 ]
+  down  [ Portal1D | BlockPlayer WantU no BPEnteringPortal1 ] -> [ Portal1D | BlockPlayer WantU BPEnteringPortal1 ]
+  right [ Portal2R | BlockPlayer WantL no BPEnteringPortal2 ] -> [ Portal2R | BlockPlayer WantL BPEnteringPortal2 ]
+  left  [ Portal2L | BlockPlayer WantR no BPEnteringPortal2 ] -> [ Portal2L | BlockPlayer WantR BPEnteringPortal2 ]
+  up    [ Portal2U | BlockPlayer WantD no BPEnteringPortal2 ] -> [ Portal2U | BlockPlayer WantD BPEnteringPortal2 ]
+  down  [ Portal2D | BlockPlayer WantU no BPEnteringPortal2 ] -> [ Portal2D | BlockPlayer WantU BPEnteringPortal2 ]
+  
+  right [ Portal1R | BlockPlayer No WantR no Error ][ BPEnteringPortal2 ] -> [ Portal1R | BlockPlayer WantR ][ BPEnteringPortal2 ]
+  left  [ Portal1L | BlockPlayer No WantL no Error ][ BPEnteringPortal2 ] -> [ Portal1L | BlockPlayer WantL ][ BPEnteringPortal2 ]
+  up    [ Portal1U | BlockPlayer No WantU no Error ][ BPEnteringPortal2 ] -> [ Portal1U | BlockPlayer WantU ][ BPEnteringPortal2 ]
+  down  [ Portal1D | BlockPlayer No WantD no Error ][ BPEnteringPortal2 ] -> [ Portal1D | BlockPlayer WantD ][ BPEnteringPortal2 ]
+  right [ Portal2R | BlockPlayer No WantR no Error ][ BPEnteringPortal1 ] -> [ Portal2R | BlockPlayer WantR ][ BPEnteringPortal1 ]
+  left  [ Portal2L | BlockPlayer No WantL no Error ][ BPEnteringPortal1 ] -> [ Portal2L | BlockPlayer WantL ][ BPEnteringPortal1 ]
+  up    [ Portal2U | BlockPlayer No WantU no Error ][ BPEnteringPortal1 ] -> [ Portal2U | BlockPlayer WantU ][ BPEnteringPortal1 ]
+  down  [ Portal2D | BlockPlayer No WantD no Error ][ BPEnteringPortal1 ] -> [ Portal2D | BlockPlayer WantD ][ BPEnteringPortal1 ]
+
+endloop
+
+(remove these things again)
+[ RigidEnteringPortal1 ] -> []
+[ RigidEnteringPortal2 ] -> []
+[ RigidLeavingPortal1 ] -> []
+[ RigidLeavingPortal2 ] -> []
+[ BPEnteringPortal1 ] -> []
+[ BPEnteringPortal2 ] -> []
+[ BPLeavingPortal1 ] -> []
+[ BPLeavingPortal2 ] -> []
+
+
+
+
+( perform the move )
+[ no Portal1 ] -> [ NoPortal1 ]
+[ no Portal2 ] -> [ NoPortal2 ]
+
+[ Block Want ] -> sfx8
+
+startloop
+
+  (Move with or without portal )
+  left  [ WantL BlockPlayer Portal1OrNothing Portal2OrNothing | No WithCollision No WantL ] -> [ | BlockPlayer Portal1OrNothing Portal2OrNothing ]
+  right [ WantR BlockPlayer Portal1OrNothing Portal2OrNothing | No WithCollision No WantR ] -> [ | BlockPlayer Portal1OrNothing Portal2OrNothing ]
+  up    [ WantU BlockPlayer Portal1OrNothing Portal2OrNothing | No WithCollision No WantU ] -> [ | BlockPlayer Portal1OrNothing Portal2OrNothing ]
+  down  [ WantD BlockPlayer Portal1OrNothing Portal2OrNothing | No WithCollision No WantD ] -> [ | BlockPlayer Portal1OrNothing Portal2OrNothing ]
+ 
+ 
+  (Teleportation! )    
+  (1RR)
+  right [ Portal1R | WantL BlockPlayer ][ PortalExit2R No WithCollision No WantR ] -> [ Portal1R | ][ PortalExit2R BlockPlayer RotateRR ]
+  (1RL)
+  right [ Portal1R | WantL BlockPlayer ][ PortalExit2L No WithCollision No WantL ] -> [ Portal1R | ][ PortalExit2L BlockPlayer RotateRL ]
+  (1RU)
+  right [ Portal1R | WantL BlockPlayer ][ PortalExit2U No WithCollision No WantU ] -> [ Portal1R | ][ PortalExit2U BlockPlayer RotateRU ]
+  (1RD)
+  right [ Portal1R | WantL BlockPlayer ][ PortalExit2D No WithCollision No WantD ] -> [ Portal1R | ][ PortalExit2D BlockPlayer RotateRD ]
+
+  (1LR)
+  left  [ Portal1L | WantR BlockPlayer ][ PortalExit2R No WithCollision No WantR ] -> [ Portal1L | ][ PortalExit2R BlockPlayer RotateLR ]
+  (1LL)
+  left  [ Portal1L | WantR BlockPlayer ][ PortalExit2L No WithCollision No WantL ] -> [ Portal1L | ][ PortalExit2L BlockPlayer RotateLL ]
+  (1LU)
+  left  [ Portal1L | WantR BlockPlayer ][ PortalExit2U No WithCollision No WantU ] -> [ Portal1L | ][ PortalExit2U BlockPlayer RotateLU ]
+  (1LD)
+  left  [ Portal1L | WantR BlockPlayer ][ PortalExit2D No WithCollision No WantD ] -> [ Portal1L | ][ PortalExit2D BlockPlayer RotateLD ]
+
+  (1LR)
+  up    [ Portal1U | WantD BlockPlayer ][ PortalExit2R No WithCollision No WantR ] -> [ Portal1U | ][ PortalExit2R BlockPlayer RotateUR ]
+  (1LL)
+  up    [ Portal1U | WantD BlockPlayer ][ PortalExit2L No WithCollision No WantL ] -> [ Portal1U | ][ PortalExit2L BlockPlayer RotateUL ]
+  (1LU)
+  up    [ Portal1U | WantD BlockPlayer ][ PortalExit2U No WithCollision No WantU ] -> [ Portal1U | ][ PortalExit2U BlockPlayer RotateUU ]
+  (1LD)
+  up    [ Portal1U | WantD BlockPlayer ][ PortalExit2D No WithCollision No WantD ] -> [ Portal1U | ][ PortalExit2D BlockPlayer RotateUD ]
+
+  (1DR)
+  down  [ Portal1D | WantU BlockPlayer ][ PortalExit2R No WithCollision No WantR ] -> [ Portal1D | ][ PortalExit2R BlockPlayer RotateDR ]
+  (1DL)
+  down  [ Portal1D | WantU BlockPlayer ][ PortalExit2L No WithCollision No WantL ] -> [ Portal1D | ][ PortalExit2L BlockPlayer RotateDL ]
+  (1DU)
+  down  [ Portal1D | WantU BlockPlayer ][ PortalExit2U No WithCollision No WantU ] -> [ Portal1D | ][ PortalExit2U BlockPlayer RotateDU ]
+  (1DD)
+  down  [ Portal1D | WantU BlockPlayer ][ PortalExit2D No WithCollision No WantD ] -> [ Portal1D | ][ PortalExit2D BlockPlayer RotateDD ]
+
+  (2RR)
+  right [ Portal2R | WantL BlockPlayer ][ PortalExit1R No WithCollision No WantR ] -> [ Portal2R | ][ PortalExit1R BlockPlayer RotateRR ]
+  (2RL)
+  right [ Portal2R | WantL BlockPlayer ][ PortalExit1L No WithCollision No WantL ] -> [ Portal2R | ][ PortalExit1L BlockPlayer RotateRL ]
+  (2RU)
+  right [ Portal2R | WantL BlockPlayer ][ PortalExit1U No WithCollision No WantU ] -> [ Portal2R | ][ PortalExit1U BlockPlayer RotateRU ]
+  (2RD)
+  right [ Portal2R | WantL BlockPlayer ][ PortalExit1D No WithCollision No WantD ] -> [ Portal2R | ][ PortalExit1D BlockPlayer RotateRD ]
+
+  (2LR)
+  left  [ Portal2L | WantR BlockPlayer ][ PortalExit1R No WithCollision No WantR ] -> [ Portal2L | ][ PortalExit1R BlockPlayer RotateLR ]
+  (2LL)
+  left  [ Portal2L | WantR BlockPlayer ][ PortalExit1L No WithCollision No WantL ] -> [ Portal2L | ][ PortalExit1L BlockPlayer RotateLL ]
+  (2LU)
+  left  [ Portal2L | WantR BlockPlayer ][ PortalExit1U No WithCollision No WantU ] -> [ Portal2L | ][ PortalExit1U BlockPlayer RotateLU ]
+  (2LD)
+  left  [ Portal2L | WantR BlockPlayer ][ PortalExit1D No WithCollision No WantD ] -> [ Portal2L | ][ PortalExit1D BlockPlayer RotateLD ]
+
+  (2UR)
+  up    [ Portal2U | WantD BlockPlayer ][ PortalExit1R No WithCollision No WantR ] -> [ Portal2U | ][ PortalExit1R BlockPlayer RotateUR ]
+  (2UL)
+  up    [ Portal2U | WantD BlockPlayer ][ PortalExit1L No WithCollision No WantL ] -> [ Portal2U | ][ PortalExit1L BlockPlayer RotateUL ]
+  (2UU)
+  up    [ Portal2U | WantD BlockPlayer ][ PortalExit1U No WithCollision No WantU ] -> [ Portal2U | ][ PortalExit1U BlockPlayer RotateUU ]
+  (2UD)
+  up    [ Portal2U | WantD BlockPlayer ][ PortalExit1D No WithCollision No WantD ] -> [ Portal2U | ][ PortalExit1D BlockPlayer RotateUD ]
+
+  (2DR)
+  down  [ Portal2D | WantU BlockPlayer ][ PortalExit1R No WithCollision No WantR ] -> [ Portal2D | ][ PortalExit1R BlockPlayer RotateDR ]
+  (2DL)
+  down  [ Portal2D | WantU BlockPlayer ][ PortalExit1L No WithCollision No WantL ] -> [ Portal2D | ][ PortalExit1L BlockPlayer RotateDL ]
+  (2DU)
+  down  [ Portal2D | WantU BlockPlayer ][ PortalExit1U No WithCollision No WantU ] -> [ Portal2D | ][ PortalExit1U BlockPlayer RotateDU ]
+  (2DD)
+  down  [ Portal2D | WantU BlockPlayer ][ PortalExit1D No WithCollision No WantD ] -> [ Portal2D | ][ PortalExit1D BlockPlayer RotateDD ]
+ 
+endloop
+
+[ NoPortal1 ] -> []
+[ NoPortal2 ] -> []
+
+( Rotation ! )
+ [ Rotate ] -> [ Rotate ] sfx4 (a bit of a hack, but this is always created after a teleportation)
+
+ [ RotateCNW  WhiteBlock___R] -> [  WhiteBlock_D__ ]
+ [ RotateCNW  WhiteBlock_D__] -> [  WhiteBlock__L_ ]
+ [ RotateCNW  WhiteBlock__L_] -> [  WhiteBlockU___ ]
+ [ RotateCNW  WhiteBlockU___] -> [  WhiteBlock___R ]
+ [ RotateCNW  YellowBlock___R] -> [  YellowBlock_D__ ]
+ [ RotateCNW  YellowBlock_D__] -> [  YellowBlock__L_ ]
+ [ RotateCNW  YellowBlock__L_] -> [  YellowBlockU___ ]
+ [ RotateCNW  YellowBlockU___] -> [  YellowBlock___R ]
+ [ RotateCNW BluePlayerR]-> [ BluePlayerD ]
+ [ RotateCNW BluePlayerL ]-> [ BluePlayerU  ]
+ [ RotateCNW BluePlayerU   ]-> [ BluePlayerR ]
+ [ RotateCNW BluePlayerD ]-> [ BluePlayerL  ]
+ [ RotateCNW OrangePlayerR]-> [ OrangePlayerD ]
+ [ RotateCNW OrangePlayerL ]-> [ OrangePlayerU  ]
+ [ RotateCNW OrangePlayerU   ]-> [ OrangePlayerR ]
+ [ RotateCNW OrangePlayerD ]-> [ OrangePlayerL  ]
+ 
+ [ RotateCW   WhiteBlock_D__] -> [  WhiteBlock___R ]
+ [ RotateCW   WhiteBlock__L_] -> [  WhiteBlock_D__ ]
+ [ RotateCW   WhiteBlockU___] -> [  WhiteBlock__L_ ]
+ [ RotateCW   WhiteBlock___R] -> [  WhiteBlockU___ ]
+ [ RotateCW   YellowBlock_D__] -> [  YellowBlock___R ]
+ [ RotateCW   YellowBlock__L_] -> [  YellowBlock_D__ ]
+ [ RotateCW   YellowBlockU___] -> [  YellowBlock__L_ ]
+ [ RotateCW   YellowBlock___R] -> [  YellowBlockU___ ]
+ [ RotateCW BluePlayerD ]-> [ BluePlayerR  ]
+ [ RotateCW BluePlayerU   ]-> [ BluePlayerL  ]
+ [ RotateCW BluePlayerR ]-> [ BluePlayerU ]
+ [ RotateCW BluePlayerL ]-> [ BluePlayerD  ]
+ [ RotateCW OrangePlayerD ]-> [ OrangePlayerR  ]
+ [ RotateCW OrangePlayerU   ]-> [ OrangePlayerL  ]
+ [ RotateCW OrangePlayerR ]-> [ OrangePlayerU ]
+ [ RotateCW OrangePlayerL ]-> [ OrangePlayerD  ]
+ 
+ [ RotatePerpendicular   WhiteBlockUD__] -> [  WhiteBlock__LR ]
+ [ RotatePerpendicular   WhiteBlock__LR] -> [  WhiteBlockUD__ ]
+ [ RotatePerpendicular   YellowBlockUD__] -> [  YellowBlock__LR ]
+ [ RotatePerpendicular   YellowBlock__LR] -> [  YellowBlockUD__ ]
+ 
+ [ FlipVertical   BluePlayerU ] -> [ BluePlayerD ]
+ [ FlipVertical   BluePlayerD ] -> [ BluePlayerU  ]
+ [ FlipVertical   OrangePlayerU ] -> [ OrangePlayerD ]
+ [ FlipVertical   OrangePlayerD ] -> [ OrangePlayerU  ]
+
+ [ FlipVertical    WhiteBlock_D__ ] -> [  WhiteBlockU___ ]
+ [ FlipVertical    WhiteBlockU___ ] -> [  WhiteBlock_D__ ]
+ [ FlipHorizontal  WhiteBlock___R ] -> [  WhiteBlock__L_ ]
+ [ FlipHorizontal  WhiteBlock__L_ ] -> [  WhiteBlock___R ]
+ [ FlipVertical    YellowBlock_D__ ] -> [  YellowBlockU___ ]
+ [ FlipVertical    YellowBlockU___ ] -> [  YellowBlock_D__ ]
+ [ FlipHorizontal  YellowBlock___R ] -> [  YellowBlock__L_ ]
+ [ FlipHorizontal  YellowBlock__L_ ] -> [  YellowBlock___R ]
+ [ FlipHorizontal BluePlayerL ] -> [ BluePlayerR ]
+ [ FlipHorizontal BluePlayerR ] -> [ BluePlayerL ]
+ [ FlipHorizontal OrangePlayerL ] -> [ OrangePlayerR ]
+ [ FlipHorizontal OrangePlayerR ] -> [ OrangePlayerL ]
+
+ [ Rotate ] -> [  ] 
+
+
+( detect broken rigids )
+right [ WithR | WithL ] -> [ WithR OkRigidR | WithL OkRigidL ] 
+up    [ WithU | WithD ] -> [ WithU OkRigidU | WithD OkRigidD ] 
+
+
+right [ WithR | Portal1L ]  -> [ RigidEnteringPortal1 WithR | Portal1L ]
+left  [ WithL | Portal1R ]  -> [ RigidEnteringPortal1 WithL | Portal1R ]
+up    [ WithU | Portal1D ]  -> [ RigidEnteringPortal1 WithU | Portal1D ]
+down  [ WithD | Portal1U ]  -> [ RigidEnteringPortal1 WithD | Portal1U ]
+right [ WithR | Portal2L ]  -> [ RigidEnteringPortal2 WithR | Portal2L ]
+left  [ WithL | Portal2R ]  -> [ RigidEnteringPortal2 WithL | Portal2R ]
+up    [ WithU | Portal2D ]  -> [ RigidEnteringPortal2 WithU | Portal2D ]
+down  [ WithD | Portal2U ]  -> [ RigidEnteringPortal2 WithD | Portal2U ]
+
+
+right [ WithR | Portal1L ][ RigidEnteringPortal2 ] -> [ WithR OkRigidR | Portal1L ][ RigidEnteringPortal2 ]
+left  [ WithL | Portal1R ][ RigidEnteringPortal2 ] -> [ WithL OkRigidL | Portal1R ][ RigidEnteringPortal2 ]
+up    [ WithU | Portal1D ][ RigidEnteringPortal2 ] -> [ WithU OkRigidU | Portal1D ][ RigidEnteringPortal2 ]
+down  [ WithD | Portal1U ][ RigidEnteringPortal2 ] -> [ WithD OkRigidD | Portal1U ][ RigidEnteringPortal2 ]
+right [ WithR | Portal2L ][ RigidEnteringPortal1 ] -> [ WithR OkRigidR | Portal2L ][ RigidEnteringPortal1 ]
+left  [ WithL | Portal2R ][ RigidEnteringPortal1 ] -> [ WithL OkRigidL | Portal2R ][ RigidEnteringPortal1 ]
+up    [ WithU | Portal2D ][ RigidEnteringPortal1 ] -> [ WithU OkRigidU | Portal2D ][ RigidEnteringPortal1 ]
+down  [ WithD | Portal2U ][ RigidEnteringPortal1 ] -> [ WithD OkRigidD | Portal2U ][ RigidEnteringPortal1 ]
+
+[ RigidEnteringPortal1 ] -> []
+[ RigidEnteringPortal2 ] -> []
+
+
+[ WithR no OkRigidR ] -> cancel sfx5
+[ WithL no OkRigidL ] -> cancel sfx5
+[ WithU no OkRigidU ] -> cancel sfx5
+[ WithD no OkRigidD ] -> cancel sfx5
+
+
+
+([ Error ] -> cancel sfx5)
+[ Error ] -> []
+[ Want ] -> cancel sfx5
+[ OkRigid ] -> []
+
+
+
+
+
+(start sink)
+startloop
+   [ Block Water ] -> [ Block MightSink Water ]
+   ( contiguous to might sink, spread it )
+   left  [ MightSink WithL | WithR no MightSink ] -> [ MightSink WithL | WithR MightSink ]
+   right  [ MightSink WithR | WithL no MightSink ] -> [ MightSink WithR | WithL MightSink ]
+   up  [ MightSink WithU | WithD no MightSink ] -> [ MightSink WithU | WithD MightSink ]
+   down  [ MightSink WithD | WithU no MightSink ] -> [ MightSink WithD | WithU MightSink ]
+endloop
+
+startloop
+   [ MightSink no Water ] -> [ Error MightSink ]
+
+   ( contiguous to error, spread it )
+   left  [ MightSink WithL Error | WithR MightSink no Error ] -> [ MightSink WithL Error | WithR MightSink Error ]
+   right  [ MightSink WithR Error | WithL MightSink no Error ] -> [ MightSink WithR Error | WithL MightSink Error ]
+   down  [ MightSink WithD Error | WithU MightSink no Error ] -> [ MightSink WithD Error | WithU MightSink Error ]
+   up [ MightSink WithU Error | WithD MightSink no Error ] -> [ MightSink WithU Error | WithD MightSink Error ]
+   
+   left [ MightSink WithL | ActiveRightPortal ] -> [ MightSink WithL Error | ActiveRightPortal ]
+   right [ MightSink WithR | ActiveLeftPortal ] -> [ MightSink WithR Error | ActiveLeftPortal ]
+   up [ MightSink WithU | ActiveDownPortal ] -> [ MightSink WithU Error | ActiveDownPortal ]
+   down [ MightSink WithD | ActiveUpPortal ] -> [ MightSink WithD Error | ActiveUpPortal ]
+   
+   
+endloop
+
+[ MightSink Error ] -> [ ]
+[ Error ] -> []
+
+
+[ MightSink WhiteBlock____ Water ] -> [ WhiteBridge____ ] sfx6
+[ MightSink WhiteBlock___R Water ] -> [ WhiteBridge___R ] sfx6
+[ MightSink WhiteBlock__L_ Water ] -> [ WhiteBridge__L_ ] sfx6
+[ MightSink WhiteBlock__LR Water ] -> [ WhiteBridge__LR ] sfx6
+[ MightSink WhiteBlock_D__ Water ] -> [ WhiteBridge_D__ ] sfx6
+[ MightSink WhiteBlock_D_R_1 Water ] -> [ WhiteBridge_D_R_1 ] sfx6
+[ MightSink WhiteBlock_D_R_2 Water ] -> [ WhiteBridge_D_R_2 ] sfx6
+[ MightSink WhiteBlock_DL__1 Water ] -> [ WhiteBridge_DL__1 ] sfx6
+[ MightSink WhiteBlock_DL__2 Water ] -> [ WhiteBridge_DL__2 ] sfx6
+[ MightSink WhiteBlock_DLR Water ] -> [ WhiteBridge_DLR ] sfx6
+[ MightSink WhiteBlockU___ Water ] -> [ WhiteBridgeU___ ] sfx6
+[ MightSink WhiteBlockU__R_1 Water ] -> [ WhiteBridgeU__R_1 ] sfx6
+[ MightSink WhiteBlockU__R_2 Water ] -> [ WhiteBridgeU__R_2 ] sfx6
+[ MightSink WhiteBlockU_L__1 Water ] -> [ WhiteBridgeU_L__1 ] sfx6
+[ MightSink WhiteBlockU_L__2 Water ] -> [ WhiteBridgeU_L__2 ] sfx6
+[ MightSink WhiteBlockU_LR Water ] -> [ WhiteBridgeU_LR ] sfx6
+[ MightSink WhiteBlockUD__ Water ] -> [ WhiteBridgeUD__ ] sfx6
+[ MightSink WhiteBlockUD_R Water ] -> [ WhiteBridgeUD_R ] sfx6
+[ MightSink WhiteBlockUDL_ Water ] -> [ WhiteBridgeUDL_ ] sfx6
+[ MightSink WhiteBlockUDLR_1 Water ] -> [ WhiteBridgeUDLR_1 ] sfx6
+[ MightSink WhiteBlockUDLR_2 Water ] -> [ WhiteBridgeUDLR_2 ] sfx6
+
+[ MightSink Block____ Water ] -> [ Bridge____ ] sfx6
+[ MightSink Block___R Water ] -> [ Bridge___R ] sfx6
+[ MightSink Block__L_ Water ] -> [ Bridge__L_ ] sfx6
+[ MightSink Block__LR Water ] -> [ Bridge__LR ] sfx6
+[ MightSink Block_D__ Water ] -> [ Bridge_D__ ] sfx6
+[ MightSink Block_D_R_1 Water ] -> [ Bridge_D_R_1 ] sfx6
+[ MightSink Block_D_R_2 Water ] -> [ Bridge_D_R_2 ] sfx6
+[ MightSink Block_DL__1 Water ] -> [ Bridge_DL__1 ] sfx6
+[ MightSink Block_DL__2 Water ] -> [ Bridge_DL__2 ] sfx6
+[ MightSink Block_DLR Water ] -> [ Bridge_DLR ] sfx6
+[ MightSink BlockU___ Water ] -> [ BridgeU___ ] sfx6
+[ MightSink BlockU__R_1 Water ] -> [ BridgeU__R_1 ] sfx6
+[ MightSink BlockU__R_2 Water ] -> [ BridgeU__R_2 ] sfx6
+[ MightSink BlockU_L__1 Water ] -> [ BridgeU_L__1 ] sfx6
+[ MightSink BlockU_L__2 Water ] -> [ BridgeU_L__2 ] sfx6
+[ MightSink BlockU_LR Water ] -> [ BridgeU_LR ] sfx6
+[ MightSink BlockUD__ Water ] -> [ BridgeUD__ ] sfx6
+[ MightSink BlockUD_R Water ] -> [ BridgeUD_R ] sfx6
+[ MightSink BlockUDL_ Water ] -> [ BridgeUDL_ ] sfx6
+[ MightSink BlockUDLR_1 Water ] -> [ BridgeUDLR_1 ] sfx6
+[ MightSink BlockUDLR_2 Water ] -> [ BridgeUDLR_2 ] sfx6
+
+
+
+
+[ Portal  no WithWhite ] -> [  ]
+
+
+[ SinkingPlayerSprite3 ] -> [ ]
+[ SinkingPlayerSprite2 ] -> [ SinkingPlayerSprite3 ] again
+[ SinkingPlayerSprite1 ] -> [ SinkingPlayerSprite2 ] again
+[ Player Water ] -> [ Water SinkingPlayerSprite1 ] sfx7 again
+
+
+   
+
+
+
+( cleanup errors )
+
+[ PostError ] -> []
+[ Error ] -> []
+
+
+
+(delete portal helpers, see ya next turn)
+[ PortalExit ] -> [ ]
+[ ActivePortal ] -> []
+
+
+( Decorative rules )
+
+
+[ Portal1Sprite no Portal1 ] -> []
+[ Portal1RS4 ] -> [  ]
+[ Portal1LS4 ] -> [  ]
+[ Portal1US4 ] -> [  ]
+[ Portal1DS4 ] -> [  ]
+[ Portal1RS3 ] -> [ Portal1RS4 ]
+[ Portal1LS3 ] -> [ Portal1LS4 ]
+[ Portal1US3 ] -> [ Portal1US4 ]
+[ Portal1DS3 ] -> [ Portal1DS4 ]
+[ Portal1RS2 ] -> [ Portal1RS3 ]
+[ Portal1LS2 ] -> [ Portal1LS3 ]
+[ Portal1US2 ] -> [ Portal1US3 ]
+[ Portal1DS2 ] -> [ Portal1DS3 ]
+[ Portal1RS1 ] -> [ Portal1RS2 ]
+[ Portal1LS1 ] -> [ Portal1LS2 ]
+[ Portal1US1 ] -> [ Portal1US2 ]
+[ Portal1DS1 ] -> [ Portal1DS2 ]
+[ Portal1R no Portal1Sprite ] -> [ Portal1R Portal1RS1 ]
+[ Portal1L no Portal1Sprite ] -> [ Portal1L Portal1LS1 ]
+[ Portal1U no Portal1Sprite ] -> [ Portal1U Portal1US1 ]
+[ Portal1D no Portal1Sprite ] -> [ Portal1D Portal1DS1 ]
+
+[ Portal2Sprite no Portal2 ] -> []
+[ Portal2RS4 ] -> [  ]
+[ Portal2LS4 ] -> [  ]
+[ Portal2US4 ] -> [  ]
+[ Portal2DS4 ] -> [  ]
+[ Portal2RS3 ] -> [ Portal2RS4 ]
+[ Portal2LS3 ] -> [ Portal2LS4 ]
+[ Portal2US3 ] -> [ Portal2US4 ]
+[ Portal2DS3 ] -> [ Portal2DS4 ]
+[ Portal2RS2 ] -> [ Portal2RS3 ]
+[ Portal2LS2 ] -> [ Portal2LS3 ]
+[ Portal2US2 ] -> [ Portal2US3 ]
+[ Portal2DS2 ] -> [ Portal2DS3 ]
+[ Portal2RS1 ] -> [ Portal2RS2 ]
+[ Portal2LS1 ] -> [ Portal2LS2 ]
+[ Portal2US1 ] -> [ Portal2US2 ]
+[ Portal2DS1 ] -> [ Portal2DS2 ]
+[ Portal2R no Portal2Sprite ] -> [ Portal2R Portal2RS1 ]
+[ Portal2L no Portal2Sprite ] -> [ Portal2L Portal2LS1 ]
+[ Portal2U no Portal2Sprite ] -> [ Portal2U Portal2US1 ]
+[ Portal2D no Portal2Sprite ] -> [ Portal2D Portal2DS1 ]
+
+
+[ DarkWall no DarkWallSprite ] -> [ DarkWall random DarkWallSprite ]
+[ RealTimeTick ][ WaterSprite ] -> [RealTimeTick][]
+[ RealTimeTick ][ Water no WaterSprite ] -> [RealTimeTick][ Water random WaterSprite ]
+
+
+up    [ no HasCellU | ] -> [ HasCellU | ]
+down  [ no HasCellD | ] -> [ HasCellD | ]
+right [ no HasCellR | ] -> [ HasCellR | ]
+left  [ no HasCellL | ] -> [ HasCellL | ]
+
+up   [ DarkWall no HasCellU no DarkWallTop  ] -> [ DarkWall DarkWallTop ]
+left [ DarkWall no HasCellL no DarkWallLeft ] -> [ DarkWall DarkWallLeft ]
+right[ DarkWall no HasCellR no DarkWallRight ] -> [ DarkWall DarkWallRight ]
+down [ DarkWall no HasCellD no DarkWallBottom] -> [ DarkWall DarkWallBottom ]
+
+
+up   [ DarkWall no DarkWallTop  | no DarkWall ] -> [ DarkWall DarkWallTop |]
+left [ DarkWall no DarkWallLeft | no DarkWall ] -> [ DarkWall DarkWallLeft|]
+right[ DarkWall no DarkWallRight| no DarkWall ] -> [ DarkWall DarkWallRight|]
+down [ DarkWall no DarkWallBottom | no DarkWall ] -> [ DarkWall DarkWallBottom|]
+
+up   [ Wall no WhiteWallTop  | no Wall ] -> [ Wall WhiteWallTop |]
+left [ Wall no WhiteWallLeft | no Wall ] -> [ Wall WhiteWallLeft|]
+right[ Wall no WhiteWallRight| no Wall ] -> [ Wall WhiteWallRight|]
+down [ Wall no WhiteWallBottom | no Wall ] -> [ Wall WhiteWallBottom|]
+
+
+up   [ no Water no Bridge no GroundTop   | WaterOrBridge ] -> [ GroundTop   | WaterOrBridge ]
+left [ no Water no Bridge no GroundLeft  | WaterOrBridge ] -> [ GroundLeft  | WaterOrBridge ]
+right[ no Water no Bridge no GroundRight | WaterOrBridge ] -> [ GroundRight | WaterOrBridge ]
+down [ no Water no Bridge no GroundBottom| WaterOrBridge ] -> [ GroundBottom| WaterOrBridge ]
+
+up   [ Target no TargetBorderTop    | no Target ] -> [ Target  TargetBorderTop    |]
+down [ Target no TargetBorderBottom | no Target ] -> [ Target  TargetBorderBottom |]
+left [ Target no TargetBorderLeft   | no Target ] -> [ Target  TargetBorderLeft |]
+right[ Target no TargetBorderRight  | no Target ] -> [ Target  TargetBorderRight |]
+
+
+
+==============
+WINCONDITIONS
+==============
+
+All target on Block
+No WithWhite on Target
+Some Player
+Some Target
+
+=======
+LEVELS
+=======
+
+
+Message Welcome to [Redacted] Science!
+Message Your clearance level is so low that we can't even share the name of the company with you.
+Message Yours is a simple job. We need to relocate furniture in some of our chambers to the marked locations.
+Message The furniture lack proper handles so I am afraid you won't be able to pull them. You seem tough though, Surely you can push them, even multiple of them at once.
+Message You can press 'Z' to undo. 'R' to restart and 'R' followed by 'X' three times to skip a level.
+
+%%%%%%%%%%%%%%
+%o①..%%%%%%%%%
+%ö⑴......¡..%%
+%..#@@@@5336%%
+%..#@@.@8..8%%
+%..##@###....%
+%...###4@4...%
+%......c@8...%
+%......8@....%
+%%%%%%%%%%%%%%
+
+
+Message At [Redacted] Science we value your safety. For that reason some restricted areas may be surrounded by safety liquid.
+
+Message We do not recommend to submerge into the safety liquid 
+
+%##############%
+%......o②.¡....%
+%......ö⑵%%%%%%%
+%....536%%.....%
+%...#8.8%%.12.%%
+%...#..%%%.%.%%%
+%...#..~~..~h.#%
+%...###~~~~%%%%%
+%.12....~....@@%
+%....~~.....@..%
+################
+
+Message If you stumble upon any [Redacted] Science test equipment, make sure to report it to the terminal and do not handle it.
+
+Message We estimate that unauthorized handling of [Redacted] Science equipment might be hazardous to the equipment.
+
+%%%%%%%%%%%%
+%o③....~~~%%
+%ö⑶4.~~~.~@%
+%!.c.~~~.~.%
+%.0c.~~~.~.%
+%..8.~...~.%
+%....~...~.%
+########%%%%
+
+Message Rest assured that this is not a test. This is a job for humans.
+Message There are no records being kept of the number of moves you are using and we don't look at any leaderboards.
+
+
+
+%%%%%%%%%%%%%%%%%%%
+%..............%%#%
+%..............%.@%
+%.!........%~~~~.@%
+%...4.5336..~~~~.@%
+%...c.c12c..~~~~.@%
+%...c.933a..~~~~.%%
+%...8.......~~~~~%%
+%.........o④~~~~~%%
+%.........ö⑷~~~~%%%
+%###############%%%
+
+Message If this was a test, I would have no reason to lie about it. Therefore, this is not a test.
+
+%%%%%%%%%%%%%
+%%......%%o⑤%
+%%......~.ö⑸%
+%..%4%..~.~@%
+#.0.c.~.~~~%%
+#...c.~~~.~%%
+#...8.~...~%%
+#.....~!..~%%
+#########%%%%
+
+Message All we care about is for the assigned areas to be covered by furniture. That's hopefully the way in which [Redacted] Science will utilize you.
+
+###############
+#@..........o⑥#
+#@.!....##..ö⑹#
+#.....136.....#
+#.....4.c...@@#
+#13325n.c.#@..#
+####1n..8.#@.@#
+#######...#####
+###############
+
+
+Message Some of our painters may have accidentally spilled paint from an experimental bucket on some of our pieces of furtniture.
+Message Please disregard pieces of furniture that are not [Redacted] Science Interior Design Department-approved yellow.
+
+%%%%%%%%%%%%%%%
+%.......~~@@@~%
+%.......~~..@~%
+%533336.~~~~~~%
+%c....c.~~~~~~%
+%c....c.~~~~~~%
+%c....8.%..o⑦~%
+%c......%.0ö⑺~%
+%8.“···».~~~~@%
+%........~~~~.%
+%...!....~~~~~%
+%........~~~~~%
+%%%%%%%%%%%%%%%
+
+
+Message [ End of playtest, big congrats ]
+
+
+(
+
+
+
+#################
+~...............#
+~.......536..!..#
+~.......8.8.....#
+~...#############
+~...#############
+~...#############
+~............@@@#
+~............@.@#
+#################
+
+#################
+#...............#
+#..12...536136..#
+#....!..8.8..96.#
+#...####......c.#
+#...###12..133a.#
+#...###..###.####
+#............@@@#
+#............@.@#
+#################
+
+
+#################
+#...............#
+#..12...536.....#
+#.......8.8.....#
+#...####........#
+#...######..!...#
+#...######.#.####
+#............@@@#
+#............@.@#
+@################
+
+
+
+
+
+###################
+############.....##
+#..........#.....@#
+#.!........#~~~~.##
+#...#.5336..~~~~..#
+#.....c12c..~~~~..#
+#...0.933a..~~~~.##
+#...............~##
+#...............~##
+#...............###
+###################
+
+#################
+#...............#
+#.......536.....#
+#.......8.8.....#
+#...######......#
+#...######..!...#
+#...#############
+#............@@@#
+#............@.@#
+#################
+
+
+
+
+
+
+
+#################
+#@@@@...##......#
+#@..@...........#
+#........52.5336#
+#....536.c..8..8#
+#....c!d3a......#
+#####93a........#
+#####.......#...#
+#####...........#
+#################
+
+
+
+#################
+#...............#
+#...........@...#
+#...............#
+#....536........#
+#....c!c........#
+#....93a........#
+#...............#
+#...............#
+#################
+
+
+#################
+#...............#
+#.......536.....#
+#.......8.8.....#
+#...######......#
+#...######..!...#
+#...#############
+#............@@@#
+#............@.@#
+#################
+
+
+#################
+#...............#
+#.!..1372..0....#
+#...#..8........#
+#....1613212..~.#
+#..536964.....~.#
+#..8.848csg..~~.#
+#.....97apn.~~~.#
+#......8..~~~~~.#
+#@..............#
+#################
+)
