@@ -1,13 +1,17 @@
-title Furniture Science 0.1.113
+title Furniture Science 0.1.121
 author vexorian
 homepage vexorian.com
 (debug)
 (verbose_logging)
 again_interval 0.03
-(again_interval 0.3)
+(again_interval 1.0)
 run_rules_on_level_start
 realtime_interval 0.25
+enable_level_select
 
+
+key_repeat_interval 0.15
+norepeat_action
 (
 zlib License
 
@@ -2114,6 +2118,13 @@ D9
 .....
 
 
+PlayerNotFound
+red
+.....
+.000.
+.0.0.
+.000.
+.....
 
 =======
 LEGEND
@@ -2373,8 +2384,10 @@ OkRigidL
 OkRigidR
 OkRigidD
 OkRigidU
-RigidEnteringPortal1 , RigidLeavingPortal1
-RigidEnteringPortal2 , RigidLeavingPortal2
+RigidEnteringPortal1
+RigidLeavingPortal1
+RigidEnteringPortal2
+RigidLeavingPortal2
 BPEnteringPortal1, BPLeavingPortal1
 BPEnteringPortal2, BPLeavingPortal2
 NoPortal1
@@ -2388,10 +2401,22 @@ HasCellD
 HasCellR
 HasCellL
 RealTimeTick
+PlayerNotFound
 
 ======
 RULES
 ======
+
+
+( This is mostly so that moving the direction keys doesn't change the state when the player
+is dead and thus undo will work in one press )
+[ ] -> [ PlayerNotFound ]
+[ PlayerNotFound ][ SinkingPlayerSprite1 ] -> [][ SinkingPlayerSprite1 ]
+[ PlayerNotFound ][ SinkingPlayerSprite2 ] -> [][ SinkingPlayerSprite2 ]
+[ PlayerNotFound ][ SinkingPlayerSprite3 ] -> [][ SinkingPlayerSprite3 ]
+[ PlayerNotFound ][ Player ] -> [][ Player ]
+[ PlayerNotFound  ] -> Cancel
+
 
 [ RealTimeTick ] -> []
 [ stationary Player ] -> [ Player RealTimeTick ]
@@ -2817,6 +2842,7 @@ endloop
 
 startloop
 
+
   (Move with or without portal )
   left  [ WantL BlockPlayer Portal1OrNothing Portal2OrNothing | No WithCollision No WantL ] -> [ | BlockPlayer Portal1OrNothing Portal2OrNothing ]
   right [ WantR BlockPlayer Portal1OrNothing Portal2OrNothing | No WithCollision No WantR ] -> [ | BlockPlayer Portal1OrNothing Portal2OrNothing ]
@@ -2993,16 +3019,21 @@ down  [ WithD | Portal2U ][ RigidEnteringPortal1 ] -> [ WithD OkRigidD | Portal2
 [ RigidEnteringPortal2 ] -> []
 
 
-[ WithR no OkRigidR ] -> cancel sfx5
-[ WithL no OkRigidL ] -> cancel sfx5
-[ WithU no OkRigidU ] -> cancel sfx5
-[ WithD no OkRigidD ] -> cancel sfx5
+[ WithR no OkRigidR ] -> sfx5
+[ WithR no OkRigidR ] -> cancel
+[ WithL no OkRigidL ] -> sfx5
+[ WithL no OkRigidL ] -> cancel
+[ WithU no OkRigidU ] -> sfx5
+[ WithU no OkRigidU ] -> cancel
+[ WithD no OkRigidD ] -> sfx5
+[ WithD no OkRigidD ] -> cancel
 
 
 
 ([ Error ] -> cancel sfx5)
 [ Error ] -> []
-[ Want ] -> cancel sfx5
+[ Want ] -> sfx5
+[ Want ] -> cancel 
 [ OkRigid ] -> []
 
 
@@ -3212,6 +3243,7 @@ Some Target
 LEVELS
 =======
 
+level_select_point
 
 Message Welcome to [Redacted] Science!
 Message Your clearance level is so low that we can't even share the name of the company with you.
@@ -3230,6 +3262,7 @@ Message You can press 'Z' to undo. 'R' to restart and 'R' followed by 'X' three 
 %......8@....%
 %%%%%%%%%%%%%%
 
+level_select_point
 
 Message At [Redacted] Science we value your safety. For that reason some restricted areas may be surrounded by safety liquid.
 
@@ -3251,6 +3284,8 @@ Message If you stumble upon any [Redacted] Science test equipment, make sure to 
 
 Message We estimate that unauthorized handling of [Redacted] Science equipment might be hazardous to the equipment.
 
+level_select_point
+
 %%%%%%%%%%%%
 %o③....~~~%%
 %ö⑶4.~~~.~@%
@@ -3263,6 +3298,7 @@ Message We estimate that unauthorized handling of [Redacted] Science equipment m
 Message Rest assured that this is not a test. This is a job for humans.
 Message There are no records being kept of the number of moves you are using and we don't look at any leaderboards.
 
+level_select_point
 
 
 %%%%%%%%%%%%%%%%%%%
@@ -3279,15 +3315,19 @@ Message There are no records being kept of the number of moves you are using and
 
 Message If this was a test, I would have no reason to lie about it. Therefore, this is not a test.
 
+level_select_point
+
 %%%%%%%%%%%%%
-%%......%%o⑤%
-%%......~.ö⑸%
+%%......%%%%%
+%%......~...%
 %..%4%..~.~@%
 #.0.c.~.~~~%%
 #...c.~~~.~%%
-#...8.~...~%%
-#.....~!..~%%
+#...8.~.o⑤~%%
+#.....~!ö⑸~%%
 #########%%%%
+
+level_select_point
 
 Message All we care about is for the assigned areas to be covered by furniture. That's hopefully the way in which [Redacted] Science will utilize you.
 
@@ -3301,9 +3341,39 @@ Message All we care about is for the assigned areas to be covered by furniture. 
 #######...#####
 ###############
 
+level_select_point
 
 Message Some of our painters may have accidentally spilled paint from an experimental bucket on some of our pieces of furtniture.
 Message Please disregard pieces of furniture that are not [Redacted] Science Interior Design Department-approved yellow.
+
+%%%%%%%%%%%%%%%
+%%%%%%%%%..o⑦~%
+%.......%.0ö⑺~%
+%..“···».~~~~@%
+%........~~~~.%
+%...!....~~~~~%
+%%%%%%%%%%%%%%%
+
+level_select_point
+
+Message joke
+
+%%%%%%%%%%%%%%%
+%o⑧.....~~@@@~%
+%ö⑻533336~..@~%
+%..c....c~~~~~%
+%..c....c~~~~~%
+%..c....8~~~~~%
+%..c....%.0~~~%
+%..8.!..%..~~~%
+%........~~~~@%
+%.“···»..~~~~.%
+%........~~~~~%
+%........%%%%%%
+%%%%%%%%%%%%%%%
+
+
+Message sadsg
 
 %%%%%%%%%%%%%%%
 %.......~~@@@~%
