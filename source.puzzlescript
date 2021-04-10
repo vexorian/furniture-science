@@ -1,4 +1,4 @@
-title Furniture Science 0.1.121
+title Furniture Science 0.2.145
 author vexorian
 homepage vexorian.com
 (debug)
@@ -10,7 +10,7 @@ realtime_interval 0.25
 enable_level_select
 
 
-key_repeat_interval 0.15
+(key_repeat_interval 0.15)
 norepeat_action
 (
 zlib License
@@ -463,34 +463,34 @@ Target
 .....
 
 TargetBorderTop
-#FFE012
-.000.
+#FFE012 #8F7012 
+.101.
 .....
 .....
 .....
 .....
 TargetBorderBottom
-#FFE012
+#FFE012 #8F7012 
 .....
 .....
 .....
 .....
-.000.
+.101.
 
 TargetBorderLeft
-#FFE012
+#FFE012 #8F7012 
 .....
+1....
 0....
-0....
-0....
+1....
 .....
 
 TargetBorderRight
-#FFE012
+#FFE012 #8F7012 
 .....
+....1
 ....0
-....0
-....0
+....1
 .....
 
 
@@ -1467,12 +1467,12 @@ WhiteBridgeU_L__2
 44443
 
 WhiteBridgeU_LR
-#B66F26 #A46422 #9C5F20 #1D7C6B
-01112
-11111
-11111
+#72F1DA #68DCC7 #63D1BD #1D7C6B #1B7162
+40124
+00120
 11111
 22222
+44444
 
 WhiteBridgeUD__
 #72F1DA #68DCC7 #63D1BD #1D7C6B #1B7162
@@ -2126,6 +2126,57 @@ red
 .000.
 .....
 
+WithUThroughPortal
+transparent
+
+WithDThroughPortal
+transparent
+
+WithLThroughPortal
+transparent
+
+WithRThroughPortal
+transparent
+
+FutureUsed
+transparent
+
+RigidLNextToPortal
+transparent
+
+RigidRNextToPortal
+transparent
+
+RigidUNextToPortal
+transparent
+
+RigidDNextToPortal
+transparent
+
+UnmovablePortal
+transparent
+
+ErrorSprite
+red
+00.00
+0...0
+.....
+0...0
+00.00
+
+
+
+ConveyorLeft
+black
+..0..
+...0.
+..0..
+.0...
+0....
+
+JustTurned
+transparent
+
 =======
 LEGEND
 =======
@@ -2208,6 +2259,7 @@ o = u0
 ⑺ = d7
 ⑻ = d8
 ⑼ = d9
+_  = ConveyorLeft
 
 
 
@@ -2261,6 +2313,10 @@ WithCollision = Block or Player or Wall or DarkWall
 BlockPlayer = Block or Player
 
 Want = WantL or WantR or WantU or WantD
+WantNotD = WantR or WantL or WantU
+WantNotU = WantR or WantL          or WantD
+WantNotR =          WantL or WantU or WantD
+WantNotL = WantR          or WantU or WantD
 WantH = WantL or WantR
 WantV = WantD or WantU
 Origin = OriginL or OriginR or OriginD or OriginU
@@ -2269,7 +2325,10 @@ Portal1 = Portal1R or Portal1L or Portal1U or Portal1D
 Portal2 = Portal2R or Portal2L or Portal2U or Portal2D
 Portal = Portal1 or Portal2
 
-PortalExit = PortalExit1R or PortalExit1L or PortalExit1U or PortalExit1D or PortalExit2R or PortalExit2L or PortalExit2U or PortalExit2D
+Portal1Exit = PortalExit1R or PortalExit1L or PortalExit1U or PortalExit1D
+Portal2Exit = PortalExit2R or PortalExit2L or PortalExit2U or PortalExit2D
+
+PortalExit = Portal1Exit or Portal2Exit
 
 
 ActivePortal = ActiveRightPortal or ActiveLeftPortal or ActiveUpPortal or ActiveDownPortal
@@ -2303,7 +2362,19 @@ WaterSprite = WaterSprite1 or WaterSprite2 or WaterSprite3 or WaterSprite4
 Portal1SPrite = Portal1RS1 or Portal1RS2 or Portal1RS3 or Portal1RS4 or Portal1LS1 or Portal1LS2 or Portal1LS3 or Portal1LS4 or Portal1US1 or Portal1US2 or Portal1US3 or Portal1US4 or Portal1DS1 or Portal1DS2 or Portal1DS3 or Portal1DS4
 Portal2SPrite = Portal2RS1 or Portal2RS2 or Portal2RS3 or Portal2RS4 or Portal2LS1 or Portal2LS2 or Portal2LS3 or Portal2LS4 or Portal2US1 or Portal2US2 or Portal2US3 or Portal2US4 or Portal2DS1 or Portal2DS2 or Portal2DS3 or Portal2DS4
 
+ThroughPortal = WithUThroughPortal or WithDThroughPortal or WithRThroughPortal or WithLThroughPortal
 
+WithVertical = WithU or WithD
+WithHorizontal = WithL or WithR
+
+RigidHNextToPortal = RigidRNextToPortal or RigidLNextToPortal
+RigidVNextToPortal = RigidDNextToPortal or RigidUNextToPortal
+RigidNextToPortal = RigidHNextToPortal or RigidVNextToPortal
+
+PlayerL = BluePlayerL or OrangePlayerL or BlackPlayerL
+PlayerR = BluePlayerR or OrangePlayerR or BlackPlayerR
+PlayerD = BluePlayerD or OrangePlayerD or BlackPlayerD
+PlayerU = BluePlayerU or OrangePlayerU or BlackPlayerU
 
 =======
 SOUNDS
@@ -2318,6 +2389,7 @@ sfx5 24968106 (error)
 sfx6 50609104 (sink)
 sfx7 38799704 (player sink)
 sfx8 22930307
+sfx9 47474505 (light error)
 
  (push)
 
@@ -2403,6 +2475,20 @@ HasCellL
 RealTimeTick
 PlayerNotFound
 
+WithUThroughPortal
+WithRThroughPortal
+WithLThroughPortal
+WithDThroughPortal
+
+FutureUsed
+RigidNextToPortal
+UnmovablePortal
+
+ErrorSprite
+ConveyorLeft
+
+JustTurned
+
 ======
 RULES
 ======
@@ -2447,34 +2533,43 @@ is dead and thus undo will work in one press )
   
 ( / some decorative stuff )
 
+[ JustTurned ] -> []
 
-left [ > BluePlayerL ] -> [ stationary BluePlayerL WantL OriginL ]
-left [ > OrangePlayerL ] -> [ stationary OrangePlayerL WantL OriginL ]
-left [ > BlackPlayerL ] -> [ stationary BlackPlayerL WantL OriginL ]
-left [ > BluePlayer ] -> [ stationary BluePlayerL  ]
-left [ > OrangePlayer ] -> [ stationary OrangePlayerL ]
-left [ > BlackPlayer ] -> [ stationary BlackPlayerL ]
+left  [ > BluePlayerL   ] -> [ stationary BluePlayerL WantL OriginL ]
+left  [ > OrangePlayerL ] -> [ stationary OrangePlayerL WantL OriginL ]
+left  [ > BlackPlayerL  ] -> [ stationary BlackPlayerL WantL OriginL ]
+left  [ > BluePlayer    ] -> [ stationary BluePlayerL JustTurned ]
+left  [ > OrangePlayer  ] -> [ stationary OrangePlayerL JustTurned ]
+left  [ > BlackPlayer   ] -> [ stationary BlackPlayerL JustTurned ]
 
-right [ > BluePlayerR ] -> [ stationary BluePlayerR WantR OriginR ]
+right [ > BluePlayerR   ] -> [ stationary BluePlayerR WantR OriginR ]
 right [ > OrangePlayerR ] -> [ stationary OrangePlayerR WantR OriginR ]
-right [ > BlackPlayerR ] -> [ stationary BlackPlayerR WantR OriginR ]
-right [ > BluePlayer ] -> [ stationary BluePlayerR  ]
-right [ > OrangePlayer ] -> [ stationary OrangePlayerR ]
-right [ > BlackPlayer ] -> [ stationary BlackPlayerR ]
+right [ > BlackPlayerR  ] -> [ stationary BlackPlayerR WantR OriginR ]
+right [ > BluePlayer    ] -> [ stationary BluePlayerR JustTurned ]
+right [ > OrangePlayer  ] -> [ stationary OrangePlayerR JustTurned ]
+right [ > BlackPlayer   ] -> [ stationary BlackPlayerR JustTurned ]
 
-up    [ > BluePlayerU ] -> [ stationary BluePlayerU WantU OriginU ]
+up    [ > BluePlayerU   ] -> [ stationary BluePlayerU WantU OriginU ]
 up    [ > OrangePlayerU ] -> [ stationary OrangePlayerU WantU OriginU ]
-up    [ > BlackPlayerU ] -> [ stationary BlackPlayerU WantU OriginU ]
-up    [ > BluePlayer ] -> [ stationary BluePlayerU  ]
-up    [ > OrangePlayer ] -> [ stationary OrangePlayerU ]
-up    [ > BlackPlayer ] -> [ stationary BlackPlayerU ]
+up    [ > BlackPlayerU  ] -> [ stationary BlackPlayerU WantU OriginU ]
+up    [ > BluePlayer    ] -> [ stationary BluePlayerU  JustTurned ]
+up    [ > OrangePlayer  ] -> [ stationary OrangePlayerU JustTurned ]
+up    [ > BlackPlayer   ] -> [ stationary BlackPlayerU JustTurned ]
 
-down  [ > BluePlayerD ] -> [ stationary BluePlayerD WantD OriginD ]
+down  [ > BluePlayerD   ] -> [ stationary BluePlayerD WantD OriginD ]
 down  [ > OrangePlayerD ] -> [ stationary OrangePlayerD WantD OriginD ]
-down  [ > BlackPlayerD ] -> [ stationary BlackPlayerD WantD OriginD ]
-down  [ > BluePlayer ] -> [ stationary BluePlayerD  ]
-down  [ > OrangePlayer ] -> [ stationary OrangePlayerD ]
-down  [ > BlackPlayer ] -> [ stationary BlackPlayerD ]
+down  [ > BlackPlayerD  ] -> [ stationary BlackPlayerD WantD OriginD ]
+down  [ > BluePlayer    ] -> [ stationary BluePlayerD  JustTurned]
+down  [ > OrangePlayer  ] -> [ stationary OrangePlayerD JustTurned]
+down  [ > BlackPlayer   ] -> [ stationary BlackPlayerD JustTurned]
+
+
+left  [ PlayerL JustTurned | no WithCollision no Water ] -> [ PlayerL WantL OriginL | ]
+right [ PlayerR JustTurned | no WithCollision no Water ] -> [ PlayerR WantR OriginR | ]
+up    [ PlayerU JustTurned | no WithCollision no Water ] -> [ PlayerU WantU OriginU | ]
+down  [ PlayerD JustTurned | no WithCollision no Water ] -> [ PlayerD WantD OriginD | ]
+
+[ ConveyorLeft Block ] -> [ OriginL WantL Block ConveyorLeft ]
 
 left  [ BlackPlayerL Origin WantL | PortalGunTM ] -> [ | BlackPlayerN GotGun ] sfx1
 right [ BlackPlayerR Origin WantR | PortalGunTM ] -> [ | BlackPlayerN GotGun ] sfx1
@@ -2483,6 +2578,35 @@ up    [ BlackPlayerU Origin WantU | PortalGunTM ] -> [ | BlackPlayerN GotGun ] s
 
 [ BlackPlayerN GotGun ] -> [ BluePlayerN ] checkpoint message After aiming, press 'X' to shoot
 
+
+(Prepare portal helpers)
+right [ Portal1R | No PortalExit1R ] -> [ Portal1R | PortalExit1R ] 
+left  [ Portal1L | No PortalExit1L ] -> [ Portal1L | PortalExit1L ]
+up    [ Portal1U | No PortalExit1U ] -> [ Portal1U | PortalExit1U ]
+down  [ Portal1D | No PortalExit1D ] -> [ Portal1D | PortalExit1D ]
+
+right [ Portal2R | No PortalExit2R ] -> [ Portal2R | PortalExit2R ] 
+left  [ Portal2L | No PortalExit2L ] -> [ Portal2L | PortalExit2L ]
+up    [ Portal2U | No PortalExit2U ] -> [ Portal2U | PortalExit2U ]
+down  [ Portal2D | No PortalExit2D ] -> [ Portal2D | PortalExit2D ]
+
+
+[ Portal1R ][ Portal2 ] -> [ Portal1R ActiveRightPortal ][ Portal2 ]
+[ Portal1L ][ Portal2 ] -> [ Portal1L ActiveLeftPortal  ][ Portal2 ]
+[ Portal1U ][ Portal2 ] -> [ Portal1U ActiveUpPortal    ][ Portal2 ]
+[ Portal1D ][ Portal2 ] -> [ Portal1D ActiveDownPortal  ][ Portal2 ]
+[ Portal2R ][ Portal1 ] -> [ Portal2R ActiveRightPortal ][ Portal1 ]
+[ Portal2L ][ Portal1 ] -> [ Portal2L ActiveLeftPortal  ][ Portal1 ]
+[ Portal2U ][ Portal1 ] -> [ Portal2U ActiveUpPortal    ][ Portal1 ]
+[ Portal2D ][ Portal1 ] -> [ Portal2D ActiveDownPortal  ][ Portal1 ]
+
+
+( Detect rigids through portals )
+[ ThroughPortal ] -> []
+left [ WithL | ActiveRightPortal ] -> [ WithL WithLThroughPortal | ActiveRightPortal ]
+right[ WithR | ActiveLeftPortal  ] -> [ WithR WithRThroughPortal | ActiveLeftPortal ]
+up   [ WithU | ActiveDownPortal  ] -> [ WithU WithUThroughPortal | ActiveDownPortal ]
+down [ WithD | ActiveUpPortal    ] -> [ WithD WithDThroughPortal | ActiveUpPortal ]
 
 
 [ BlueShotFL ] -> [ BlueShotL ]
@@ -2493,6 +2617,9 @@ up    [ BlackPlayerU Origin WantU | PortalGunTM ] -> [ | BlackPlayerN GotGun ] s
 [ OrangeShotFR ] -> [ OrangeShotR ]
 [ OrangeShotFD ] -> [ OrangeShotD ]
 [ OrangeShotFU ] -> [ OrangeShotU ]
+( Cancel shot if there are withLs through portals) 
+[ ThroughPortal ][ action Player ] -> [ ThroughPortal ][ Player ] sfx9
+
 
 [ action BluePlayerL ] -> [ BluePlayerL BlueShotL ] sfx2
 [ action BluePlayerR ] -> [ BluePlayerR BlueShotR ] sfx2
@@ -2562,42 +2689,56 @@ down  [ OrangeShotD | WithCollision ] -> [ | Shot2ParticleSprite1U WithCollision
 [ ColorToggle ][ OrangePlayerU ] -> [ ][ BluePlayerU ]
 [ ColorToggle ][ OrangePlayerD ] -> [ ][ BluePlayerD ]
 
-(Prepare portal helpers)
-right [ Portal1R | No PortalExit1R ] -> [ Portal1R | PortalExit1R ] 
-left  [ Portal1L | No PortalExit1L ] -> [ Portal1L | PortalExit1L ]
-up    [ Portal1U | No PortalExit1U ] -> [ Portal1U | PortalExit1U ]
-down  [ Portal1D | No PortalExit1D ] -> [ Portal1D | PortalExit1D ]
+[ RigidNextToPortal ] -> []
 
-right [ Portal2R | No PortalExit2R ] -> [ Portal2R | PortalExit2R ] 
-left  [ Portal2L | No PortalExit2L ] -> [ Portal2L | PortalExit2L ]
-up    [ Portal2U | No PortalExit2U ] -> [ Portal2U | PortalExit2U ]
-down  [ Portal2D | No PortalExit2D ] -> [ Portal2D | PortalExit2D ]
+right [ Portal1R ActiveRightPortal | WithL ] -> [  Portal1R ActiveRightPortal | WithL RigidLNextToPortal ]
+left  [ Portal1L ActiveLeftPortal  | WithR ] -> [  Portal1L ActiveLeftPortal  | WithR RigidRNextToPortal ]
+up    [ Portal1U ActiveUpPortal    | WithD ] -> [  Portal1U ActiveUpPortal    | WithD RigidDNextToPortal ]
+down  [ Portal1D ActiveDownPortal  | WithU ] -> [  Portal1D ActiveDownPortal  | WithU RigidUNextToPortal ]
+right [ Portal2R ActiveRightPortal | WithL ] -> [  Portal2R ActiveRightPortal | WithL RigidLNextToPortal ]
+left  [ Portal2L ActiveLeftPortal  | WithR ] -> [  Portal2L ActiveLeftPortal  | WithR RigidRNextToPortal ]
+up    [ Portal2U ActiveUpPortal    | WithD ] -> [  Portal2U ActiveUpPortal    | WithD RigidDNextToPortal ]
+down  [ Portal2D ActiveDownPortal  | WithU ] -> [  Portal2D ActiveDownPortal  | WithU RigidUNextToPortal ]
 
 
-[ Portal1R ][ Portal2 ] -> [ Portal1R ActiveRightPortal ][ Portal2 ]
-[ Portal1L ][ Portal2 ] -> [ Portal1L ActiveLeftPortal  ][ Portal2 ]
-[ Portal1U ][ Portal2 ] -> [ Portal1U ActiveUpPortal    ][ Portal2 ]
-[ Portal1D ][ Portal2 ] -> [ Portal1D ActiveDownPortal  ][ Portal2 ]
-[ Portal2R ][ Portal1 ] -> [ Portal2R ActiveRightPortal ][ Portal1 ]
-[ Portal2L ][ Portal1 ] -> [ Portal2L ActiveLeftPortal  ][ Portal1 ]
-[ Portal2U ][ Portal1 ] -> [ Portal2U ActiveUpPortal    ][ Portal1 ]
-[ Portal2D ][ Portal1 ] -> [ Portal2D ActiveDownPortal  ][ Portal1 ]
+
+[ UnmovablePortal ] -> []
+[ RigidNextToPortal ][ Portal1 ] -> [ RigidNextToPortal ][ Portal1 UnmovablePortal ]
+[ RigidNextToPortal ][ Portal2 ] -> [ RigidNextToPortal ][ Portal2 UnmovablePortal ]
+
 
 (  spread  )
 startloop
 
 
 
-  left [ BlockPlayer WantL  | Block No WantL No ActiveRightPortal ] -> [ BlockPlayer WantL | Block WantL ]
-  right [ BlockPlayer WantR  | Block No WantR No ActiveLeftPortal ] -> [ BlockPlayer WantR | Block WantR ]
-  down [ BlockPlayer WantD | Block No WantD No ActiveUpPortal ] -> [ BlockPlayer WantD | Block WantD ]
-  up [ BlockPlayer WantU | Block No WantU No ActiveDownPortal ] -> [ BlockPlayer WantU | Block WantU ]
+  left [ BlockPlayer WantL  | Block No WantL No ActiveRightPortal  No UnmovablePortal ] -> [ BlockPlayer WantL | Block WantL ]
+  right [ BlockPlayer WantR  | Block No WantR No ActiveLeftPortal No UnmovablePortal ] -> [ BlockPlayer WantR | Block WantR ]
+  down [ BlockPlayer WantD | Block No WantD No ActiveUpPortal No UnmovablePortal ] -> [ BlockPlayer WantD | Block WantD ]
+  up [ BlockPlayer WantU | Block No WantU No ActiveDownPortal No UnmovablePortal ] -> [ BlockPlayer WantU | Block WantU ]
 
 
-  left  [ Want WithL | WithR no Want ] -> [ Want WithL | WithR Want ]
-  right  [ Want WithR | WithL no Want ] -> [ Want WithR | WithL Want ]
-  up  [ Want WithU | WithD no Want ] -> [ Want WithU | WithD Want ]
-  down  [ Want WithD | WithU no Want ] -> [ Want WithD | WithU Want ]
+  left  [ WantL WithL | WithR no WantL ] -> [ WantL WithL | WithR WantL ]
+  right [ WantL WithR | WithL no WantL ] -> [ WantL WithR | WithL WantL ]
+  up    [ WantL WithU | WithD no WantL ] -> [ WantL WithU | WithD WantL ]
+  down  [ WantL WithD | WithU no WantL ] -> [ WantL WithD | WithU WantL ]
+
+  left  [ WantR WithL | WithR no WantR ] -> [ WantR WithL | WithR WantR ]
+  right [ WantR WithR | WithL no WantR ] -> [ WantR WithR | WithL WantR ]
+  up    [ WantR WithU | WithD no WantR ] -> [ WantR WithU | WithD WantR ]
+  down  [ WantR WithD | WithU no WantR ] -> [ WantR WithD | WithU WantR ]
+
+  left  [ WantU WithL | WithR no WantU ] -> [ WantU WithL | WithR WantU ]
+  right [ WantU WithR | WithL no WantU ] -> [ WantU WithR | WithL WantU ]
+  up    [ WantU WithU | WithD no WantU ] -> [ WantU WithU | WithD WantU ]
+  down  [ WantU WithD | WithU no WantU ] -> [ WantU WithD | WithU WantU ]
+
+  left  [ WantD WithL | WithR no WantD ] -> [ WantD WithL | WithR WantD ]
+  right [ WantD WithR | WithL no WantD ] -> [ WantD WithR | WithL WantD ]
+  up    [ WantD WithU | WithD no WantD ] -> [ WantD WithU | WithD WantD ]
+  down  [ WantD WithD | WithU no WantD ] -> [ WantD WithD | WithU WantD ]
+
+
 
   ( Spread rigidity through portals )
   right [ Portal1R | WantR WithL no RigidLeavingPortal1 ] -> [ Portal1R | WantR WithL RigidLeavingPortal1 ]
@@ -2637,14 +2778,14 @@ startloop
   down  [ Portal2D | WithU no WantU ][ RigidLeavingPortal1  ] -> [ Portal2D | WithU WantU ][ RigidLeavingPortal1  ]
   
   ( BlockPlayer pushing through portal )
-  right [ Portal1R | BlockPlayer WantL no BPEnteringPortal1 ] -> [ Portal1R | BlockPlayer WantL BPEnteringPortal1 ]
-  left  [ Portal1L | BlockPlayer WantR no BPEnteringPortal1 ] -> [ Portal1L | BlockPlayer WantR BPEnteringPortal1 ]
-  up    [ Portal1U | BlockPlayer WantD no BPEnteringPortal1 ] -> [ Portal1U | BlockPlayer WantD BPEnteringPortal1 ]
-  down  [ Portal1D | BlockPlayer WantU no BPEnteringPortal1 ] -> [ Portal1D | BlockPlayer WantU BPEnteringPortal1 ]
-  right [ Portal2R | BlockPlayer WantL no BPEnteringPortal2 ] -> [ Portal2R | BlockPlayer WantL BPEnteringPortal2 ]
-  left  [ Portal2L | BlockPlayer WantR no BPEnteringPortal2 ] -> [ Portal2L | BlockPlayer WantR BPEnteringPortal2 ]
-  up    [ Portal2U | BlockPlayer WantD no BPEnteringPortal2 ] -> [ Portal2U | BlockPlayer WantD BPEnteringPortal2 ]
-  down  [ Portal2D | BlockPlayer WantU no BPEnteringPortal2 ] -> [ Portal2D | BlockPlayer WantU BPEnteringPortal2 ]
+  right [ Portal1R | BlockPlayer WantL no BPEnteringPortal1 no WithU no WithD ] -> [ Portal1R | BlockPlayer WantL BPEnteringPortal1 ]
+  left  [ Portal1L | BlockPlayer WantR no BPEnteringPortal1 no WithU no WithD ] -> [ Portal1L | BlockPlayer WantR BPEnteringPortal1 ]
+  up    [ Portal1U | BlockPlayer WantD no BPEnteringPortal1 no WithR no WithL ] -> [ Portal1U | BlockPlayer WantD BPEnteringPortal1 ]
+  down  [ Portal1D | BlockPlayer WantU no BPEnteringPortal1 no WithR no WithL ] -> [ Portal1D | BlockPlayer WantU BPEnteringPortal1 ]
+  right [ Portal2R | BlockPlayer WantL no BPEnteringPortal2 no WithU no WithD ] -> [ Portal2R | BlockPlayer WantL BPEnteringPortal2 ]
+  left  [ Portal2L | BlockPlayer WantR no BPEnteringPortal2 no WithU no WithD ] -> [ Portal2L | BlockPlayer WantR BPEnteringPortal2 ]
+  up    [ Portal2U | BlockPlayer WantD no BPEnteringPortal2 no WithR no WithL ] -> [ Portal2U | BlockPlayer WantD BPEnteringPortal2 ]
+  down  [ Portal2D | BlockPlayer WantU no BPEnteringPortal2 no WithR no WithL ] -> [ Portal2D | BlockPlayer WantU BPEnteringPortal2 ]
   
   right [ Portal1R | BlockPlayer No WantR ][ BPEnteringPortal2 ] -> [ Portal1R | BlockPlayer WantR ][ BPEnteringPortal2 ]
   left  [ Portal1L | BlockPlayer No WantL ][ BPEnteringPortal2 ] -> [ Portal1L | BlockPlayer WantL ][ BPEnteringPortal2 ]
@@ -2659,22 +2800,93 @@ endloop
 
 (  detect error )
 
+[ FutureUsed ] -> []
+
+( detect objects moving to the same place )
+right [ WantR no BPEnteringPortal1 no BPEnteringPortal2 | FutureUsed ] -> [ WantR | FutureUsed Error ]
+right [ WantR no BPEnteringPortal1 no BPEnteringPortal2 |            ] -> [       WantR | FutureUsed ]
+
+left  [ WantL no BPEnteringPortal1 no BPEnteringPortal2 | FutureUsed ] -> [ WantL | FutureUsed Error ]
+left  [ WantL no BPEnteringPortal1 no BPEnteringPortal2 |            ] -> [       WantL | FutureUsed ]
+
+up    [ WantU no BPEnteringPortal1 no BPEnteringPortal2 | FutureUsed ] -> [ WantU | FutureUsed Error ]
+up    [ WantU no BPEnteringPortal1 no BPEnteringPortal2 |            ] -> [       WantU | FutureUsed ]
+
+down  [ WantD no BPEnteringPortal1 no BPEnteringPortal2 | FutureUsed ] -> [  WantD | FutureUsed Error ]
+down  [ WantD no BPEnteringPortal1 no BPEnteringPortal2 |            ] -> [       WantD | FutureUsed ]
+
+
+right  [ WantR BPEnteringPortal1 ][ Portal2Exit FutureUsed ] -> [ Error WantR BPEnteringPortal1 ][ Portal2Exit FutureUsed ]
+right [ WantR BPEnteringPortal1 ][ Portal2Exit            ] -> [       WantR BPEnteringPortal1 ][ Portal2Exit FutureUsed ]
+right [ WantR BPEnteringPortal2 ][ Portal1Exit FutureUsed ] -> [ Error WantR BPEnteringPortal2 ][ Portal1Exit FutureUsed ]
+right [ WantR BPEnteringPortal2 ][ Portal1Exit            ] -> [       WantR BPEnteringPortal2 ][ Portal1Exit FutureUsed ]
+
+left  [ WantL BPEnteringPortal1 ][ Portal2Exit FutureUsed ] -> [ Error WantL BPEnteringPortal1 ][ Portal2Exit FutureUsed ]
+left  [ WantL BPEnteringPortal1 ][ Portal2Exit            ] -> [       WantL BPEnteringPortal1 ][ Portal2Exit FutureUsed ]
+left  [ WantL BPEnteringPortal2 ][ Portal1Exit FutureUsed ] -> [ Error WantL BPEnteringPortal2 ][ Portal1Exit FutureUsed ]
+left  [ WantL BPEnteringPortal2 ][ Portal1Exit            ] -> [       WantL BPEnteringPortal2 ][ Portal1Exit FutureUsed ]
+
+up    [ WantU BPEnteringPortal1 ][ Portal2Exit FutureUsed ] -> [ Error WantU BPEnteringPortal1 ][ Portal2Exit FutureUsed ]
+up    [ WantU BPEnteringPortal1 ][ Portal2Exit            ] -> [       WantU BPEnteringPortal1 ][ Portal2Exit FutureUsed ]
+up    [ WantU BPEnteringPortal2 ][ Portal1Exit FutureUsed ] -> [ Error WantU BPEnteringPortal2 ][ Portal1Exit FutureUsed ]
+up    [ WantU BPEnteringPortal2 ][ Portal1Exit            ] -> [       WantU BPEnteringPortal2 ][ Portal1Exit FutureUsed ]
+
+down  [ WantD BPEnteringPortal1 ][ Portal2Exit FutureUsed ] -> [ Error WantD BPEnteringPortal1 ][ Portal2Exit FutureUsed ]
+down  [ WantD BPEnteringPortal1 ][ Portal2Exit            ] -> [       WantD BPEnteringPortal1 ][ Portal2Exit FutureUsed ]
+down  [ WantD BPEnteringPortal2 ][ Portal1Exit FutureUsed ] -> [ Error WantD BPEnteringPortal2 ][ Portal1Exit FutureUsed ]
+down  [ WantD BPEnteringPortal2 ][ Portal1Exit            ] -> [       WantD BPEnteringPortal2 ][ Portal1Exit FutureUsed ]
+
+( /detect objects moving to the same place )
+
+
+
 startloop
+  [ BPEnteringPortal1 ][ Portal1 ] -> [ BPEnteringPortal1 ][ UnmovablePortal Portal1 ]
+  [ BPEnteringPortal2 ][ Portal2 ] -> [ BPEnteringPortal2 ][ UnmovablePortal Portal2 ]
 
   (   hit something then add error)
   left  [ WantL No Error | WithCollision no WantL no ActiveRightPortal ] -> [ WantL Error PostError | WithCollision ]
   right [ WantR No Error | WithCollision no WantR no ActiveLeftPortal  ] -> [ WantR Error PostError | WithCollision ]
   down  [ WantD No Error | WithCollision no WantD no ActiveUpPortal    ] -> [ WantD Error PostError | WithCollision ]
   up    [ WantU No Error | WithCollision no WantU no ActiveDownPortal  ] -> [ WantU Error PostError | WithCollision ]
+
+
+  left  [ WantL No Error UnmovablePortal ] -> [ WantL Error PostError UnmovablePortal ]
+  right [ WantR No Error UnmovablePortal ] -> [ WantR Error PostError UnmovablePortal ]
+  down  [ WantD No Error UnmovablePortal ] -> [ WantD Error PostError UnmovablePortal ]
+  up    [ WantU No Error UnmovablePortal ] -> [ WantU Error PostError UnmovablePortal ]
+
+
+  ( Attempt to push rigid through portal )
+
+  (left [ wantL No Error WithVertical   | ActiveRightPortal ] -> [ wantL Error WithVertical   | ActiveRightPortal ]
+  right[ wantR No Error WithVertical   | ActiveLeftPortal  ] -> [ wantR Error WithVertical   | ActiveLeftPortal ]
+  down [ wantD No Error WithHorizontal | ActiveUpPortal    ] -> [ wantD Error WithHorizontal | ActiveUpPortal ]
+  up   [ wantU No Error WithHorizontal | ActiveDownPortal  ] -> [ wantU Error WithHorizontal | ActiveDownPortal ])
+
+  ( Cant cut )
+  [ WantH RigidUNextToPortal ] -> [ WantH RigidUNextToPortal Error ]
+  [ WantH RigidDNextToPortal ] -> [ WantH RigidDNextToPortal Error ]
+  [ WantV RigidRNextToPortal ] -> [ WantV RigidRNextToPortal Error ]
+  [ WantV RigidLNextToPortal ] -> [ WantV RigidLNextToPortal Error ]
   
+  right [ ActiveRightPortal | WantL WithVertical ] -> [ ActiveRightPortal | WantL WithVertical Error ] 
+  left  [ ActiveLeftPortal  | WantR WithVertical ] -> [ ActiveLeftPortal  | WantR WithVertical Error ] 
+  up    [ ActiveUpPortal    | WantD WithHorizontal]-> [ ActiveUpPortal    | WantD WithHorizontal Error ] 
+  down  [ ActiveDownPortal  | WantU WithHorizontal]-> [ ActiveDownPortal  | WantU WithHorizontal Error ] 
+
+
+
+
+  ( Cant push and cut )
+  [ Want Portal1 No Error ][ RigidNextToPortal ] -> [ Want Portal1 Error ][ RigidNextToPortal ] 
+  [ Want Portal2 No Error ][ RigidNextToPortal ] -> [ Want Portal2 Error ][ RigidNextToPortal ] 
   
   ( Contradiction, then add error )
-  [ WantL WantU ] -> [ WantL WantU Error ]
-  [ WantL WAntR ] -> [ WantL WantR Error ]
-  [ WantL WAntD ] -> [ WantL WantD Error ]
-  [ WantR WAntU ] -> [ WantR WantU Error ]
-  [ WantR WAntD ] -> [ WantR WantD Error ]
-  [ WantU WAntD ] -> [ WantU WantD Error ]
+  [ WantL WantNotL ] -> [ WantL WantNotL Error ]
+  [ WantR WantNotR ] -> [ WantR WantNotR Error ]
+  [ WantD WantNotD ] -> [ WantD WantNotD Error ]
+  [ WantU WantNotU ] -> [ WantU WantNotU Error ]
 
   (   hit error , then add error)
   left [ WantL No Error | WithCollision Error ] -> [ WantL Error PostError | WithCollision Error ]
@@ -2706,6 +2918,7 @@ startloop
   up    [ Portal2 wantU | Portal1D ] -> [ Portal2 wantU Error | Portal1D ]
   down  [ Portal2 wantD | Portal1U ] -> [ Portal2 wantD Error | Portal1U ]
 
+
   ( > spread errors through portals )
   right [ Portal1R | BlockPlayer WantR no BPLeavingPortal1 ] -> [ Portal1R | BlockPlayer WantR BPLeavingPortal1 ]
   left  [ Portal1L | BlockPlayer WantL no BPLeavingPortal1 ] -> [ Portal1L | BlockPlayer WantL BPLeavingPortal1 ]
@@ -2722,14 +2935,6 @@ startloop
 
 endloop
 
-[ RigidEnteringPortal1 ] -> []
-[ RigidEnteringPortal2 ] -> []
-[ RigidLeavingPortal1 ] -> []
-[ RigidLeavingPortal2 ] -> []
-[ BPEnteringPortal1 ] -> []
-[ BPEnteringPortal2 ] -> []
-[ BPLeavingPortal1 ] -> []
-[ BPLeavingPortal2 ] -> []
 
 
 
@@ -2743,19 +2948,29 @@ endloop
 [ OriginD no Error ] -> [WantD]
 [ OriginU no Error ] -> [WantU]
 
-[ Origin Error ] -> []
+
 [ Origin ] -> []
+
+[ RigidEnteringPortal1 ] -> []
+[ RigidEnteringPortal2 ] -> []
+[ RigidLeavingPortal1 ] -> []
+[ RigidLeavingPortal2 ] -> []
+[ BPEnteringPortal1 ] -> []
+[ BPEnteringPortal2 ] -> []
+[ BPLeavingPortal1 ] -> []
+[ BPLeavingPortal2 ] -> []
+
 
 
 (  spread again, blocked by errors )
+
+
 startloop
+  left  [ BlockPlayer WantL No BPEnteringPortal1 No BPEnteringPortal2 | Block No WantL No Error No UnmovablePortal No ActiveRightPortal ] -> [ BlockPlayer WantL | Block WantL ]
+  right [ BlockPlayer WantR No BPEnteringPortal1 No BPEnteringPortal2 | Block No WantR No Error No UnmovablePortal No ActiveLeftPortal ] -> [ BlockPlayer WantR | Block WantR ]
+  down  [ BlockPlayer WantD No BPEnteringPortal1 No BPEnteringPortal2 | Block No WantD no Error No UnmovablePortal No ActiveUpPortal ] -> [ BlockPlayer WantD | Block WantD ]
+  up    [ BlockPlayer WantU No BPEnteringPortal1 No BPEnteringPortal2 | Block No WantU no Error No UnmovablePortal No ActiveDownPortal ] -> [ BlockPlayer WantU | Block WantU ]
 
-
-
-  left [ BlockPlayer WantL | Block No WantL No Error No ActiveRightPortal ] -> [ BlockPlayer WantL | Block WantL ]
-  right [ BlockPlayer WantR | Block No WantR No Error No ActiveLeftPortal ] -> [ BlockPlayer WantR | Block WantR ]
-  down [ BlockPlayer WantD | Block No WantD no Error No ACtiveUpPortal ] -> [ BlockPlayer WantD | Block WantD ]
-  up [ BlockPlayer WantU | Block No WantU no Error No ActiveDownPortal ] -> [ BlockPlayer WantU | Block WantU ]
 
 
   left  [ Want WithL | WithR no Want no Error ] -> [ Want WithL | WithR Want ]
@@ -2764,23 +2979,23 @@ startloop
   down  [ Want WithD | WithU no Want no Error ] -> [ Want WithD | WithU Want ]
  
   ( Spread rigidity through portals minus error )
-  right [ Portal1R | WantR WithL no RigidLeavingPortal1 ] -> [ Portal1R | WantR WithL RigidLeavingPortal1 ]
+  right [ Portal1R | WantR WithL no RigidLeavingPortal1  ] -> [ Portal1R | WantR WithL RigidLeavingPortal1 ]
   left  [ Portal1L | WantL WithR no RigidLeavingPortal1 ] -> [ Portal1L | WantL WithR RigidLeavingPortal1 ]
   up    [ Portal1U | WantU WithD no RigidLeavingPortal1 ] -> [ Portal1U | WantU WithD RigidLeavingPortal1 ]
   down  [ Portal1D | WantD WithU no RigidLeavingPortal1 ] -> [ Portal1D | WantD WithU RigidLeavingPortal1 ]
-  right [ Portal2R | WantR WithL no RigidLeavingPortal2 ] -> [ Portal2R | WantR WithL RigidLeavingPortal2 ]
-  left  [ Portal2L | WantL WithR no RigidLeavingPortal2 ] -> [ Portal2L | WantL WithR RigidLeavingPortal2 ]
+  right [ Portal2R | WantR WithL no RigidLeavingPortal2   ] -> [ Portal2R | WantR WithL RigidLeavingPortal2 ]
+  left  [ Portal2L | WantL WithR no RigidLeavingPortal2   ] -> [ Portal2L | WantL WithR RigidLeavingPortal2 ]
   up    [ Portal2U | WantU WithD no RigidLeavingPortal2 ] -> [ Portal2U | WantU WithD RigidLeavingPortal2 ]
   down  [ Portal2D | WantD WithU no RigidLeavingPortal2 ] -> [ Portal2D | WantD WithU RigidLeavingPortal2 ]
   
-  right [ Portal1R | WantL WithL no RigidEnteringPortal1] -> [ Portal1R | WantL WithL RigidEnteringPortal1]
-  left  [ Portal1L | WantR WithR no RigidEnteringPortal1] -> [ Portal1L | WantR WithR RigidEnteringPortal1]
-  up    [ Portal1U | WantD WithD no RigidEnteringPortal1] -> [ Portal1U | WantD WithD RigidEnteringPortal1]
-  down  [ Portal1D | WantU WithU no RigidEnteringPortal1] -> [ Portal1D | WantU WithU RigidEnteringPortal1]
-  right [ Portal2R | WantL WithL no RigidEnteringPortal2] -> [ Portal2R | WantL WithL RigidEnteringPortal2]
-  left  [ Portal2L | WantR WithR no RigidEnteringPortal2] -> [ Portal2L | WantR WithR RigidEnteringPortal2]
-  up    [ Portal2U | WantD WithD no RigidEnteringPortal2] -> [ Portal2U | WantD WithD RigidEnteringPortal2]
-  down  [ Portal2D | WantU WithU no RigidEnteringPortal2] -> [ Portal2D | WantU WithU RigidEnteringPortal2]  
+  right [ Portal1R | WantL WithL no RigidEnteringPortal1 no WithVertical  ] -> [ Portal1R | WantL WithL RigidEnteringPortal1]
+  left  [ Portal1L | WantR WithR no RigidEnteringPortal1 no WithVertical  ] -> [ Portal1L | WantR WithR RigidEnteringPortal1]
+  up    [ Portal1U | WantD WithD no RigidEnteringPortal1 no WithHorizontal] -> [ Portal1U | WantD WithD RigidEnteringPortal1]
+  down  [ Portal1D | WantU WithU no RigidEnteringPortal1 no WithHorizontal] -> [ Portal1D | WantU WithU RigidEnteringPortal1]
+  right [ Portal2R | WantL WithL no RigidEnteringPortal2 no WithVertical  ] -> [ Portal2R | WantL WithL RigidEnteringPortal2]
+  left  [ Portal2L | WantR WithR no RigidEnteringPortal2 no WithVertical  ] -> [ Portal2L | WantR WithR RigidEnteringPortal2]
+  up    [ Portal2U | WantD WithD no RigidEnteringPortal2 no WithHorizontal] -> [ Portal2U | WantD WithD RigidEnteringPortal2]
+  down  [ Portal2D | WantU WithU no RigidEnteringPortal2 no WithHorizontal] -> [ Portal2D | WantU WithU RigidEnteringPortal2]  
   
   right [ Portal1R | WithL no WantR no Error ][ RigidEnteringPortal2 ] -> [ Portal1R | WithL WantR ][ RigidEnteringPortal2 ]
   left  [ Portal1L | WithR no WantL no Error ][ RigidEnteringPortal2 ] -> [ Portal1L | WithR WantL ][ RigidEnteringPortal2 ]
@@ -2801,14 +3016,14 @@ startloop
   down  [ Portal2D | WithU no WantU no Error ][ RigidLeavingPortal1  ] -> [ Portal2D | WithU WantU ][ RigidLeavingPortal1  ]
   
   ( BlockPlayer pushing through portal, no error )
-  right [ Portal1R | BlockPlayer WantL no BPEnteringPortal1 ] -> [ Portal1R | BlockPlayer WantL BPEnteringPortal1 ]
-  left  [ Portal1L | BlockPlayer WantR no BPEnteringPortal1 ] -> [ Portal1L | BlockPlayer WantR BPEnteringPortal1 ]
-  up    [ Portal1U | BlockPlayer WantD no BPEnteringPortal1 ] -> [ Portal1U | BlockPlayer WantD BPEnteringPortal1 ]
-  down  [ Portal1D | BlockPlayer WantU no BPEnteringPortal1 ] -> [ Portal1D | BlockPlayer WantU BPEnteringPortal1 ]
-  right [ Portal2R | BlockPlayer WantL no BPEnteringPortal2 ] -> [ Portal2R | BlockPlayer WantL BPEnteringPortal2 ]
-  left  [ Portal2L | BlockPlayer WantR no BPEnteringPortal2 ] -> [ Portal2L | BlockPlayer WantR BPEnteringPortal2 ]
-  up    [ Portal2U | BlockPlayer WantD no BPEnteringPortal2 ] -> [ Portal2U | BlockPlayer WantD BPEnteringPortal2 ]
-  down  [ Portal2D | BlockPlayer WantU no BPEnteringPortal2 ] -> [ Portal2D | BlockPlayer WantU BPEnteringPortal2 ]
+  right [ Portal1R | BlockPlayer WantL no BPEnteringPortal1 no WithVertical   ] -> [ Portal1R | BlockPlayer WantL BPEnteringPortal1 ]
+  left  [ Portal1L | BlockPlayer WantR no BPEnteringPortal1 no WithVertical   ] -> [ Portal1L | BlockPlayer WantR BPEnteringPortal1 ]
+  up    [ Portal1U | BlockPlayer WantD no BPEnteringPortal1 no WithHorizontal ] -> [ Portal1U | BlockPlayer WantD BPEnteringPortal1 ]
+  down  [ Portal1D | BlockPlayer WantU no BPEnteringPortal1 no WithHorizontal ] -> [ Portal1D | BlockPlayer WantU BPEnteringPortal1 ]
+  right [ Portal2R | BlockPlayer WantL no BPEnteringPortal2 no WithVertical   ] -> [ Portal2R | BlockPlayer WantL BPEnteringPortal2 ]
+  left  [ Portal2L | BlockPlayer WantR no BPEnteringPortal2 no WithVertical   ] -> [ Portal2L | BlockPlayer WantR BPEnteringPortal2 ]
+  up    [ Portal2U | BlockPlayer WantD no BPEnteringPortal2 no WithHorizontal ] -> [ Portal2U | BlockPlayer WantD BPEnteringPortal2 ]
+  down  [ Portal2D | BlockPlayer WantU no BPEnteringPortal2 no WithHorizontal ] -> [ Portal2D | BlockPlayer WantU BPEnteringPortal2 ]
   
   right [ Portal1R | BlockPlayer No WantR no Error ][ BPEnteringPortal2 ] -> [ Portal1R | BlockPlayer WantR ][ BPEnteringPortal2 ]
   left  [ Portal1L | BlockPlayer No WantL no Error ][ BPEnteringPortal2 ] -> [ Portal1L | BlockPlayer WantL ][ BPEnteringPortal2 ]
@@ -2819,17 +3034,9 @@ startloop
   up    [ Portal2U | BlockPlayer No WantU no Error ][ BPEnteringPortal1 ] -> [ Portal2U | BlockPlayer WantU ][ BPEnteringPortal1 ]
   down  [ Portal2D | BlockPlayer No WantD no Error ][ BPEnteringPortal1 ] -> [ Portal2D | BlockPlayer WantD ][ BPEnteringPortal1 ]
 
-endloop
 
-(remove these things again)
-[ RigidEnteringPortal1 ] -> []
-[ RigidEnteringPortal2 ] -> []
-[ RigidLeavingPortal1 ] -> []
-[ RigidLeavingPortal2 ] -> []
-[ BPEnteringPortal1 ] -> []
-[ BPEnteringPortal2 ] -> []
-[ BPLeavingPortal1 ] -> []
-[ BPLeavingPortal2 ] -> []
+
+endloop
 
 
 
@@ -2852,78 +3059,92 @@ startloop
  
   (Teleportation! )    
   (1RR)
-  right [ Portal1R | WantL BlockPlayer ][ PortalExit2R No WithCollision No WantR ] -> [ Portal1R | ][ PortalExit2R BlockPlayer RotateRR ]
+  right [ Portal1R | WantL BlockPlayer BPEnteringPortal1 ][ PortalExit2R No WithCollision No WantR ] -> [ Portal1R | ][ PortalExit2R BlockPlayer RotateRR ]
   (1RL)
-  right [ Portal1R | WantL BlockPlayer ][ PortalExit2L No WithCollision No WantL ] -> [ Portal1R | ][ PortalExit2L BlockPlayer RotateRL ]
+  right [ Portal1R | WantL BlockPlayer BPEnteringPortal1 ][ PortalExit2L No WithCollision No WantL ] -> [ Portal1R | ][ PortalExit2L BlockPlayer RotateRL ]
   (1RU)
-  right [ Portal1R | WantL BlockPlayer ][ PortalExit2U No WithCollision No WantU ] -> [ Portal1R | ][ PortalExit2U BlockPlayer RotateRU ]
+  right [ Portal1R | WantL BlockPlayer BPEnteringPortal1 ][ PortalExit2U No WithCollision No WantU ] -> [ Portal1R | ][ PortalExit2U BlockPlayer RotateRU ]
   (1RD)
-  right [ Portal1R | WantL BlockPlayer ][ PortalExit2D No WithCollision No WantD ] -> [ Portal1R | ][ PortalExit2D BlockPlayer RotateRD ]
+  right [ Portal1R | WantL BlockPlayer BPEnteringPortal1 ][ PortalExit2D No WithCollision No WantD ] -> [ Portal1R | ][ PortalExit2D BlockPlayer RotateRD ]
 
   (1LR)
-  left  [ Portal1L | WantR BlockPlayer ][ PortalExit2R No WithCollision No WantR ] -> [ Portal1L | ][ PortalExit2R BlockPlayer RotateLR ]
+  left  [ Portal1L | WantR BlockPlayer BPEnteringPortal1 ][ PortalExit2R No WithCollision No WantR ] -> [ Portal1L | ][ PortalExit2R BlockPlayer RotateLR ]
   (1LL)
-  left  [ Portal1L | WantR BlockPlayer ][ PortalExit2L No WithCollision No WantL ] -> [ Portal1L | ][ PortalExit2L BlockPlayer RotateLL ]
+  left  [ Portal1L | WantR BlockPlayer BPEnteringPortal1 ][ PortalExit2L No WithCollision No WantL ] -> [ Portal1L | ][ PortalExit2L BlockPlayer RotateLL ]
   (1LU)
-  left  [ Portal1L | WantR BlockPlayer ][ PortalExit2U No WithCollision No WantU ] -> [ Portal1L | ][ PortalExit2U BlockPlayer RotateLU ]
+  left  [ Portal1L | WantR BlockPlayer BPEnteringPortal1 ][ PortalExit2U No WithCollision No WantU ] -> [ Portal1L | ][ PortalExit2U BlockPlayer RotateLU ]
   (1LD)
-  left  [ Portal1L | WantR BlockPlayer ][ PortalExit2D No WithCollision No WantD ] -> [ Portal1L | ][ PortalExit2D BlockPlayer RotateLD ]
+  left  [ Portal1L | WantR BlockPlayer BPEnteringPortal1 ][ PortalExit2D No WithCollision No WantD ] -> [ Portal1L | ][ PortalExit2D BlockPlayer RotateLD ]
 
-  (1LR)
-  up    [ Portal1U | WantD BlockPlayer ][ PortalExit2R No WithCollision No WantR ] -> [ Portal1U | ][ PortalExit2R BlockPlayer RotateUR ]
-  (1LL)
-  up    [ Portal1U | WantD BlockPlayer ][ PortalExit2L No WithCollision No WantL ] -> [ Portal1U | ][ PortalExit2L BlockPlayer RotateUL ]
-  (1LU)
-  up    [ Portal1U | WantD BlockPlayer ][ PortalExit2U No WithCollision No WantU ] -> [ Portal1U | ][ PortalExit2U BlockPlayer RotateUU ]
-  (1LD)
-  up    [ Portal1U | WantD BlockPlayer ][ PortalExit2D No WithCollision No WantD ] -> [ Portal1U | ][ PortalExit2D BlockPlayer RotateUD ]
+  (1UR)
+  up    [ Portal1U | WantD BlockPlayer BPEnteringPortal1 ][ PortalExit2R No WithCollision No WantR ] -> [ Portal1U | ][ PortalExit2R BlockPlayer RotateUR ]
+  (1UL)
+  up    [ Portal1U | WantD BlockPlayer BPEnteringPortal1 ][ PortalExit2L No WithCollision No WantL ] -> [ Portal1U | ][ PortalExit2L BlockPlayer RotateUL ]
+  (1UU)
+  up    [ Portal1U | WantD BlockPlayer BPEnteringPortal1 ][ PortalExit2U No WithCollision No WantU ] -> [ Portal1U | ][ PortalExit2U BlockPlayer RotateUU ]
+  (1UD)
+  up    [ Portal1U | WantD BlockPlayer BPEnteringPortal1 ][ PortalExit2D No WithCollision No WantD ] -> [ Portal1U | ][ PortalExit2D BlockPlayer RotateUD ]
 
   (1DR)
-  down  [ Portal1D | WantU BlockPlayer ][ PortalExit2R No WithCollision No WantR ] -> [ Portal1D | ][ PortalExit2R BlockPlayer RotateDR ]
+  down  [ Portal1D | WantU BlockPlayer BPEnteringPortal1 ][ PortalExit2R No WithCollision No WantR ] -> [ Portal1D | ][ PortalExit2R BlockPlayer RotateDR ]
   (1DL)
-  down  [ Portal1D | WantU BlockPlayer ][ PortalExit2L No WithCollision No WantL ] -> [ Portal1D | ][ PortalExit2L BlockPlayer RotateDL ]
+  down  [ Portal1D | WantU BlockPlayer BPEnteringPortal1 ][ PortalExit2L No WithCollision No WantL ] -> [ Portal1D | ][ PortalExit2L BlockPlayer RotateDL ]
   (1DU)
-  down  [ Portal1D | WantU BlockPlayer ][ PortalExit2U No WithCollision No WantU ] -> [ Portal1D | ][ PortalExit2U BlockPlayer RotateDU ]
+  down  [ Portal1D | WantU BlockPlayer BPEnteringPortal1 ][ PortalExit2U No WithCollision No WantU ] -> [ Portal1D | ][ PortalExit2U BlockPlayer RotateDU ]
   (1DD)
-  down  [ Portal1D | WantU BlockPlayer ][ PortalExit2D No WithCollision No WantD ] -> [ Portal1D | ][ PortalExit2D BlockPlayer RotateDD ]
+  down  [ Portal1D | WantU BlockPlayer BPEnteringPortal1 ][ PortalExit2D No WithCollision No WantD ] -> [ Portal1D | ][ PortalExit2D BlockPlayer RotateDD ]
 
   (2RR)
-  right [ Portal2R | WantL BlockPlayer ][ PortalExit1R No WithCollision No WantR ] -> [ Portal2R | ][ PortalExit1R BlockPlayer RotateRR ]
+  right [ Portal2R | WantL BlockPlayer BPEnteringPortal2 ][ PortalExit1R No WithCollision No WantR ] -> [ Portal2R | ][ PortalExit1R BlockPlayer RotateRR ]
   (2RL)
-  right [ Portal2R | WantL BlockPlayer ][ PortalExit1L No WithCollision No WantL ] -> [ Portal2R | ][ PortalExit1L BlockPlayer RotateRL ]
+  right [ Portal2R | WantL BlockPlayer BPEnteringPortal2 ][ PortalExit1L No WithCollision No WantL ] -> [ Portal2R | ][ PortalExit1L BlockPlayer RotateRL ]
   (2RU)
-  right [ Portal2R | WantL BlockPlayer ][ PortalExit1U No WithCollision No WantU ] -> [ Portal2R | ][ PortalExit1U BlockPlayer RotateRU ]
+  right [ Portal2R | WantL BlockPlayer BPEnteringPortal2 ][ PortalExit1U No WithCollision No WantU ] -> [ Portal2R | ][ PortalExit1U BlockPlayer RotateRU ]
   (2RD)
-  right [ Portal2R | WantL BlockPlayer ][ PortalExit1D No WithCollision No WantD ] -> [ Portal2R | ][ PortalExit1D BlockPlayer RotateRD ]
+  right [ Portal2R | WantL BlockPlayer BPEnteringPortal2 ][ PortalExit1D No WithCollision No WantD ] -> [ Portal2R | ][ PortalExit1D BlockPlayer RotateRD ]
 
   (2LR)
-  left  [ Portal2L | WantR BlockPlayer ][ PortalExit1R No WithCollision No WantR ] -> [ Portal2L | ][ PortalExit1R BlockPlayer RotateLR ]
+  left  [ Portal2L | WantR BlockPlayer BPEnteringPortal2 ][ PortalExit1R No WithCollision No WantR ] -> [ Portal2L | ][ PortalExit1R BlockPlayer RotateLR ]
   (2LL)
-  left  [ Portal2L | WantR BlockPlayer ][ PortalExit1L No WithCollision No WantL ] -> [ Portal2L | ][ PortalExit1L BlockPlayer RotateLL ]
+  left  [ Portal2L | WantR BlockPlayer BPEnteringPortal2 ][ PortalExit1L No WithCollision No WantL ] -> [ Portal2L | ][ PortalExit1L BlockPlayer RotateLL ]
   (2LU)
-  left  [ Portal2L | WantR BlockPlayer ][ PortalExit1U No WithCollision No WantU ] -> [ Portal2L | ][ PortalExit1U BlockPlayer RotateLU ]
+  left  [ Portal2L | WantR BlockPlayer BPEnteringPortal2 ][ PortalExit1U No WithCollision No WantU ] -> [ Portal2L | ][ PortalExit1U BlockPlayer RotateLU ]
   (2LD)
-  left  [ Portal2L | WantR BlockPlayer ][ PortalExit1D No WithCollision No WantD ] -> [ Portal2L | ][ PortalExit1D BlockPlayer RotateLD ]
+  left  [ Portal2L | WantR BlockPlayer BPEnteringPortal2 ][ PortalExit1D No WithCollision No WantD ] -> [ Portal2L | ][ PortalExit1D BlockPlayer RotateLD ]
 
   (2UR)
-  up    [ Portal2U | WantD BlockPlayer ][ PortalExit1R No WithCollision No WantR ] -> [ Portal2U | ][ PortalExit1R BlockPlayer RotateUR ]
+  up    [ Portal2U | WantD BlockPlayer BPEnteringPortal2 ][ PortalExit1R No WithCollision No WantR ] -> [ Portal2U | ][ PortalExit1R BlockPlayer RotateUR ]
   (2UL)
-  up    [ Portal2U | WantD BlockPlayer ][ PortalExit1L No WithCollision No WantL ] -> [ Portal2U | ][ PortalExit1L BlockPlayer RotateUL ]
+  up    [ Portal2U | WantD BlockPlayer BPEnteringPortal2 ][ PortalExit1L No WithCollision No WantL ] -> [ Portal2U | ][ PortalExit1L BlockPlayer RotateUL ]
   (2UU)
-  up    [ Portal2U | WantD BlockPlayer ][ PortalExit1U No WithCollision No WantU ] -> [ Portal2U | ][ PortalExit1U BlockPlayer RotateUU ]
+  up    [ Portal2U | WantD BlockPlayer BPEnteringPortal2 ][ PortalExit1U No WithCollision No WantU ] -> [ Portal2U | ][ PortalExit1U BlockPlayer RotateUU ]
   (2UD)
-  up    [ Portal2U | WantD BlockPlayer ][ PortalExit1D No WithCollision No WantD ] -> [ Portal2U | ][ PortalExit1D BlockPlayer RotateUD ]
+  up    [ Portal2U | WantD BlockPlayer BPEnteringPortal2 ][ PortalExit1D No WithCollision No WantD ] -> [ Portal2U | ][ PortalExit1D BlockPlayer RotateUD ]
 
   (2DR)
-  down  [ Portal2D | WantU BlockPlayer ][ PortalExit1R No WithCollision No WantR ] -> [ Portal2D | ][ PortalExit1R BlockPlayer RotateDR ]
+  down  [ Portal2D | WantU BlockPlayer BPEnteringPortal2 ][ PortalExit1R No WithCollision No WantR ] -> [ Portal2D | ][ PortalExit1R BlockPlayer RotateDR ]
   (2DL)
-  down  [ Portal2D | WantU BlockPlayer ][ PortalExit1L No WithCollision No WantL ] -> [ Portal2D | ][ PortalExit1L BlockPlayer RotateDL ]
+  down  [ Portal2D | WantU BlockPlayer BPEnteringPortal2 ][ PortalExit1L No WithCollision No WantL ] -> [ Portal2D | ][ PortalExit1L BlockPlayer RotateDL ]
   (2DU)
-  down  [ Portal2D | WantU BlockPlayer ][ PortalExit1U No WithCollision No WantU ] -> [ Portal2D | ][ PortalExit1U BlockPlayer RotateDU ]
+  down  [ Portal2D | WantU BlockPlayer BPEnteringPortal2 ][ PortalExit1U No WithCollision No WantU ] -> [ Portal2D |  ][ PortalExit1U BlockPlayer RotateDU ]
   (2DD)
-  down  [ Portal2D | WantU BlockPlayer ][ PortalExit1D No WithCollision No WantD ] -> [ Portal2D | ][ PortalExit1D BlockPlayer RotateDD ]
+  down  [ Portal2D | WantU BlockPlayer BPEnteringPortal2 ][ PortalExit1D No WithCollision No WantD ] -> [ Portal2D | ][ PortalExit1D BlockPlayer RotateDD ]
  
 endloop
+
+
+(remove these things again)
+[ RigidEnteringPortal1 ] -> []
+[ RigidEnteringPortal2 ] -> []
+[ RigidLeavingPortal1 ] -> []
+[ RigidLeavingPortal2 ] -> []
+[ BPEnteringPortal1 ] -> []
+[ BPEnteringPortal2 ] -> []
+[ BPLeavingPortal1 ] -> []
+[ BPLeavingPortal2 ] -> []
+
+
+
 
 [ NoPortal1 ] -> []
 [ NoPortal2 ] -> []
@@ -3020,20 +3241,22 @@ down  [ WithD | Portal2U ][ RigidEnteringPortal1 ] -> [ WithD OkRigidD | Portal2
 
 
 [ WithR no OkRigidR ] -> sfx5
-[ WithR no OkRigidR ] -> cancel
+([ WithR no OkRigidR ] -> cancel)
 [ WithL no OkRigidL ] -> sfx5
-[ WithL no OkRigidL ] -> cancel
+([ WithL no OkRigidL ] -> cancel)
 [ WithU no OkRigidU ] -> sfx5
-[ WithU no OkRigidU ] -> cancel
+([ WithU no OkRigidU ] -> cancel)
 [ WithD no OkRigidD ] -> sfx5
-[ WithD no OkRigidD ] -> cancel
+([ WithD no OkRigidD ] -> cancel)
 
 
 
 ([ Error ] -> cancel sfx5)
-[ Error ] -> []
+([ Error ] -> [ ErrorSprite ])
+[ Error ] -> [ ]
+
 [ Want ] -> sfx5
-[ Want ] -> cancel 
+([ Want ] -> cancel )
 [ OkRigid ] -> []
 
 
@@ -3243,12 +3466,11 @@ Some Target
 LEVELS
 =======
 
-level_select_point
+level_select_point (01)
 
-Message Welcome to [Redacted] Science!
+Message Welcome to [Redacted] Science.
 Message Your clearance level is so low that we can't even share the name of the company with you.
-Message Yours is a simple job. We need to relocate furniture in some of our chambers to the marked locations.
-Message The furniture lack proper handles so I am afraid you won't be able to pull them. You seem tough though, Surely you can push them, even multiple of them at once.
+Message Your Job is simple: Relocate the furniture to the marked locations.
 Message You can press 'Z' to undo. 'R' to restart and 'R' followed by 'X' three times to skip a level.
 
 %%%%%%%%%%%%%%
@@ -3262,7 +3484,7 @@ Message You can press 'Z' to undo. 'R' to restart and 'R' followed by 'X' three 
 %......8@....%
 %%%%%%%%%%%%%%
 
-level_select_point
+level_select_point (02)
 
 Message At [Redacted] Science we value your safety. For that reason some restricted areas may be surrounded by safety liquid.
 
@@ -3276,15 +3498,15 @@ Message We do not recommend to submerge into the safety liquid
 %...#..%%%.%.%%%
 %...#..~~..~h.#%
 %...###~~~~%%%%%
-%.12....~....@@%
-%....~~.....@..%
+%.12....~...@@@%
+%....~~.....@.@%
 ################
 
 Message If you stumble upon any [Redacted] Science test equipment, make sure to report it to the terminal and do not handle it.
 
 Message We estimate that unauthorized handling of [Redacted] Science equipment might be hazardous to the equipment.
 
-level_select_point
+level_select_point (03)
 
 %%%%%%%%%%%%
 %o③....~~~%%
@@ -3298,24 +3520,25 @@ level_select_point
 Message Rest assured that this is not a test. This is a job for humans.
 Message There are no records being kept of the number of moves you are using and we don't look at any leaderboards.
 
-level_select_point
+level_select_point (04)
 
 
 %%%%%%%%%%%%%%%%%%%
-%..............%%#%
-%..............%.@%
+%............o④%%#%
+%............ö⑷%.@%
 %.!........%~~~~.@%
-%...4.5336..~~~~.@%
-%...c.c12c..~~~~.@%
-%...c.933a..~~~~.%%
-%...8.......~~~~~%%
-%.........o④~~~~~%%
-%.........ö⑷~~~~%%%
+%...4.5336.~~~~~.@%
+%...c.c12c.~~~~~.@%
+%...c.933a.~~~~~.%%
+%...8......~~~~~~%%
+%..........~~~~~~%%
+%..........~~~~~%%%
 %###############%%%
+
 
 Message If this was a test, I would have no reason to lie about it. Therefore, this is not a test.
 
-level_select_point
+level_select_point (05)
 
 %%%%%%%%%%%%%
 %%......%%%%%
@@ -3327,34 +3550,57 @@ level_select_point
 #.....~!ö⑸~%%
 #########%%%%
 
-level_select_point
+level_select_point (06)
 
 Message All we care about is for the assigned areas to be covered by furniture. That's hopefully the way in which [Redacted] Science will utilize you.
 
-###############
-#@..........o⑥#
-#@.!....##..ö⑹#
-#.....136.....#
-#.....4.c...@@#
-#13325n.c.#@..#
-####1n..8.#@.@#
-#######...#####
-###############
+#############
+#.#.#...#...#
+#.....#.##@@#
+#.%.136..@@.#
+#.%%..c..o⑥##
+#..52.c!#ö⑹.#
+##1n..8.###.#
+#####@@@#@@@#
+#############
 
-level_select_point
 
-Message Some of our painters may have accidentally spilled paint from an experimental bucket on some of our pieces of furtniture.
+level_select_point (07)
+
 Message Please disregard pieces of furniture that are not [Redacted] Science Interior Design Department-approved yellow.
 
-%%%%%%%%%%%%%%%
-%%%%%%%%%..o⑦~%
-%.......%.0ö⑺~%
-%..“···».~~~~@%
-%........~~~~.%
-%...!....~~~~~%
-%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%
+%o⑦.....~~~~~%
+%ö⑺.!...~~~~~%
+%......%.0.~~%
+%.µ.µ..%...~~%
+%.\·”·».~~~~@%
+%.......~~~~.%
+%%%%%%%%%%%%%%
 
-level_select_point
+Message [ End of playtest, big Thanks ]
+
+level_select_point (08)
+
+Message as a thank you, you've been taken to a big playground where you can play with portals and more furniture
+
+%%%%%%%%%%%%%%%%%%%%
+%~~~~~~~~~~~~~~~~~~%
+%..②.....~~~~~~~~~~%
+%..⑷...133332..~~~~%
+%............4.%%..%
+%.........4..c.....%
+%.....!...933a.536.%
+%..............8.8.%
+%..“···»...........%
+%..........}..%....%
+%.............%....%
+%%%%%%%%%%%%%%%%%%%%
+
+
+(
+
+level_select_point (08)
 
 Message joke
 
