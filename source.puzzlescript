@@ -1,4 +1,4 @@
-title Furniture Science 0.5.174
+title Furniture Science 0.6.188
 (Note always before sharing set SOUND_VOL to 0.05 in the HTML)
 author vexorian
 homepage vexorian.com
@@ -94,12 +94,28 @@ GroundBottom
 
 
 Wall
-#e0e0e0 #efefef #a0a0a0
+#c8c8c8 #efefef #b0b0b0 #ffffff
+00000
+00000
+00000
+00000
+00000
+
+
+WallOdd
+#c8c8c8 #efefef #b0b0b0 #ffffff
+22222
+22222
+22222
+22222
+22222
+
+(#d8d8d8 #efefef #a0a0a0
 11111
 10002
 10002
 10002
-22222
+22222)
 
 WhiteWallTop
 #ffffff
@@ -109,6 +125,14 @@ WhiteWallTop
 .....
 .....
 
+(transparent
+#d8d8d8 #efefef #c0c0c0 #ffffff
+33333
+.222.
+.....
+.....
+.....)
+
 WhiteWallLeft
 #ffffff
 0....
@@ -117,21 +141,41 @@ WhiteWallLeft
 0....
 0....
 
+
+(transparent
+#d8d8d8 #efefef #c0c0c0 #ffffff
+3....
+32...
+32...
+32...
+3....)
+
 WhiteWallRight
-#181818
-....0
-....0
-....0
-....0
-....0
+#d8d8d8 #efefef #c0c0c0 #181818
+....3
+....3
+....3
+....3
+....3
 
 WhiteWallBottom
+#d8d8d8 #efefef #c0c0c0 #181818
+.....
+.....
+.....
+.....
+33333
+
+WhiteWallDarkCorner
 #181818
 .....
 .....
 .....
 .....
-00000
+....0
+
+WhiteWallx1
+transparent
 
 
 
@@ -235,6 +279,42 @@ DarkWallBottom
 .....
 .....
 00000
+
+WallSeparatorD
+#2B2B2B
+.....
+.....
+.....
+.....
+00000
+
+WallSeparatorU
+#2B2B2B
+00000
+.....
+.....
+.....
+.....
+
+WallSeparatorL
+#2B2B2B
+0....
+0....
+0....
+0....
+0....
+
+
+
+WallSeparatorR
+#2B2B2B
+....0
+....0
+....0
+....0
+....0
+
+
 
 Portal1RS1
 #1A4FDF #073CCF
@@ -450,42 +530,42 @@ transparent
 
 
 Target
-#B29D0D #786908 #FFE012
+#E8D138
 .....
-.....
-..2..
-.....
+.000.
+.0.0.
+.000.
 .....
 
 TargetBorderTop
-#B29D0D #786908 #FFE012  
-.101.
+#E8D138
+..0..
 .....
 .....
 .....
 .....
 TargetBorderBottom
-#B29D0D #786908 #FFE012
+#E8D138
 .....
 .....
 .....
 .....
-.101.
+..0..
 
 TargetBorderLeft
-#B29D0D #786908 #FFE012
+#E8D138
 .....
-1....
+.....
 0....
-1....
+.....
 .....
 
 TargetBorderRight
-#B29D0D #786908 #FFE012
+#E8D138
 .....
-....1
+.....
 ....0
-....1
+.....
 .....
 
 
@@ -1152,9 +1232,9 @@ YellowBlockUDLR_2
 WhiteBlock____
 #FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0
 .000.
-01412
-04342
-01412
+03332
+03332
+03332
 .222.
 
 WhiteBlock___R
@@ -2115,12 +2195,19 @@ EmptySpot
 transparent
 
 GoalSoundSprite
-yellow white
+#F7DC43 yellow
 .....
-..0..
+.000.
 .010.
-..0..
+.000.
 .....
+
+CellOdd
+transparent
+
+CellEven
+transparent
+
 
 =======
 LEGEND
@@ -2321,6 +2408,7 @@ PlayerR = BluePlayerR or OrangePlayerR or BlackPlayerR
 PlayerD = BluePlayerD or OrangePlayerD or BlackPlayerD
 PlayerU = BluePlayerU or OrangePlayerU or BlackPlayerU
 
+WhiteOrDarkWall = Wall or DarkWall
 =======
 SOUNDS
 =======
@@ -2352,6 +2440,7 @@ GroundBottom
 
 D0, D1, D2, D3, D4, D6, D7, U0, U1, U2, U4, U5
 
+Target
 TargetBorderLeft
 TargetBorderRight
 TargetBorderTop
@@ -2364,15 +2453,25 @@ SinkingPlayerSprite1, SinkingPlayerSprite2, SinkingPlayerSprite3
 Player, Wall, Block , DarkWall , PortalGunTM
 DarkWallSprite
 
-Target
+WallSeparatorD
+WallSeparatorU
+WallSeparatorL
+WallSeparatorR
+
+
 DarkWallTop
 DarkWallLeft
 DarkWallRight
 DarkWallBottom
+WallOdd
 WhiteWallTop
 WhiteWallLeft
 WhiteWallRight
 WhiteWallBottom
+WhiteWallx1
+WhiteWallDarkCorner
+
+
 
 Shot1ParticleSprite1L, Shot1ParticleSprite2L, Shot1ParticleSprite1U, Shot1ParticleSprite2U, Shot1ParticleSprite1D, Shot1ParticleSprite2D, Shot1ParticleSprite1R, Shot1ParticleSprite2R, Shot2ParticleSprite1L, Shot2ParticleSprite2L, Shot2ParticleSprite1U, Shot2ParticleSprite2U, Shot2ParticleSprite1D, Shot2ParticleSprite2D, Shot2ParticleSprite1R, Shot2ParticleSprite2R  
 
@@ -2437,12 +2536,13 @@ JustTurned
 Pointer
 PointerEnd, EmptySpot
 GoalSoundSprite
+CellOdd, CellEven
 
 ======
 RULES
 ======
 
-random [ action PlayerN ] -> [ PlayerN ]  win
+(random [ action PlayerN ] -> [ PlayerN ]  win)
 
 
 ( This is mostly so that moving the direction keys doesn't change the state when the player
@@ -2583,6 +2683,9 @@ down [ WithD | ActiveUpPortal    ] -> [ WithD WithDThroughPortal | ActiveUpPorta
 [ OrangeShot ][ RealTimeTick ] -> [ OrangeShot ][ ]
 [ BlueShot ][ Portal1 ] -> [ BlueShot ][ ]
 [ OrangeShot ][ Portal2 ] -> [ OrangeShot ][ ]
+
+[ BlueShot   ][ Portal1SPrite ] -> [ BlueShot ][ ]
+[ OrangeShot ][ Portal2SPrite ] -> [ OrangeShot ][ ]
 
 
 left   [ BlueShotL | no WithCollision ] -> [ | BlueShotFL ] again
@@ -3448,15 +3551,45 @@ right[ DarkWall no HasCellR no DarkWallRight ] -> [ DarkWall DarkWallRight ]
 down [ DarkWall no HasCellD no DarkWallBottom] -> [ DarkWall DarkWallBottom ]
 
 
-up   [ DarkWall no DarkWallTop  | no DarkWall ] -> [ DarkWall DarkWallTop |]
-left [ DarkWall no DarkWallLeft | no DarkWall ] -> [ DarkWall DarkWallLeft|]
-right[ DarkWall no DarkWallRight| no DarkWall ] -> [ DarkWall DarkWallRight|]
-down [ DarkWall no DarkWallBottom | no DarkWall ] -> [ DarkWall DarkWallBottom|]
+up   [ DarkWall no DarkWallTop  | no WhiteOrDarkWall ] -> [ DarkWall DarkWallTop |]
+left [ DarkWall no DarkWallLeft | no WhiteOrDarkWall ] -> [ DarkWall DarkWallLeft|]
+right[ DarkWall no DarkWallRight| no WhiteOrDarkWall ] -> [ DarkWall DarkWallRight|]
+down [ DarkWall no DarkWallBottom | no WhiteOrDarkWall ] -> [ DarkWall DarkWallBottom|]
 
-up   [ Wall no WhiteWallTop  | no Wall ] -> [ Wall WhiteWallTop |]
-left [ Wall no WhiteWallLeft | no Wall ] -> [ Wall WhiteWallLeft|]
-right[ Wall no WhiteWallRight| no Wall ] -> [ Wall WhiteWallRight|]
-down [ Wall no WhiteWallBottom | no Wall ] -> [ Wall WhiteWallBottom|]
+up   [ Wall no WhiteWallTop  | no WhiteOrDarkWall ] -> [ Wall WhiteWallTop |]
+left [ Wall no WhiteWallLeft | no WhiteOrDarkWall ] -> [ Wall WhiteWallLeft|]
+right[ Wall no WhiteWallRight| no WhiteOrDarkWall ] -> [ Wall WhiteWallRight|]
+down [ Wall no WhiteWallBottom | no WhiteOrDarkWall ] -> [ Wall WhiteWallBottom|]
+
+up   [ Wall no HasCellU ] -> [ Wall WhiteWallTop ]
+left [ Wall no HasCellL ] -> [ Wall WhiteWallLeft]
+right[ Wall no HasCellR ] -> [ Wall WhiteWallRight]
+down [ Wall no HasCellD ] -> [ Wall WhiteWallBottom]
+
+
+[ no HasCellU no  HasCellL ] -> [ CellOdd ]
+
+startloop
+  [ CellOdd  | no CellEven ] -> [ CellOdd  | CellEven ]
+  [ CellEven | no CellOdd  ] -> [ CellEven | CellOdd ]
+endloop
+
+[ Wall CellOdd ] -> [ Wall WallOdd CellOdd ]
+
+
+
+[ WhiteWallBottom WhiteWallTop WhiteWallLeft WhiteWallRight no WhiteWallx1 ] -> [ WhiteWallBottom WhiteWallTop WhiteWallLeft WhiteWallRight WhiteWallx1 ]
+
+
+down  [ Wall | DarkWall ] -> [ Wall | WallSeparatorU DarkWall ]
+up    [ Wall | DarkWall ] -> [ Wall | WallSeparatorD DarkWall ]
+left  [ Wall | DarkWall ] -> [ Wall | WallSeparatorR DarkWall ]
+right [ Wall | DarkWall ] -> [ Wall | WallSeparatorL DarkWall ]
+
+
+right [ Wall        | WhiteWallBottom ] -> [ action Wall | WhiteWallBottom ]
+down  [ action Wall | WhiteWallRight  ] -> [        Wall WhiteWallDarkCorner | WhiteWallRight  ]
+[ action Wall ] -> [ Wall ]
 
 
 up   [ no Water no Bridge no GroundTop   | WaterOrBridge ] -> [ GroundTop   | WaterOrBridge ]
@@ -3464,10 +3597,10 @@ left [ no Water no Bridge no GroundLeft  | WaterOrBridge ] -> [ GroundLeft  | Wa
 right[ no Water no Bridge no GroundRight | WaterOrBridge ] -> [ GroundRight | WaterOrBridge ]
 down [ no Water no Bridge no GroundBottom| WaterOrBridge ] -> [ GroundBottom| WaterOrBridge ]
 
-up   [ Target no TargetBorderTop    | no Target ] -> [ Target  TargetBorderTop    |]
-down [ Target no TargetBorderBottom | no Target ] -> [ Target  TargetBorderBottom |]
-left [ Target no TargetBorderLeft   | no Target ] -> [ Target  TargetBorderLeft |]
-right[ Target no TargetBorderRight  | no Target ] -> [ Target  TargetBorderRight |]
+up   [ Target no TargetBorderTop    | Target ] -> [ Target  TargetBorderTop    | Target ]
+down [ Target no TargetBorderBottom | Target ] -> [ Target  TargetBorderBottom | Target ]
+left [ Target no TargetBorderLeft   | Target ] -> [ Target  TargetBorderLeft   | Target ]
+right[ Target no TargetBorderRight  | Target ] -> [ Target  TargetBorderRight  | Target ]
 
 
 [ Target Block no WithWhite no GoalSoundSprite ] -> [ Target Block GoalSoundSprite ] sfx10
@@ -3546,17 +3679,16 @@ Message There are no records being kept of the number of moves you are using and
 level_select_point (04)
 
 
-%%%%%%%%%%%%%%%%%%%
-%............⨅॥%%#%
-%............⨆┓%.@%
-%.!........%~~~~.@%
-%...4.5336.~~~~~.@%
-%...c.c12c.~~~~~.@%
-%...c.933a.~~~~~.%%
-%...8......~~~~~~%%
-%..........~~~~~~%%
-%..........~~~~~%%%
-%###############%%%
+%%%%%%%%%%%%%#%
+%⨅॥........%.@%
+%⨆┓....%~~~~.@%
+%.53364~~~~~.@%
+%.c12cc~~~~~.@%
+%.933ac~~~~~.%%
+%.....8~~~~~~~%
+%...!..~~~~~~~%
+%###########%%%
+
 
 
 Message If this was a test, I would have no reason to lie about it. Therefore, this is not a test.
@@ -3603,29 +3735,46 @@ Message Please disregard pieces of furniture that are not [Redacted] Science Int
 
 level_select_point (08)
 
-Message As they say, you should aim to have as few mechanics as possible. That's why we've replaced all of them with AI.
+Message As unlikely as it may appear, these chambers took a lot of time to design.
 
-%#%%%%%%%%%%%%%%%%
-%...%.....~~~....%
-%.~.%....4~~~..@.%
-%.~%%.“»1a~~~.@@.%
-%!~.~.“»52~~~.@@.%
-%~.@%.“»8.~~~.@..%
-%..0%.....~~~..⨅⨅%
-%.}~%.....~~~..⨆⸋%
 %%%%%%%%%%%%%%%%%%
+%%%%%%.12.~....⨅⨅%
+%%%%%%..%.%....⨆⸋%
+%....%....%%%%%~%%
+%....%.%%.%%%%%.%%
+#@@..~.%~~~...!..%
+%....~~~~~~..0...%
+%~~~~~~~~~~..“·».%
+%~~~~~~~~~~..“·».%
+%%%%%%%%%%%%#%%%%%
 
 
 level_select_point (09)
 
-Message [Redacted] Science would like to thank our surviving employees. Consider your efforts noted.
+Message As they say, you should aim to have as few mechanics as possible. That's why we've replaced all of the mechanics with repair robots.
+
+%#%%%%%%%%%%%%%%%%
+%@04%.....~~~....%
+%..¢%.....~~~..@.%
+%~~c%....4~~~.@@.%
+%!.c%.“»1a~~~.@@.%
+%.1a%.“»52~~~.@..%
+%..~~.“»8.~~~..⨅⨅%
+%%.~%.....~~~..⨆⊃%
+%%%%%%%%%%%%%%%%%%
+
+
+
+level_select_point (10)
+
+Message [Redacted] Science would like to thank our surviving employees. Your efforts are noted.
 
 %%%%%%%%%%%%%%
 %%%%~~~......%
 %%%%~%~%%4...%
 %%..~.~.%c...%
-%%.0~.~@%8.⨅⨅%
-%%..~~~.%4.⨆⊃%
+%%.0~.~@%8.▟⨅%
+%%..~~~.%4.┻⨆%
 %%%%~~~~%c..%%
 %..#...#.8..%%
 %.}.~~.%...%%%
@@ -3636,14 +3785,14 @@ Message [Redacted] Science would like to thank our surviving employees. Consider
 %%%%%#%%%%%%%%
 
 
-level_select_point (10)
+level_select_point (11)
 
-Message Reminder to employees are advised not to fill safety liquid pools with unused furniture unless absolutely necesssary.
+Message Reminder to employees: Do not fill safety liquid pools with unused furniture unless absolutely necesssary.
 
 
 %%%%%%%##%%%%%%%%
-%%@%%%%~~.....▟⨅%
-%%@%%%%~~..@@.┻⨆%
+%%@%%%%~~.....▟▟%
+%%@%%%%~~..@@.┻┻%
 %%.....~~..@....%
 %%.....~~.......%
 %%~~~~~~~~~~~~~~%
@@ -3656,7 +3805,7 @@ Message Reminder to employees are advised not to fill safety liquid pools with u
 
 
 
-level_select_point (11)
+level_select_point (12)
 
 
 Message Congratulations on making this far. If this was a test, the results would be very satisfactory.
@@ -3670,17 +3819,17 @@ Message Congratulations on making this far. If this was a test, the results woul
 %.“»1a.~~~.@@.%
 %.“»4..~~~.@@.%
 %...92.~~~.@..%
-%......~~~..▟▟%
-%......~~~..┻┻%
+%......~~~..▟┐%
+%......~~~..┻ⵎ%
 %%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%
+
 
 
 
 
 Message [ End of playtest, big Thanks ]
 
-level_select_point (10)
+level_select_point (13)
 
 Message As a thank you, you've been taken to a big playground where you can play with portals and more furniture
 
