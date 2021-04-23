@@ -1,4 +1,4 @@
-title Furniture Science 0.6.188
+title Furniture Science 0.7.189
 (Note always before sharing set SOUND_VOL to 0.05 in the HTML)
 author vexorian
 homepage vexorian.com
@@ -3769,20 +3769,21 @@ level_select_point (10)
 
 Message [Redacted] Science would like to thank our surviving employees. Your efforts are noted.
 
-%%%%%%%%%%%%%%
-%%%%~~~......%
-%%%%~%~%%4...%
-%%..~.~.%c...%
-%%.0~.~@%8.▟⨅%
-%%..~~~.%4.┻⨆%
-%%%%~~~~%c..%%
-%..#...#.8..%%
-%.}.~~.%...%%%
-%.}.~~.%.4.%%%
-%......%.c.%%%
-%~~~~~~..8.%%%
-%..!..~..#.%%%
-%%%%%#%%%%%%%%
+%%%%%%%%%%%%%%%
+%%%%%~~~......%
+%%%%%~%~%%4...%
+%%%..~.~.%c...%
+%%%.0~.~@%8.▟⨅%
+%%%..~~~.%4.┻⨆%
+%%%%%~~~~%c..%%
+%...#...#.8..%%
+%.}}.~~.%...%%%
+%.......%.4.%%%
+%%~~~~~~%.c.%%%
+%%~~~~~~..8.%%%
+%%...!.~..#.%%%
+%%%%%%#%%%%%%%%
+
 
 
 level_select_point (11)
