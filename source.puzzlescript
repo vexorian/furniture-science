@@ -1,4 +1,4 @@
-title Furniture Science 0.7.189
+title Furniture Science 0.7.191
 (Note always before sharing set SOUND_VOL to 0.05 in the HTML)
 author vexorian
 homepage vexorian.com
@@ -3622,7 +3622,6 @@ Some Target
 LEVELS
 =======
 
-
 level_select_point (01)
 
 Message Welcome to [Redacted] Science.
@@ -3735,11 +3734,30 @@ Message Please disregard pieces of furniture that are not [Redacted] Science Int
 
 level_select_point (08)
 
+Message You appear to be taking quite some time to move a small piece of furniture.
+
+Message Just because you are not being tested doesn't mean your should slack off.
+
+
+%%%%%%%%%%%%%%
+%............%
+%.“»%%%%%%%%@%
+%........%%%%%
+%...%%..%%...%
+%.0........⨅⨅%
+%%%%%.%.%%.⨆⸋%
+%%%%..%%%%%%%%
+%%%%.!%%%%%%%%
+%%%%..%%%%%%%%
+%%%%%%%%%%%%%%
+
+level_select_point (09)
+
 Message As unlikely as it may appear, these chambers took a lot of time to design.
 
 %%%%%%%%%%%%%%%%%%
 %%%%%%.12.~....⨅⨅%
-%%%%%%..%.%....⨆⸋%
+%%%%%%..%.%....⨆⊃%
 %....%....%%%%%~%%
 %....%.%%.%%%%%.%%
 #@@..~.%~~~...!..%
@@ -3749,7 +3767,7 @@ Message As unlikely as it may appear, these chambers took a lot of time to desig
 %%%%%%%%%%%%#%%%%%
 
 
-level_select_point (09)
+level_select_point (10)
 
 Message As they say, you should aim to have as few mechanics as possible. That's why we've replaced all of the mechanics with repair robots.
 
@@ -3759,37 +3777,13 @@ Message As they say, you should aim to have as few mechanics as possible. That's
 %~~c%....4~~~.@@.%
 %!.c%.“»1a~~~.@@.%
 %.1a%.“»52~~~.@..%
-%..~~.“»8.~~~..⨅⨅%
-%%.~%.....~~~..⨆⊃%
+%..~~.“»8.~~~..▟⨅%
+%%.~%.....~~~..┻⨆%
 %%%%%%%%%%%%%%%%%%
-
-
-
-level_select_point (10)
-
-Message [Redacted] Science would like to thank our surviving employees. Your efforts are noted.
-
-%%%%%%%%%%%%%%%
-%%%%%~~~......%
-%%%%%~%~%%4...%
-%%%..~.~.%c...%
-%%%.0~.~@%8.▟⨅%
-%%%..~~~.%4.┻⨆%
-%%%%%~~~~%c..%%
-%...#...#.8..%%
-%.}}.~~.%...%%%
-%.......%.4.%%%
-%%~~~~~~%.c.%%%
-%%~~~~~~..8.%%%
-%%...!.~..#.%%%
-%%%%%%#%%%%%%%%
-
-
 
 level_select_point (11)
 
 Message Reminder to employees: Do not fill safety liquid pools with unused furniture unless absolutely necesssary.
-
 
 %%%%%%%##%%%%%%%%
 %%@%%%%~~.....▟▟%
@@ -3803,15 +3797,9 @@ Message Reminder to employees: Do not fill safety liquid pools with unused furni
 %....%.......8..%
 %%%%%%%%%%%%%%%%%
 
-
-
-
 level_select_point (12)
 
-
-Message Congratulations on making this far. If this was a test, the results would be very satisfactory.
-
-(this level is planned for later in the game)
+Message [Redacted] Science would like to thank our surviving employees. Your efforts are noted.
 
 %%%%%%%%%%%%%%%
 %......~~~....%
@@ -3823,6 +3811,27 @@ Message Congratulations on making this far. If this was a test, the results woul
 %......~~~..▟┐%
 %......~~~..┻ⵎ%
 %%%%%%%%%%%%%%%
+
+level_select_point (13)
+
+Message Congratulations on making this far. If this was a test, the results would be very satisfactory.
+
+%%%%%%%%%%%%%%%
+%%%%%~~~......%
+%%%%%~%~%%4...%
+%%%..~.~.%c...%
+%%%.0~.~@%8.▟┐%
+%%%..~~~.%4.┻⊃%
+%%%%%~~~~%c..%%
+%...#...#.8..%%
+%.}}.~~.%...%%%
+%.......%.4.%%%
+%%~~~~~~%.c.%%%
+%%~~~~~~..8.%%%
+%%...!.~..#.%%%
+%%%%%%#%%%%%%%%
+
+
 
 
 
