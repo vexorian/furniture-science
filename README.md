@@ -5,4 +5,4 @@ A turn-based block-pushing puzzle game which is also a bit of a homage. Made in 
 
 ![preview](https://raw.githubusercontent.com/vexorian/furniture-science/main/furniturepreview.gif)
 
-The game is currently in-development but the official play location will likely be in [vexorian.itch.io](https://vexorian.itch.io/).
+You can go play the game at [https://vexorian.itch.io/furniture-science](https://vexorian.itch.io/furniture-science).
