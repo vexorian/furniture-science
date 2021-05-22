@@ -1,4 +1,4 @@
-title Furniture Science 0.8.195
+title Furniture Science 0.8.196
 (Note always before sharing set SOUND_VOL to 0.05 in the HTML)
 author vexorian
 homepage vexorian.com
@@ -3876,7 +3876,7 @@ Message Congratulations on making this far. If this was a test, the results woul
 
 
 
-Message [ You've finished colocating the furniture. Our test chambers are finally ready ]
+Message [ You've finished placing the furniture. Our test chambers are finally ready. ]
 
 Message Good Job, Human.
 
