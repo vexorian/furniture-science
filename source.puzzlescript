@@ -1,4 +1,4 @@
-title Furniture Science 0.7.191
+title Furniture Science 0.8.195
 (Note always before sharing set SOUND_VOL to 0.05 in the HTML)
 author vexorian
 homepage vexorian.com
@@ -2209,6 +2209,9 @@ CellEven
 transparent
 
 
+MissingPlayer
+transparent
+
 =======
 LEGEND
 =======
@@ -2325,7 +2328,8 @@ Bridge = Bridge____ or Bridge___R or Bridge__L_ or Bridge__LR or Bridge_D__ or B
 BluePlayer = BluePlayerN or BluePlayerR or BluePlayerL or BluePlayerU or BluePlayerD
 OrangePlayer = OrangePlayerN or OrangePlayerR or OrangePlayerL or OrangePlayerU or OrangePlayerD
 BlackPlayer = BlackPlayerN or BlackPlayerR or BlackPlayerL or BlackPlayerU or BlackPlayerD
-Player = BluePlayer or OrangePlayer or BlackPlayer
+RealPlayer = BluePlayer or OrangePlayer or BlackPlayer
+Player = RealPlayer or MissingPlayer
 
 
 WithL = Block__L_ or Block__LR or Block_DL_ or Block_DLR or  BlockU_L_ or  BlockU_LR or BlockUDL_ or BlockUDLR
@@ -2337,7 +2341,7 @@ WithD = Block_D__  or Block_D_R  or Block_DL_  or Block_DLR  or BlockUD__  or Bl
 Block = WithL or WithR or WithU or WithD or Block____
 WithCollision = Block or Player or Wall or DarkWall
 
-BlockPlayer = Block or Player
+BlockPlayer = Block or RealPlayer
 
 Want = WantL or WantR or WantU or WantD
 WantNotD = WantR or WantL or WantU
@@ -2450,7 +2454,7 @@ Water
 WaterSprite
 Bridge
 SinkingPlayerSprite1, SinkingPlayerSprite2, SinkingPlayerSprite3
-Player, Wall, Block , DarkWall , PortalGunTM
+BlockPlayer, Wall, Block , DarkWall , PortalGunTM
 DarkWallSprite
 
 WallSeparatorD
@@ -2537,10 +2541,15 @@ Pointer
 PointerEnd, EmptySpot
 GoalSoundSprite
 CellOdd, CellEven
+MissingPlayer
 
 ======
 RULES
 ======
+
+
+[ moving MissingPlayer ] -> [ action MissingPlayer] Message You are dead. R = Restart. Z+Z = Undo.
+
 
 (random [ action PlayerN ] -> [ PlayerN ]  win)
 
@@ -2551,9 +2560,11 @@ is dead and thus undo will work in one press )
 [ PlayerNotFound ][ SinkingPlayerSprite1 ] -> [][ SinkingPlayerSprite1 ]
 [ PlayerNotFound ][ SinkingPlayerSprite2 ] -> [][ SinkingPlayerSprite2 ]
 [ PlayerNotFound ][ SinkingPlayerSprite3 ] -> [][ SinkingPlayerSprite3 ]
-[ PlayerNotFound ][ Player ] -> [][ Player ]
+[ PlayerNotFound ][ RealPlayer ] -> [][ RealPlayer ]
+[ PlayerNotFound ][ action MissingPlayer ] -> [][ action MissingPlayer ]
 [ PlayerNotFound  ] -> Cancel
 
+[ action MissingPlayer ] -> [ ]
 
 [ RealTimeTick ] -> []
 [ stationary Player ] -> [ Player RealTimeTick ]
@@ -2647,6 +2658,20 @@ down  [ Portal2D | No PortalExit2D ] -> [ Portal2D | PortalExit2D ]
 [ Portal2L ][ Portal1 ] -> [ Portal2L ActiveLeftPortal  ][ Portal1 ]
 [ Portal2U ][ Portal1 ] -> [ Portal2U ActiveUpPortal    ][ Portal1 ]
 [ Portal2D ][ Portal1 ] -> [ Portal2D ActiveDownPortal  ][ Portal1 ]
+
+( Do not consider a portal active if it is right next to a wall )
+( This fixes situations in which you try to push a rigid body through a portal
+ blocked by a wall, the rigid can disarm in that case)
+(This part uses the action on wall to signify that active portals must be deleted)
+right [ ActiveRightPortal | WhiteOrDarkWall ] -> [  | action WhiteOrDarkWall ]
+left  [ ActiveLeftPortal  | WhiteOrDarkWall ] -> [  | action WhiteOrDarkWall ]
+up    [ ActiveUpPortal    | WhiteOrDarkWall ] -> [  | action WhiteOrDarkWall ]
+down  [ ActiveDownPortal  | WhiteOrDarkWall ] -> [  | action WhiteOrDarkWall ]
+
+[ action WhiteOrDarkWall ][ ActivePortal ] -> [ action WhiteOrDarkWall ][]
+[ action WhiteOrDarkWall ] -> [ stationary WhiteOrDarkWall ]
+
+
 
 
 ( Detect rigids through portals )
@@ -2963,7 +2988,7 @@ startloop
   down  [ Want WithD Error | WithU Want no Error ] -> [ Want WithD Error | WithU Want Error ]
   up  [ Want WithU Error | WithD Want no Error ] -> [ Want WithU Error | WithD Want Error ]
 
-  ( Portal attempting to enter another portl )
+  ( Portal attempting to enter another portal )
   right [ Portal1 wantR | Portal2L ] -> [ Portal1 wantR Error | Portal2L ]
   left  [ Portal1 wantL | Portal2R ] -> [ Portal1 wantL Error | Portal2R ]
   up    [ Portal1 wantU | Portal2D ] -> [ Portal1 wantU Error | Portal2D ]
@@ -3468,7 +3493,7 @@ endloop
 [ SinkingPlayerSprite3 ] -> [ ]
 [ SinkingPlayerSprite2 ] -> [ SinkingPlayerSprite3 ] again
 [ SinkingPlayerSprite1 ] -> [ SinkingPlayerSprite2 ] again
-[ Player Water ] -> [ Water SinkingPlayerSprite1 ] sfx7 again
+[ RealPlayer Water ] -> [ Water SinkingPlayerSprite1 MissingPlayer ] sfx7 again
 
 
    
@@ -3657,9 +3682,8 @@ Message We do not recommend to submerge into the safety liquid
 %....~~.....@.@%
 ################
 
-Message If you stumble upon any [Redacted] Science test equipment, make sure to report it to the terminal and do not handle it.
+Message In case you stumble upon any [Redacted] Science Test Equipment, please leave it where you found and report the incident to IT.
 
-Message We estimate that unauthorized handling of [Redacted] Science equipment might be hazardous to the equipment.
 
 level_select_point (03)
 
@@ -3672,15 +3696,33 @@ level_select_point (03)
 %....~...~.%
 ########%%%%
 
-Message Rest assured that this is not a test. This is a job for humans.
-Message There are no records being kept of the number of moves you are using and we don't look at any leaderboards.
+
+Message We estimate that unauthorized exposure to [Redacted] Science Test equipment may cause malfunction in the equipment and may also cause death to crew member manipulating it.
 
 level_select_point (04)
 
+%%%%%%
+%%%@%%
+%⨅॥@@%
+%⨆┓@@%
+%~~..%
+%..!~%
+%sg..%
+#pn.0%
+#....%
+%%%%#%
+
+
+
+Message Rest assured that this is not a test. This is a job for humans.
+Message There are no records being kept of the number of moves you are using and we don't look at any leaderboards.
+
+level_select_point (05)
+
 
 %%%%%%%%%%%%%#%
-%⨅॥........%.@%
-%⨆┓....%~~~~.@%
+%⨅┏........%.@%
+%⨆⊃....%~~~~.@%
 %.53364~~~~~.@%
 %.c12cc~~~~~.@%
 %.933ac~~~~~.%%
@@ -3692,7 +3734,7 @@ level_select_point (04)
 
 Message If this was a test, I would have no reason to lie about it. Therefore, this is not a test.
 
-level_select_point (05)
+level_select_point (06)
 
 %%%%%%%%%%%%%
 %%......%%%%%
@@ -3701,10 +3743,10 @@ level_select_point (05)
 #.0.c.~.~~~%%
 #...c.~~~.~%%
 #...8.~.⨅┏~%%
-#.....~!⨆⊃~%%
+#.....~!⨆⸋~%%
 #########%%%%
 
-level_select_point (06)
+level_select_point (07)
 
 Message All we care about is for the assigned areas to be covered by furniture. That's hopefully the way in which [Redacted] Science will utilize you.
 
@@ -3712,27 +3754,27 @@ Message All we care about is for the assigned areas to be covered by furniture. 
 #.#.#...#...#
 #.....#.##@@#
 #.%.136..@@.#
-#.%%..c..⨅┏##
-#..52.c!#⨆⸋.#
+#.%%..c..⨅┐##
+#..52.c!#⨆┃.#
 ##1n..8.###.#
 #####@@@#@@@#
 #############
 
 
-level_select_point (07)
+level_select_point (08)
 
 Message Please disregard pieces of furniture that are not [Redacted] Science Interior Design Department-approved yellow.
 
 %%%%%%%%%%%%%%
-%⨅┐.....~~~~~%
-%⨆┃.!...~~~~~%
+%⨅⨅.....~~~~~%
+%⨆⸋.!...~~~~~%
 %......%.0.~~%
 %.µ.µ..%...~~%
 %.\·”·».~~~~@%
 %.......~~~~.%
 %%%%%%%%%%%%%%
 
-level_select_point (08)
+level_select_point (09)
 
 Message You appear to be taking quite some time to move a small piece of furniture.
 
@@ -3745,19 +3787,19 @@ Message Just because you are not being tested doesn't mean your should slack off
 %........%%%%%
 %...%%..%%...%
 %.0........⨅⨅%
-%%%%%.%.%%.⨆⸋%
+%%%%%.%.%%.⨆⊃%
 %%%%..%%%%%%%%
 %%%%.!%%%%%%%%
 %%%%..%%%%%%%%
 %%%%%%%%%%%%%%
 
-level_select_point (09)
+level_select_point (10)
 
 Message As unlikely as it may appear, these chambers took a lot of time to design.
 
 %%%%%%%%%%%%%%%%%%
-%%%%%%.12.~....⨅⨅%
-%%%%%%..%.%....⨆⊃%
+%%%%%%.12.~....▟⨅%
+%%%%%%..%.%....┻⨆%
 %....%....%%%%%~%%
 %....%.%%.%%%%%.%%
 #@@..~.%~~~...!..%
@@ -3767,7 +3809,7 @@ Message As unlikely as it may appear, these chambers took a lot of time to desig
 %%%%%%%%%%%%#%%%%%
 
 
-level_select_point (10)
+level_select_point (11)
 
 Message As they say, you should aim to have as few mechanics as possible. That's why we've replaced all of the mechanics with repair robots.
 
@@ -3777,17 +3819,17 @@ Message As they say, you should aim to have as few mechanics as possible. That's
 %~~c%....4~~~.@@.%
 %!.c%.“»1a~~~.@@.%
 %.1a%.“»52~~~.@..%
-%..~~.“»8.~~~..▟⨅%
-%%.~%.....~~~..┻⨆%
+%..~~.“»8.~~~..▟▟%
+%%.~%.....~~~..┻┻%
 %%%%%%%%%%%%%%%%%%
 
-level_select_point (11)
+level_select_point (12)
 
 Message Reminder to employees: Do not fill safety liquid pools with unused furniture unless absolutely necesssary.
 
 %%%%%%%##%%%%%%%%
-%%@%%%%~~.....▟▟%
-%%@%%%%~~..@@.┻┻%
+%%@%%%%~~.....▟┐%
+%%@%%%%~~..@@.┻ⵎ%
 %%.....~~..@....%
 %%.....~~.......%
 %%~~~~~~~~~~~~~~%
@@ -3797,7 +3839,7 @@ Message Reminder to employees: Do not fill safety liquid pools with unused furni
 %....%.......8..%
 %%%%%%%%%%%%%%%%%
 
-level_select_point (12)
+level_select_point (13)
 
 Message [Redacted] Science would like to thank our surviving employees. Your efforts are noted.
 
@@ -3809,10 +3851,10 @@ Message [Redacted] Science would like to thank our surviving employees. Your eff
 %.“»4..~~~.@@.%
 %...92.~~~.@..%
 %......~~~..▟┐%
-%......~~~..┻ⵎ%
+%......~~~..┻⊃%
 %%%%%%%%%%%%%%%
 
-level_select_point (13)
+level_select_point (14)
 
 Message Congratulations on making this far. If this was a test, the results would be very satisfactory.
 
@@ -3820,8 +3862,8 @@ Message Congratulations on making this far. If this was a test, the results woul
 %%%%%~~~......%
 %%%%%~%~%%4...%
 %%%..~.~.%c...%
-%%%.0~.~@%8.▟┐%
-%%%..~~~.%4.┻⊃%
+%%%.0~.~@%8.▟॥%
+%%%..~~~.%4.┻┓%
 %%%%%~~~~%c..%%
 %...#...#.8..%%
 %.}}.~~.%...%%%
@@ -3834,26 +3876,21 @@ Message Congratulations on making this far. If this was a test, the results woul
 
 
 
+Message [ You've finished colocating the furniture. Our test chambers are finally ready ]
 
-
-
-Message [ End of playtest, big Thanks ]
-
-level_select_point (13)
-
-Message As a thank you, you've been taken to a big playground where you can play with portals and more furniture
+Message Good Job, Human.
 
 %%%%%%%%%%%%%%%%%%%%
-%~~~~~~~~~~~~~~~~~~%
-%........~~~~~~~~~~%
-%......133332..~~~~%
-%..}}00......4.%%..%
-%..}}00...4..c.....%
-%.....!...933a.536.%
-%..............8.8.%
-%..“···»...........%
-%..........}..%..┏┏%
-%.............%..⨆⨆%
+%..................%
+%..................%
+%.....0.0.0........%
+%.....µ.µ.µ........%
+%....4\·”·æ4.......%
+%....933333a.......%
+%.............!....%
+%..................%
+%................┏┏%
+%................⨆⨆%
 %%%%%%%%%%%%%%%%%%%%
 
 
