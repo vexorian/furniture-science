@@ -60,10 +60,10 @@ TAGS
 color          = yellow white
 portal_color   = blue orange
 weapon_status  = blue orange disarmed
-aU = yU nU
-aD = yD nD
-aR = yR nR
-aL = yL nL
+uu = _U __
+dd = _D __
+rr = _R __
+ll = _L __
 
 vertical_tag   = down up
 horizontal_tag = left right
@@ -808,7 +808,7 @@ blue
 ...0.
 .....
 
-Shot1ParticleSprite1L
+ParticleSprite1:blue:left
 blue
 .....
 0....
@@ -816,7 +816,7 @@ blue
 0....
 .....
 
-Shot1ParticleSprite2L
+ParticleSprite2:blue:left
 blue
 0....
 .....
@@ -833,7 +833,7 @@ blue
 .0...
 .....
 
-Shot1ParticleSprite1R
+ParticleSprite1:blue:right
 blue
 .....
 ....0
@@ -841,7 +841,7 @@ blue
 ....0
 .....
 
-Shot1ParticleSprite2R
+ParticleSprite2:blue:right
 blue
 ....0
 .....
@@ -859,7 +859,7 @@ blue
 .....
 
 
-Shot1ParticleSprite1D
+ParticleSprite1:blue:down
 blue
 .....
 .....
@@ -867,7 +867,7 @@ blue
 .....
 .0.0.
 
-Shot1ParticleSprite2D
+ParticleSprite2:blue:down
 blue
 .....
 .....
@@ -884,7 +884,7 @@ blue
 .0.0.
 ..0..
 
-Shot1ParticleSprite1U
+ParticleSprite1:blue:up
 blue
 .0.0.
 .....
@@ -892,7 +892,7 @@ blue
 .....
 .....
 
-Shot1ParticleSprite2U
+ParticleSprite2:blue:up
 blue
 0...0
 .....
@@ -945,7 +945,7 @@ Orange
 ...0.
 .....
 
-Shot2ParticleSprite1L
+ParticleSprite1:orange:left
 Orange
 .....
 0....
@@ -953,7 +953,7 @@ Orange
 0....
 .....
 
-Shot2ParticleSprite2L
+ParticleSprite2:orange:left
 Orange
 0....
 .....
@@ -970,7 +970,7 @@ Orange
 .0...
 .....
 
-Shot2ParticleSprite1R
+ParticleSprite1:orange:right
 Orange
 .....
 ....0
@@ -978,7 +978,7 @@ Orange
 ....0
 .....
 
-Shot2ParticleSprite2R
+ParticleSprite2:orange:right
 Orange
 ....0
 .....
@@ -996,7 +996,7 @@ Orange
 .....
 
 
-Shot2ParticleSprite1D
+ParticleSprite1:orange:down
 Orange
 .....
 .....
@@ -1004,7 +1004,7 @@ Orange
 .....
 .0.0.
 
-Shot2ParticleSprite2D
+ParticleSprite2:orange:down
 Orange
 .....
 .....
@@ -1021,7 +1021,7 @@ Orange
 .0.0.
 ..0..
 
-Shot2ParticleSprite1U
+ParticleSprite1:orange:up
 Orange
 .0.0.
 .....
@@ -1029,7 +1029,7 @@ Orange
 .....
 .....
 
-Shot2ParticleSprite2U
+ParticleSprite2:orange:up
 Orange
 0...0
 .....
@@ -1112,33 +1112,33 @@ WaterSprite3
 WaterSprite4
 transparent
 
-Block____:yellow
-#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138
-.000.
+Block:__:__:__:__:yellow
+#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138 transparent
+50005
 01412
 04342
 01412
-.222.
+52225
 
-Block___R:yellow
-#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138
-.0000
+Block:__:__:__:_R:yellow
+#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138 transparent
+50000
 01411
 04341
 01411
-.2222
+52222
 
 
-Block__L_:yellow
-#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138
-0000.
+Block:__:__:_L:__:yellow
+#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138 transparent
+00005
 11412
 14342
 11412
-2222.
+22225
 
-Block__LR:yellow
-#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138
+Block:__:__:_L:_R:yellow
+#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138 transparent
 00000
 11411
 14341
@@ -1146,109 +1146,76 @@ Block__LR:yellow
 22222
 
 
-Block_D__:yellow
-#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138
-.000.
+Block:__:_D:__:__:yellow
+#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138 transparent
+50005
 01412
 04342
 01412
 01112
 
 
-Block_D_R_1:yellow
-#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138
-.0000
+Block:__:_D:__:_R:yellow
+#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138 transparent
+50000
 01411
 04341
 01411
 01112
 
 
-Block_D_R_2:yellow
-#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138
-.0000
-01411
-04341
-01411
-01111
-
-Block_DL__1:yellow
-#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138
-0000.
+Block:__:_D:_L:__:yellow
+#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138 transparent
+00005
 11412
 14342
 11412
 11112
 
 
-Block_DL__2:yellow
-#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138
-0000.
-11412
-14342
-11412
-11112
-
-
-Block_DLR:yellow
-#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138
+Block:__:_D:_L:_R:yellow
+#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138 transparent
 00000
 11411
 14341
 11411
 11112
 
-BlockU___:yellow
-#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138
+Block:_U:__:__:__:yellow
+#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138 transparent
 01112
 01412
 04342
 01412
-.222.
+52225
 
-BlockU__R_1:yellow
-#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138
+Block:_U:__:__:_R:yellow
+#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138 transparent
 01112
 01411
 04341
 01411
-.2222
+52222
 
-BlockU__R_2:yellow
-#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138
-01111
-01411
-04341
-01411
-.2222
-
-BlockU_L__1:yellow
-#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138
+Block:_U:__:_L:__:yellow
+#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138 transparent
 01112
 11412
 14342
 11412
-2222.
+22225
 
 
-BlockU_L__2:yellow
-#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138
-11112
-11412
-14342
-11412
-2222.
-
-BlockU_LR:yellow
-#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138
+Block:_U:__:_L:_R:yellow
+#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138 transparent
 01112
 11411
 14341
 11411
 22222
 
-BlockUD__:yellow
-#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138
+Block:_U:_D:__:__:yellow
+#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138 transparent
 01112
 01412
 04342
@@ -1256,16 +1223,16 @@ BlockUD__:yellow
 01112
 
 
-BlockUD_R:yellow
-#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138
+Block:_U:_D:__:_R:yellow
+#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138 transparent
 01112
 01411
 04341
 01411
 01112
 
-BlockUDL_:yellow
-#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138
+Block:_U:_D:_L:__:yellow
+#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138 transparent
 01112
 11412
 14342
@@ -1274,7 +1241,7 @@ BlockUDL_:yellow
 
 
 
-BlockUDLR_1:yellow
+Block:_U:_D:_L:_R:yellow
 #E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138
 21110
 11411
@@ -1283,15 +1250,39 @@ BlockUDLR_1:yellow
 01112
 
 
-BlockUDLR_2:yellow
-#E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138
-11111
-11411
-14341
-11411
-11111
+BlockCorner:up:right:yellow
+#D4BF33
+....0
+.....
+.....
+.....
+.....
 
-BlockStub:aU:aD:aL:aR:yellow
+BlockCorner:up:left:yellow
+#D4BF33
+0....
+.....
+.....
+.....
+.....
+
+BlockCorner:down:left:yellow
+#D4BF33
+.....
+.....
+.....
+.....
+0....
+
+BlockCorner:down:right:yellow
+#D4BF33
+.....
+.....
+.....
+.....
+....0
+
+BlockStub:uu:dd:ll:rr:yellow
 #E5D98B #D4BF33 #1F1B07 #B6A42C #E8D138
 1.1.1
 .111.
@@ -1300,7 +1291,7 @@ BlockStub:aU:aD:aL:aR:yellow
 1.1.1
 
 
-BlockStub:aU:aD:aL:aR:white
+BlockStub:uu:dd:ll:rr:white
 #FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0
 1.1.1
 .111.
@@ -1310,33 +1301,33 @@ BlockStub:aU:aD:aL:aR:white
 
 
 
-Block____:white
-#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0
-.000.
+Block:__:__:__:__:white
+#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0 transparent
+50005
 03332
 03332
 03332
-.222.
+52225
 
-Block___R:white
-#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0
-.0000
+Block:__:__:__:_R:white
+#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0 transparent
+50000
 01411
 04341
 01411
-.2222
+52222
 
 
-Block__L_:white
-#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0
-0000.
+Block:__:__:_L:__:white
+#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0 transparent
+00005
 11412
 14342
 11412
-2222.
+22225
 
-Block__LR:white
-#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0
+Block:__:__:_L:_R:white
+#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0 transparent
 00000
 11411
 14341
@@ -1344,109 +1335,76 @@ Block__LR:white
 22222
 
 
-Block_D__:white
-#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0
-.000.
+Block:__:_D:__:__:white
+#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0 transparent
+50005
 01412
 04342
 01412
 01112
 
 
-Block_D_R_1:white
-#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0
-.0000
+Block:__:_D:__:_R:white
+#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0 transparent
+50000
 01411
 04341
 01411
 01112
 
 
-Block_D_R_2:white
-#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0
-.0000
-01411
-04341
-01411
-01111
-
-Block_DL__1:white
-#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0
-0000.
+Block:__:_D:_L:__:white
+#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0 transparent
+00005
 11412
 14342
 11412
 11112
 
 
-Block_DL__2:white
-#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0
-0000.
-11412
-14342
-11412
-11112
-
-
-Block_DLR:white
-#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0
+Block:__:_D:_L:_R:white
+#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0 transparent
 00000
 11411
 14341
 11411
 11112
 
-BlockU___:white
-#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0
+Block:_U:__:__:__:white
+#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0 transparent
 01112
 01412
 04342
 01412
-.222.
+52225
 
-BlockU__R_1:white
-#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0
+Block:_U:__:__:_R:white
+#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0 transparent
 01112
 01411
 04341
 01411
-.2222
+52222
 
-BlockU__R_2:white
-#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0
-01111
-01411
-04341
-01411
-.2222
-
-BlockU_L__1:white
-#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0
+Block:_U:__:_L:__:white
+#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0 transparent
 01112
 11412
 14342
 11412
-2222.
+22225
 
 
-BlockU_L__2:white
-#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0
-11112
-11412
-14342
-11412
-2222.
-
-BlockU_LR:white
-#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0
+Block:_U:__:_L:_R:white
+#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0 transparent
 01112
 11411
 14341
 11411
 22222
 
-BlockUD__:white
-#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0
+Block:_U:_D:__:__:white
+#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0 transparent
 01112
 01412
 04342
@@ -1454,16 +1412,16 @@ BlockUD__:white
 01112
 
 
-BlockUD_R:white
-#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0
+Block:_U:_D:__:_R:white
+#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0 transparent
 01112
 01411
 04341
 01411
 01112
 
-BlockUDL_:white
-#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0
+Block:_U:_D:_L:__:white
+#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0 transparent
 01112
 11412
 14342
@@ -1472,8 +1430,8 @@ BlockUDL_:white
 
 
 
-BlockUDLR_1:white
-#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0
+Block:_U:_D:_L:_R:white
+#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0 transparent
 21110
 11411
 14341
@@ -1481,388 +1439,197 @@ BlockUDLR_1:white
 01112
 
 
-BlockUDLR_2:white
-#FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0
-11111
-11411
-14341
-11411
-11111
-
-
-Bridge____:white
-#72F1DA #68DCC7 #63D1BD #1D7C6B #1B7162
-34443
-40004
-40124
-42224
-34443
-
-Bridge___R:white
-#72F1DA #68DCC7 #63D1BD #1D7C6B #1B7162
-34444
-40000
-40112
-42222
-34444
-
-
-Bridge__L_:white
-#72F1DA #68DCC7 #63D1BD #1D7C6B #1B7162
-44443
-00004
-11124
-22224
-44443
-
-
-Bridge__LR:white
-#72F1DA #68DCC7 #63D1BD #1D7C6B #1B7162
-44444
-00000
-11111
-22222
-44444
-
-
-
-Bridge_D__:white
-#72F1DA #68DCC7 #63D1BD #1D7C6B #1B7162
-34443
-40004
-40124
-40124
-40124
-
-
-
-Bridge_D_R_1:white
-#72F1DA #68DCC7 #63D1BD #1D7C6B #1B7162
-34444
-40000
-40111
-40112
-40124
-
-
-
-Bridge_D_R_2:white
-#72F1DA #68DCC7 #63D1BD #1D7C6B #1B7162
-34444
-40000
-40111
-40111
-40111
-
-Bridge_DL__1:white
-#72F1DA #68DCC7 #63D1BD #1D7C6B #1B7162
-44443
-00004
-11124
-21124
-40124
-
-
-Bridge_DL__2:white
-#72F1DA #68DCC7 #63D1BD #1D7C6B #1B7162
-44443
-00004
-11124
-11124
-11124
-
-
-Bridge_DLR:white
-#B66F26 #A46422 #9C5F20 #1D7C6B
-00000
-11111
-11111
-11111
-21112
-
-BridgeU___:white
-#72F1DA #68DCC7 #63D1BD #1D7C6B #1B7162
-40124
-40124
-40124
-42224
-34443
-
-
-BridgeU__R_1:white
-#72F1DA #68DCC7 #63D1BD #1D7C6B #1B7162
-40124
-40110
-40111
-42222
-34444
-
-BridgeU__R_2:white
-#72F1DA #68DCC7 #63D1BD #1D7C6B #1B7162
-40111
-40111
-40111
-42222
-34444
-
-BridgeU_L__1:white
-#72F1DA #68DCC7 #63D1BD #1D7C6B #1B7162
-40124
-00124
-11124
-22224
-44443
-
-
-BridgeU_L__2:white
-#72F1DA #68DCC7 #63D1BD #1D7C6B #1B7162
-11124
-11124
-11124
-22224
-44443
-
-BridgeU_LR:white
-#72F1DA #68DCC7 #63D1BD #1D7C6B #1B7162
-40124
-00120
-11111
-22222
-44444
-
-BridgeUD__:white
-#72F1DA #68DCC7 #63D1BD #1D7C6B #1B7162
-40124
-40124
-40124
-40124
-40124
-
-
-
-BridgeUD_R:white
-#B66F26 #A46422 #9C5F20 #1D7C6B
-01112
-01111
-01111
-01111
-01112
-
-BridgeUDL_:white
-#B66F26 #A46422 #9C5F20 #1D7C6B
-01112
-11112
-11112
-11112
-21112
-
-
-
-BridgeUDLR_1:white
-#B66F26 #A46422 #9C5F20 #1D7C6B
-21110
-11111
-11111
-11111
-01112
-
-
-BridgeUDLR_2:white
-#72F1DA #68DCC7 #63D1BD #1D7C6B #1B7162
-11111
-11111
-11111
-11111
-11111
-
-
-
-
-Bridge____:yellow
-#4EE874 #38E864 #34D95D #1D7C6B #1B7162
-34443
-40004
-40124
-42224
-34443
-
-Bridge___R:yellow
-#4EE874 #38E864 #34D95D #1D7C6B #1B7162
-34444
-40000
-40112
-42222
-34444
-
-
-Bridge__L_:yellow
-#4EE874 #38E864 #34D95D #1D7C6B #1B7162
-44443
-00004
-11124
-22224
-44443
-
-
-Bridge__LR:yellow
-#4EE874 #38E864 #34D95D #1D7C6B #1B7162
-44444
-00000
-11111
-22222
-44444
-
-
-
-Bridge_D__:yellow
-#4EE874 #38E864 #34D95D #1D7C6B #1B7162
-34443
-40004
-40124
-40124
-40124
-
-
-
-Bridge_D_R_1:yellow
-#4EE874 #38E864 #34D95D #1D7C6B #1B7162
-34444
-40000
-40111
-40112
-40124
-
-
-
-Bridge_D_R_2:yellow
-#4EE874 #38E864 #34D95D #1D7C6B #1B7162
-34444
-40000
-40111
-40111
-40111
-
-Bridge_DL__1:yellow
-#4EE874 #38E864 #34D95D #1D7C6B #1B7162
-44443
-00004
-11124
-21124
-40124
-
-
-Bridge_DL__2:yellow
-#4EE874 #38E864 #34D95D #1D7C6B #1B7162
-44443
-00004
-11124
-11124
-11124
-
-
-Bridge_DLR:yellow
-#B66F26 #A46422 #9C5F20 #1D7C6B
-00000
-11111
-11111
-11111
-21112
-
-BridgeU___:yellow
-#4EE874 #38E864 #34D95D #1D7C6B #1B7162
-40124
-40124
-40124
-42224
-34443
-
-
-BridgeU__R_1:yellow
-#4EE874 #38E864 #34D95D #1D7C6B #1B7162
-40124
-40110
-40111
-42222
-34444
-
-BridgeU__R_2:yellow
-#4EE874 #38E864 #34D95D #1D7C6B #1B7162
-40111
-40111
-40111
-42222
-34444
-
-BridgeU_L__1:yellow
-#4EE874 #38E864 #34D95D #1D7C6B #1B7162
-40124
-00124
-11124
-22224
-44443
-
-
-BridgeU_L__2:yellow
-#4EE874 #38E864 #34D95D #1D7C6B #1B7162
-11124
-11124
-11124
-22224
-44443
-
-BridgeU_LR:yellow
-#B66F26 #A46422 #9C5F20 #1D7C6B
-01112
-11111
-11111
-11111
-22222
-
-BridgeUD__:yellow
-#4EE874 #38E864 #34D95D #1D7C6B #1B7162
-40124
-40124
-40124
-40124
-40124
-
-
-
-BridgeUD_R:yellow
-#B66F26 #A46422 #9C5F20 #1D7C6B
-01112
-01111
-01111
-01111
-01112
-
-BridgeUDL_:yellow
-#B66F26 #A46422 #9C5F20 #1D7C6B
-01112
-11112
-11112
-11112
-21112
-
-
-
-BridgeUDLR_1:yellow
-#B66F26 #A46422 #9C5F20 #1D7C6B
-21110
-11111
-11111
-11111
-01112
-
-
-BridgeUDLR_2:yellow
-#4EE874 #38E864 #34D95D #1D7C6B #1B7162
-11111
-11111
-11111
-11111
-11111
-
+BlockCorner:up:right:white
+#e0e0e0
+....0
+.....
+.....
+.....
+.....
+
+BlockCorner:up:left:white
+#e0e0e0
+0....
+.....
+.....
+.....
+.....
+
+BlockCorner:down:left:white
+#e0e0e0
+.....
+.....
+.....
+.....
+0....
+
+BlockCorner:down:right:white
+#e0e0e0
+.....
+.....
+.....
+.....
+....0
+
+Bridge:__:__:__:__:white
+#1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
+copy:Block:__:__:__:__:white
+
+Bridge:__:__:__:_R:white
+#1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
+copy:Block:__:__:__:_R:white
+
+Bridge:__:__:_L:__:white
+#1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
+copy:Block:__:__:_L:__:white
+
+Bridge:__:__:_L:_R:white
+#1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
+copy:Block:__:__:_L:_R:white
+
+Bridge:__:_D:__:__:white
+#1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
+copy:Block:__:_D:__:__:white
+
+Bridge:__:_D:__:_R:white
+#1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
+copy:Block:__:_D:__:_R:white
+
+Bridge:__:_D:_L:__:white
+#1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
+copy:Block:__:_D:_L:__:white
+
+Bridge:__:_D:_L:_R:white
+#1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
+copy:Block:__:_D:_L:_R:white
+
+Bridge:_U:__:__:__:white
+#1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
+copy:Block:_U:__:__:__:white
+
+Bridge:_U:__:__:_R:white
+#1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
+copy:Block:_U:__:__:_R:white
+
+Bridge:_U:__:_L:__:white
+#1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
+copy:Block:_U:__:_L:__:white
+
+Bridge:_U:__:_L:_R:white
+#1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
+copy:Block:_U:__:_L:_R:white
+
+Bridge:_U:_D:__:__:white
+#1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
+copy:Block:_U:_D:__:__:white
+
+Bridge:_U:_D:__:_R:white
+#1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
+copy:Block:_U:_D:__:_R:white
+
+Bridge:_U:_D:_L:__:white
+#1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
+copy:Block:_U:_D:_L:__:white
+
+Bridge:_U:_D:_L:_R:white
+#1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
+copy:Block:_U:_D:_L:_R:white
+
+BridgeCorner:up:right:white
+#72F1DA
+copy:BlockCorner:up:right:yellow
+
+BridgeCorner:up:left:white
+#72F1DA
+copy:BlockCorner:up:left:yellow
+
+BridgeCorner:down:right:white
+#72F1DA
+copy:BlockCorner:down:right:yellow
+
+BridgeCorner:down:left:white
+#72F1DA
+copy:BlockCorner:down:left:yellow
+
+Bridge:__:__:__:__:yellow
+#1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
+copy:Block:__:__:__:__:yellow
+
+Bridge:__:__:__:_R:yellow
+#1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
+copy:Block:__:__:__:_R:yellow
+
+Bridge:__:__:_L:__:yellow
+#1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
+copy:Block:__:__:_L:__:yellow
+
+Bridge:__:__:_L:_R:yellow
+#1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
+copy:Block:__:__:_L:_R:yellow
+
+Bridge:__:_D:__:__:yellow
+#1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
+copy:Block:__:_D:__:__:yellow
+
+Bridge:__:_D:__:_R:yellow
+#1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
+copy:Block:__:_D:__:_R:yellow
+
+Bridge:__:_D:_L:__:yellow
+#1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
+copy:Block:__:_D:_L:__:yellow
+
+Bridge:__:_D:_L:_R:yellow
+#1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
+copy:Block:__:_D:_L:_R:yellow
+
+Bridge:_U:__:__:__:yellow
+#1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
+copy:Block:_U:__:__:__:yellow
+
+Bridge:_U:__:__:_R:yellow
+#1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
+copy:Block:_U:__:__:_R:yellow
+
+Bridge:_U:__:_L:__:yellow
+#1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
+copy:Block:_U:__:_L:__:yellow
+
+Bridge:_U:__:_L:_R:yellow
+#1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
+copy:Block:_U:__:_L:_R:yellow
+
+Bridge:_U:_D:__:__:yellow
+#1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
+copy:Block:_U:_D:__:__:yellow
+
+Bridge:_U:_D:__:_R:yellow
+#1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
+copy:Block:_U:_D:__:_R:yellow
+
+Bridge:_U:_D:_L:__:yellow
+#1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
+copy:Block:_U:_D:_L:__:yellow
+
+Bridge:_U:_D:_L:_R:yellow
+#1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
+copy:Block:_U:_D:_L:_R:yellow
+
+BridgeCorner:up:right:yellow
+#38E864
+copy:BlockCorner:up:right:yellow
+
+BridgeCorner:up:left:yellow
+#38E864
+copy:BlockCorner:up:left:yellow
+
+BridgeCorner:down:right:yellow
+#38E864
+copy:BlockCorner:down:right:yellow
+
+BridgeCorner:down:left:yellow
+#38E864
+copy:BlockCorner:down:left:yellow
 
 Want:left
 red blue
@@ -2006,16 +1773,7 @@ transparent
 
 
 
-OkRigidL
-transparent
-
-OkRigidR
-transparent
-
-OkRigidD
-transparent
-
-OkRigidU
+OkRigid:directions
 transparent
 
 RigidEnteringPortal1
@@ -2076,104 +1834,104 @@ RealTimeTick
 transparent
 
 U0
-#424242
-.....
-.....
-.....
-.000.
-.0.0.	
+#424242 #333333
+11111
+11111
+11111
+10001
+10101
 
 D0
-#424242
-.0.0.
-.0.0.
-.000.
-.....
-.....
+#424242 #333333
+10101
+10101
+10001
+11111
+11111
 
 U1
-#424242
-.....
-.....
-.....
-..0..
-.00..
+#424242 #333333
+11111
+11111
+11111
+11011
+10011
 
 D1
-#424242
-..0..
-..0..
-.000.
-.....
-.....
+#424242 #333333
+11011
+11011
+10001
+11111
+11111
 
 U2
-#424242
-.....
-.....
-.....
-.000.
-...0.
+#424242 #333333
+11111
+11111
+11111
+10001
+11101
 
 D2
-#424242
-.000.
-.0...
-.000.
-.....
-.....
+#424242 #333333
+10001
+10111
+10001
+11111
+11111
 
 D3
-#424242
-.000.
-...0.
-.000.
-.....
-.....
+#424242 #333333
+10001
+11101
+10001
+11111
+11111
 
 U4
-#424242
-.....
-.....
-.....
-.0.0.
-.0.0.
+#424242 #333333
+11111
+11111
+11111
+10101
+10101
 
 D4
-#424242
-.000.
-...0.
-...0.
-.....
-.....
+#424242 #333333
+10001
+11101
+11101
+11111
+11111
 
 U5
-#424242
-.....
-.....
-.....
-.000.
-.0...
+#424242 #333333
+11111
+11111
+11111
+10001
+10111
 
 D6
-#424242
-.000.
-.0.0.
-.000.
-.....
-.....
+#424242 #333333
+10001
+10101
+10001
+11111
+11111
 
 
 D7
-#424242
-...0.
-...0.
-...0.
-.....
-.....
+#424242 #333333
+11101
+11101
+11101
+11111
+11111
 
 B0
-red
+#424242
 .000.
 .0.0.
 .0.0.
@@ -2181,7 +1939,7 @@ red
 .000.
 
 B1
-red
+#424242
 ...0.
 ...0.
 ...0.
@@ -2189,7 +1947,7 @@ red
 ...0.
 
 B2
-red
+#424242
 .000.
 ...0.
 .000.
@@ -2197,7 +1955,7 @@ red
 .000.
 
 B3
-red
+#424242
 .000.
 ...0.
 .000.
@@ -2205,7 +1963,7 @@ red
 .000.
 
 B4
-red
+#424242
 .0.0.
 .0.0.
 .000.
@@ -2214,7 +1972,7 @@ red
 
 
 B5
-red
+#424242
 .000.
 .0...
 .000.
@@ -2223,7 +1981,7 @@ red
 
 
 B6
-red
+#424242
 .000.
 .0...
 .000.
@@ -2232,7 +1990,7 @@ red
 
 
 B7
-red
+#424242
 .000.
 ...0.
 ...0.
@@ -2241,7 +1999,7 @@ red
 
 
 B8
-red
+#424242
 .000.
 .0.0.
 .000.
@@ -2249,7 +2007,7 @@ red
 .000.
 
 B9
-red
+#424242
 .000.
 .0.0.
 .000.
@@ -2272,16 +2030,7 @@ transparent
 FutureUsed
 transparent
 
-RigidLNextToPortal
-transparent
-
-RigidRNextToPortal
-transparent
-
-RigidUNextToPortal
-transparent
-
-RigidDNextToPortal
+RigidNextToPortal:directions
 transparent
 
 UnmovablePortal
@@ -2455,49 +2204,39 @@ LEGEND
 ! = Player:blue:front and Background
 ¡ = Player:disarmed:front and Background
 
-ñ = Block____:yellow
-⅄ = Block___R:yellow
-☥ = Block__L_:yellow
-ⱬ = Block__LR:yellow
-┦ = Block_D__:yellow
-⡧ = Block_D_R_1:yellow
-ℌ = Block_DL__1:yellow
-╎ = Block_DLR:yellow
-⹏ = BlockU___:yellow
-⸔ = BlockU__R_1:yellow
-A = BlockU_L__1:yellow
-B = BlockU_LR:yellow
-C = BlockUD__:yellow
-E = BlockUDL_:yellow
-F = BlockUDLR_1:yellow
+ñ = Block:__:__:__:__:yellow
+⅄ = Block:__:__:__:_R:yellow
+☥ = Block:__:__:_L:__:yellow
+ⱬ = Block:__:__:_L:_R:yellow
+┦ = Block:__:_D:__:__:yellow
+⡧ = Block:__:_D:__:_R:yellow
+ℌ = Block:__:_D:_L:__:yellow
+╎ = Block:__:_D:_L:_R:yellow
+⹏ = Block:_U:__:__:__:yellow
+⸔ = Block:_U:__:__:_R:yellow
+A = Block:_U:__:_L:__:yellow
+B = Block:_U:__:_L:_R:yellow
+C = Block:_U:_D:__:__:yellow
+E = Block:_U:_D:_L:__:yellow
+F = Block:_U:_D:_L:_R:yellow
 
-S = Block_D_R_2:yellow
-G = Block_DL__2:yellow
-P = BlockU__R_2:yellow
-N = BlockU_L__2:yellow
-K = BlockUDLR_2:yellow
 
-} = Block____:white
-“ = Block___R:white
-» = Block__L_:white
-· = Block__LR:white
-µ = Block_D__:white
-½ = Block_D_R_1:white
-¬ = Block_DL__1:white
-{ = Block_DLR:white
-¶ = BlockU___:white
-\ = BlockU__R_1:white
-æ = BlockU_L__1:white
-” = BlockU_LR:white
-¢ = BlockUD__:white
-ð = BlockUD_R:white
-€ = BlockUDL_:white
-đ = BlockUDLR_1:white
-ß = Block_D_R_2:white
-ŋ = Block_DL__2:white
-þ = BlockU__R_2:white
-ł = BlockU_L__2:white
-ĸ = BlockUDLR_2:white
+} = Block:__:__:__:__:white
+“ = Block:__:__:__:_R:white
+» = Block:__:__:_L:__:white
+· = Block:__:__:_L:_R:white
+µ = Block:__:_D:__:__:white
+½ = Block:__:_D:__:_R:white
+¬ = Block:__:_D:_L:__:white
+{ = Block:__:_D:_L:_R:white
+¶ = Block:_U:__:__:__:white
+\ = Block:_U:__:__:_R:white
+æ = Block:_U:__:_L:__:white
+” = Block:_U:__:_L:_R:white
+¢ = Block:_U:_D:__:__:white
+ð = Block:_U:_D:__:_R:white
+€ = Block:_U:_D:_L:__:white
+đ = Block:_U:_D:_L:_R:white
 
 
 ~ = Water
@@ -2528,84 +2267,40 @@ _  = ConveyorLeft
 ŧ = LightBridgeStarter:left
 
 
-Y = BlockStub:yU:yD:yL:yR:yellow
-W = BlockStub:yU:yD:yL:yR:white
+Y = BlockStub:_U:_D:_L:_R:yellow
+W = BlockStub:_U:_D:_L:_R:white
 
 HintTerminal = HintTerminal1 or HintTerminal2
 
-Block_D_R:color = Block_D_R_1:color or Block_D_R_2:color
-Block_DL_:color = Block_DL__1:color or Block_DL__2:color
-BlockU__R:color = BlockU__R_1:color or BlockU__R_2:color
-BlockU_L_:color = BlockU_L__1:color or BlockU_L__2:color
-BlockUDLR:color = BlockUDLR_1:color or BlockUDLR_2:color
-
-
-b3U:color = BlockStub:yU:yD:yL:nR:color or BlockStub:yU:yD:nL:yR:color or BlockStub:yU:nD:yL:yR:color
-b3D:color = BlockStub:yU:yD:yL:nR:color or BlockStub:yU:yD:nL:yR:color or BlockStub:nU:yD:yL:yR:color
-b3L:color = BlockStub:yU:yD:yL:nR:color or BlockStub:yU:nD:yL:yR:color or BlockStub:nU:yD:yL:yR:color
-b3R:color = BlockStub:nU:yD:yL:nR:color or BlockStub:yU:nD:yL:yR:color or BlockStub:yU:yD:nL:yR:color
-
-b2U:color = BlockStub:yU:yD:nL:nR:color or BlockStub:yU:nD:yL:nR:color or BlockStub:yU:nD:nL:yR:color
-b2D:color = BlockStub:yU:yD:nL:nR:color or BlockStub:nU:yD:yL:nR:color or BlockStub:nU:yD:nL:yR:color
-b2L:color = BlockStub:yU:nD:yL:nR:color or BlockStub:nU:yD:yL:nR:color or BlockStub:nU:nD:yL:yR:color
-b2R:color = BlockStub:yU:nD:nL:yR:color or BlockStub:nU:yD:nL:yR:color or BlockStub:nU:nD:yL:yR:color
-
-BlockStub3U:color = b3U:color
-BlockStub3D:color = b3D:color
-BlockStub3L:color = b3L:color
-BlockStub3R:color = b3R:color
-
-BlockStub2U:color = b2U:color
-BlockStub2D:color = b2D:color
-BlockStub2L:color = b2L:color
-BlockStub2R:color = b2R:color
-
-
-BlockStubWithU:color = BlockStub:yU:aD:aL:aR:color
-BlockStubWithD:color = BlockStub:aU:yD:aL:aR:color
-BlockStubWithL:color = BlockStub:aU:aD:yL:aR:color
-BlockStubWithR:color = BlockStub:aU:aD:aL:yR:color
-
-Bridge_D_R:color = Bridge_D_R_1:color or Bridge_D_R_2:color
-Bridge_DL_:color = Bridge_DL__1:color or Bridge_DL__2:color
-BridgeU__R:color = BridgeU__R_1:color or BridgeU__R_2:color
-BridgeU_L_:color = BridgeU_L__1:color or BridgeU_L__2:color
-BridgeUDLR:color = BridgeUDLR_1:color or BridgeUDLR_2:color
 
 
 
-Bridge____ = Bridge____:color
-Bridge___R = Bridge___R:color
-Bridge__L_ = Bridge__L_:color
-Bridge__LR = Bridge__LR:color
-Bridge_D__ = Bridge_D__:color
-Bridge_D_R = Bridge_D_R:color
-Bridge_DL_ = Bridge_DL_:color
-Bridge_DLR = Bridge_DLR:color
-BridgeU___ = BridgeU___:color
-BridgeU__R = BridgeU__R:color
-BridgeU_L_ = BridgeU_L_:color
-BridgeU_LR = BridgeU_LR:color
-BridgeUD__ = BridgeUD__:color
-BridgeUD_R = BridgeUD_R:color
-BridgeUDL_ = BridgeUDL_:color
-BridgeUDLR = BridgeUDLR:color
+BlockStubWithU:color = BlockStub:_U:dd:ll:rr:color
+BlockStubWithD:color = BlockStub:uu:_D:ll:rr:color
+BlockStubWithL:color = BlockStub:uu:dd:_L:rr:color
+BlockStubWithR:color = BlockStub:uu:dd:ll:_R:color
 
-Bridge_D_R_1 = Bridge_D_R_1:color
-Bridge_D_R_2 = Bridge_D_R_2:color
-Bridge_DL__1 = Bridge_DL__1:color
-Bridge_DL__2 = Bridge_DL__2:color
-BridgeU__R_1 = BridgeU__R_1:color
-BridgeU__R_2 = BridgeU__R_2:color
-BridgeU_L__1 = BridgeU_L__1:color
-BridgeU_L__2 = BridgeU_L__2:color
-BridgeUDLR_1 = BridgeUDLR_1:color
-BridgeUDLR_2 = BridgeUDLR_2:color
 
-Bridge1 = BridgeU___ or Bridge_D__ or Bridge__L_ or Bridge___R
-Bridge2 = BridgeUD__ or BridgeU_L_ or BridgeU__R or Bridge_DL_ or Bridge_D_R or Bridge__LR
-Bridge3 = BridgeUDL_ or BridgeUD_R or BridgeU_LR or Bridge_DLR
-Bridge = Bridge____ or Bridge1 or Bridge2 or Bridge3 or BridgeUDLR 
+Bridge:__:__:__:__ = Bridge:__:__:__:__:color
+Bridge:__:__:__:_R = Bridge:__:__:__:_R:color
+Bridge:__:__:_L:__ = Bridge:__:__:_L:__:color
+Bridge:__:__:_L:_R = Bridge:__:__:_L:_R:color
+Bridge:__:_D:__:__ = Bridge:__:_D:__:__:color
+Bridge:__:_D:__:_R = Bridge:__:_D:__:_R:color
+Bridge:__:_D:_L:__ = Bridge:__:_D:_L:__:color
+Bridge:__:_D:_L:_R = Bridge:__:_D:_L:_R:color
+Bridge:_U:__:__:__ = Bridge:_U:__:__:__:color
+Bridge:_U:__:__:_R = Bridge:_U:__:__:_R:color
+Bridge:_U:__:_L:__ = Bridge:_U:__:_L:__:color
+Bridge:_U:__:_L:_R = Bridge:_U:__:_L:_R:color
+Bridge:_U:_D:__:__ = Bridge:_U:_D:__:__:color
+Bridge:_U:_D:__:_R = Bridge:_U:_D:__:_R:color
+Bridge:_U:_D:_L:__ = Bridge:_U:_D:_L:__:color
+Bridge:_U:_D:_L:_R = Bridge:_U:_D:_L:_R:color
+
+
+Bridge = Bridge:uu:dd:ll:rr
+
 
 
 Player:blue = Player:blue:front or Player:blue:directions
@@ -2621,15 +2316,15 @@ RealPlayer = Player:blue or Player:orange or Player:disarmed
 Player = RealPlayer or MissingPlayer
 
 
-With:left = Block__L_:color or Block__LR:color or Block_DL_:color or Block_DLR:color or  BlockU_L_:color or  BlockU_LR:color or BlockUDL_:color or BlockUDLR:color or BlockStubWithL:color or BlockStub2L:color
-With:right = Block___R:color or Block__LR:color or Block_D_R:color or Block_DLR:color or BlockU__R:color or BlockU_LR:color or BlockUD_R:color or BlockUDLR:color or BlockStubWithR:color or BlockStub2R:color
-With:up = BlockU___:color or BlockU__R:color or BlockU_L_:color or BlockU_LR:color or BlockUD__:color or BlockUD_R:color or BlockUDL_:color or BlockUDLR:color or BlockStubWithU:color or BlockStub2U:color
-With:down = Block_D__:color or Block_D_R:color or Block_DL_:color  or Block_DLR:color  or BlockUD__:color  or BlockUD_R:color  or BlockUDL_:color  or BlockUDLR:color  or BlockStubWithD:color or BlockStub2D:color
+With:left = Block:uu:dd:_L:rr:color or BlockStubWithL:color 
+With:right = Block:__:__:__:_R:color or Block:__:__:_L:_R:color or Block:__:_D:__:_R:color or Block:__:_D:_L:_R:color or Block:_U:__:__:_R:color or Block:_U:__:_L:_R:color or Block:_U:_D:__:_R:color or Block:_U:_D:_L:_R:color or BlockStubWithR:color 
+With:up = Block:_U:__:__:__:color or Block:_U:__:__:_R:color or Block:_U:__:_L:__:color or Block:_U:__:_L:_R:color or Block:_U:_D:__:__:color or Block:_U:_D:__:_R:color or Block:_U:_D:_L:__:color or Block:_U:_D:_L:_R:color or BlockStubWithU:color 
+With:down = Block:__:_D:__:__:color or Block:__:_D:__:_R:color or Block:__:_D:_L:__:color  or Block:__:_D:_L:_R:color  or Block:_U:_D:__:__:color  or Block:_U:_D:__:_R:color  or Block:_U:_D:_L:__:color  or Block:_U:_D:_L:_R:color  or BlockStubWithD:color
  
  
 
  
-Block = With:left or With:right or With:up or With:down or Block____:color or BlockStub:nU:nD:nL:nR:color
+Block = With:left or With:right or With:up or With:down or Block:__:__:__:__:color or BlockStub:__:__:__:__:color
 WithCollision = Block or Player or Wall or DarkWall
 
 BlockPlayer = Block or RealPlayer
@@ -2681,7 +2376,7 @@ FlipHorizontal = RotateLL or RotateRR
 Rotate = RotateRR or RotateRL or RotateRU or RotateRD or RotateLR or RotateLL or RotateLU or RotateLD or RotateUR or RotateUL or RotateUU or RotateUD or RotateDR or RotateDL or RotateDU or RotateDD
 
 
-OkRigid = OkRigidL or OkRigidD or OkRigidR or OkRigidU
+OkRigid = OkRigid:directions
 
 Portal1OrNothing = Portal:blue    or NoPortal1
 Portal2OrNothing = Portal:orange  or NoPortal2
@@ -2690,7 +2385,7 @@ BlueShot = Shot:blue:directions
 OrangeShot = Shot:orange:directions
 
 
-Block:white = Block____:white or Block___R:white or Block__L_:white or Block__LR:white or Block_D__:white or Block_D_R_1:white or Block_DL__1:white or Block_DLR:white or BlockU___:white or BlockU__R_1:white or BlockU_L__1:white or BlockU_LR:white or BlockUD__:white or BlockUD_R:white or BlockUDL_:white or BlockUDLR_1:white or Block_D_R_2:white or Block_DL__2:white or BlockU__R_2:white or BlockU_L__2:white or BlockUDLR_2:white
+Block:white = Block:uu:dd:ll:rr:white
 
 WithWhite = Wall or Block:white
 
@@ -2707,9 +2402,9 @@ ThroughPortal = ThroughPortal:directions
 WithVertical = With:up or With:down
 WithHorizontal = With:left or With:right
 
-RigidHNextToPortal = RigidRNextToPortal or RigidLNextToPortal
-RigidVNextToPortal = RigidDNextToPortal or RigidUNextToPortal
-RigidNextToPortal = RigidHNextToPortal or RigidVNextToPortal
+RigidHNextToPortal = RigidNextToPortal:horizontal
+RigidVNextToPortal = RigidNextToPortal:vertical
+RigidNextToPortal  = RigidNextToPortal:directions
 
 Player:left  = Player:weapon_status:left
 Player:right = Player:weapon_status:right
@@ -2723,6 +2418,8 @@ LightBridgeSprite:left = LightBridgeSprite:smod3:left
 LightBridgeSprite:right = LightBridgeSprite:smod3:right
 LightBridgeSprite:up = LightBridgeSprite:smod3:up
 LightBridgeSprite:down = LightBridgeSprite:smod3:down
+
+
 
 =======
 SOUNDS
@@ -2753,7 +2450,8 @@ GroundLeft
 GroundRight
 GroundBottom
 
-B0, B1, B2, B3, B4, B5, B6, B7, B8, B9, D0, D1, D2, D3, D4, D6, D7, U0, U1, U2, U4, U5
+B0, B1, B2, B3, B4, B5, B6, B7, B8, B9
+D0, D1, D2, D3, D4, D6, D7, U0, U1, U2, U4, U5
 
 Target
 TargetBorderLeft
@@ -2764,6 +2462,10 @@ TargetBorderBottom
 Water
 WaterSprite
 Bridge
+BridgeCorner:up:left:color
+BridgeCorner:down:left:color
+BridgeCorner:down:right:color
+BridgeCorner:up:right:color
 SinkingPlayerSprite1, SinkingPlayerSprite2, SinkingPlayerSprite3
 
 
@@ -2779,6 +2481,10 @@ LightBridgeStarter:directions
 
 BlockPlayer, Wall, DarkWall , PortalGunTM
 DarkWallSprite
+BlockCorner:up:left:color
+BlockCorner:down:left:color
+BlockCorner:down:right:color
+BlockCorner:up:right:color
 
 HintTerminal1, HintTerminal2
 
@@ -2802,7 +2508,7 @@ WallDarkCorner:white
 
 
 
-Shot1ParticleSprite1L, Shot1ParticleSprite2L, Shot1ParticleSprite1U, Shot1ParticleSprite2U, Shot1ParticleSprite1D, Shot1ParticleSprite2D, Shot1ParticleSprite1R, Shot1ParticleSprite2R, Shot2ParticleSprite1L, Shot2ParticleSprite2L, Shot2ParticleSprite1U, Shot2ParticleSprite2U, Shot2ParticleSprite1D, Shot2ParticleSprite2D, Shot2ParticleSprite1R, Shot2ParticleSprite2R  
+ParticleSprite1:portal_color:directions ParticleSprite2:portal_color:directions
 
 WantL
 WantR
@@ -2826,10 +2532,10 @@ ActivePortal:left
 ActivePortal:down
 ActivePortal:up
 Rotate
-OkRigidL
-OkRigidR
-OkRigidD
-OkRigidU
+OkRigid:left
+OkRigid:right
+OkRigid:down
+OkRigid:up
 RigidEnteringPortal1
 RigidLeavingPortal1
 RigidEnteringPortal2
@@ -2873,56 +2579,36 @@ MissingPlayer
 RULES
 ======
 
-down [ b0 | b0 ] -> [ u0 | d0 ]
-down [ b1 | b1 ] -> [ u1 | d1 ]
-down [ b2 | b2 ] -> [ u2 | d2 ]
-down [ b3 | b3 ] -> [ u2 | d3 ]
-down [ b4 | b4 ] -> [ u4 | d4 ]
-down [ b5 | b5 ] -> [ u5 | d3 ]
-down [ b6 | b6 ] -> [ u5 | d6 ]
-down [ b7 | b7 ] -> [ u2 | d7 ]
-down [ b8 | b8 ] -> [ u0 | d6 ]
-down [ b9 | b9 ] -> [ u0 | d3 ]
-down [ b6 | b0 ] -> [ u5 | d0 ]
+down [ b0 | b0 ] -> [ b0 u0 | b0 d0 ]
+down [ b1 | b1 ] -> [ b1 u1 | b1 d1 ]
+down [ b2 | b2 ] -> [ b2 u2 | b2 d2 ]
+down [ b3 | b3 ] -> [ b3 u2 | b3 d3 ]
+down [ b4 | b4 ] -> [ b4 u4 | b4 d4 ]
+down [ b5 | b5 ] -> [ b5 u5 | b5 d3 ]
+down [ b6 | b6 ] -> [ b6 u5 | b6 d6 ]
+down [ b7 | b7 ] -> [ b7 u2 | b7 d7 ]
+down [ b8 | b8 ] -> [ b8 u0 | b8 d6 ]
+down [ b9 | b9 ] -> [ b9 u0 | b9 d3 ]
+down [ b6 | b0 ] -> [ b6 u5 | b0 d0 ]
 
 
 startloop
   (Remove U)
-  down  [ no With:down | BlockStub:yU:aD:aL:aR:color ] -> [ | BlockStub:nU:aD:aL:aR:color ]
+  down  [ no With:down | BlockStub:_U:dd:ll:rr:color ] -> [ | BlockStub:__:dd:ll:rr:color ]
   
   (Remove D)
-  up    [ no With:up | BlockStub:aU:yD:aL:aR:color ] -> [ | BlockStub:aU:nD:aL:aR:color ]
+  up    [ no With:up   | BlockStub:uu:_D:ll:rr:color ] -> [ | BlockStub:uu:__:ll:rr:color ]
   
   (Remove L)
-  right [ no With:right | BlockStub:aU:aD:yL:aR:color ] -> [ | BlockStub:aU:aD:nL:aR:color ]
+  right [ no With:right| BlockStub:uu:dd:_L:rr:color ] -> [ | BlockStub:uu:dd:__:rr:color ]
   
   (Remove R)
-  left  [ no With:left | BlockStub:aU:aD:aL:yR:color ] -> [ | BlockStub:aU:aD:aL:nR:color ]
+  left  [ no With:left | BlockStub:uu:dd:ll:_R:color ] -> [ | BlockStub:uu:dd:ll:__:color ]
 
 endloop
 
 
-[ BlockStub:yU:yD:yL:yR:color ] -> [ BlockUDLR_1:color ]
-
-[ BlockStub:yU:yD:yL:nR:color ] -> [ BlockUDL_:color   ]
-[ BlockStub:yU:yD:nL:yR:color ] -> [ BlockUD_R:color   ]
-[ BlockStub:yU:nD:yL:yR:color ] -> [ BlockU_LR:color   ]
-[ BlockStub:nU:yD:yL:yR:color ] -> [ Block_DLR:color   ]
-
-[ BlockStub:yU:yD:nL:nR:color ] -> [ BlockUD__:color   ]
-[ BlockStub:yU:nD:yL:nR:color ] -> [ BlockU_L__1:color ]
-[ BlockStub:yU:nD:nL:yR:color ] -> [ BlockU__R_1:color ]
-[ BlockStub:nU:yD:yL:nR:color ] -> [ Block_DL__1:color ]
-[ BlockStub:nU:yD:nL:yR:color ] -> [ Block_D_R_1:color ]
-[ BlockStub:nU:nD:yL:yR:color ] -> [ Block__LR:color   ]
-
-[ BlockStub:yU:nD:nL:nR:color ] -> [ BlockU___:color ]
-[ BlockStub:nU:yD:nL:nR:color ] -> [ Block_D__:color ]
-[ BlockStub:nU:nD:yL:nR:color ] -> [ Block__L_:color ]
-[ BlockStub:nU:nD:nL:yR:color ] -> [ Block___R:color ]
-
-[ BlockStub:nU:nD:nL:nR:color ] -> [ Block____:color ]
-
+[ BlockStub:uu:dd:ll:rr:color ] -> [ Block:uu:dd:ll:rr:color ]
 
 
 [ moving MissingPlayer ] -> [ action MissingPlayer] Message You are dead. R = Restart. Z+Z = Undo.
@@ -2952,23 +2638,11 @@ is dead and thus undo will work in one press )
   [ HintTerminal1          ] -> [ HintTerminal2 ]
   [ action DarkWall        ] -> [ HintTerminal1 DarkWall ]
   
-  [RealTimeTick][ Shot1ParticleSprite2R ] ->  [RealTimeTick][  ]
-  [RealTimeTick][ Shot1ParticleSprite2L ] ->  [RealTimeTick][  ]
-  [RealTimeTick][ Shot1ParticleSprite2U ] ->  [RealTimeTick][  ]
-  [RealTimeTick][ Shot1ParticleSprite2D ] ->  [RealTimeTick][  ]
-  [RealTimeTick][ Shot2ParticleSprite2R ] ->  [RealTimeTick][  ]
-  [RealTimeTick][ Shot2ParticleSprite2L ] ->  [RealTimeTick][  ]
-  [RealTimeTick][ Shot2ParticleSprite2U ] ->  [RealTimeTick][  ]
-  [RealTimeTick][ Shot2ParticleSprite2D ] ->  [RealTimeTick][  ]
+
   
-  [RealTimeTick][ Shot1ParticleSprite1R ] ->  [RealTimeTick][ Shot1ParticleSprite2R ]
-  [RealTimeTick][ Shot1ParticleSprite1L ] ->  [RealTimeTick][ Shot1ParticleSprite2L ]
-  [RealTimeTick][ Shot1ParticleSprite1U ] ->  [RealTimeTick][ Shot1ParticleSprite2U ]
-  [RealTimeTick][ Shot1ParticleSprite1D ] ->  [RealTimeTick][ Shot1ParticleSprite2D ]
-  [RealTimeTick][ Shot2ParticleSprite1R ] ->  [RealTimeTick][ Shot2ParticleSprite2R ]
-  [RealTimeTick][ Shot2ParticleSprite1L ] ->  [RealTimeTick][ Shot2ParticleSprite2L ]
-  [RealTimeTick][ Shot2ParticleSprite1U ] ->  [RealTimeTick][ Shot2ParticleSprite2U ]
-  [RealTimeTick][ Shot2ParticleSprite1D ] ->  [RealTimeTick][ Shot2ParticleSprite2D ]
+  [RealTimeTick][ ParticleSprite2:portal_color:directions ] ->  [RealTimeTick][  ]
+  
+  [RealTimeTick][ ParticleSprite1:portal_color:directions ] ->  [RealTimeTick][ ParticleSprite2:portal_color:directions ]
   
 ( / some decorative stuff )
 
@@ -3062,60 +2736,35 @@ portal_color directions [ action Player:portal_color:directions ] -> [ Player:po
 portal_color [ Shot:portal_color:> | no WithCollision ] -> [ | ShotF:portal_color:> ] again
 
 
-left  [Portal:blue][ Shot:blue:left  | WithWhite ] -> [][ Shot:blue:left  | WithWhite ]
-right [Portal:blue][ Shot:blue:right | WithWhite ] -> [][ Shot:blue:right | WithWhite ]
-down  [Portal:blue][ Shot:blue:down  | WithWhite ] -> [][ Shot:blue:down  | WithWhite ]
-up    [Portal:blue][ Shot:blue:up    | WithWhite ] -> [][ Shot:blue:up    | WithWhite ]
+(Delete the old Portal if the shot is about to create a new one)
+portal_color [Portal:portal_color][ Shot:portal_color:> | WithWhite ] -> [][ Shot:portal_color:>| WithWhite ]
 
-left  [Portal:orange][ Shot:orange:left  | WithWhite ] -> [][ Shot:orange:left  | WithWhite ]
-right [Portal:orange][ Shot:orange:right | WithWhite ] -> [][ Shot:orange:right | WithWhite ]
-down  [Portal:orange][ Shot:orange:down  | WithWhite ] -> [][ Shot:orange:down  | WithWhite ]
-up    [Portal:orange][ Shot:orange:up    | WithWhite ] -> [][ Shot:orange:up    | WithWhite ]
-
-
-left  [ Shot:blue:left    | WithWhite ] -> [ ColorToggle | Portal:blue:right WithWhite ] sfx3
-right [ Shot:blue:right   | WithWhite ] -> [ ColorToggle | Portal:blue:left WithWhite ] sfx3
-up    [ Shot:blue:up      | WithWhite ] -> [ ColorToggle | Portal:blue:down WithWhite ] sfx3
-down  [ Shot:blue:down    | WithWhite ] -> [ ColorToggle | Portal:blue:up WithWhite ] sfx3
-
-left  [ Shot:orange:left  | WithWhite ] -> [ ColorToggle | Portal:orange:right WithWhite ] sfx3
-right [ Shot:orange:right | WithWhite ] -> [ ColorToggle | Portal:orange:left WithWhite ] sfx3
-up    [ Shot:orange:up    | WithWhite ] -> [ ColorToggle | Portal:orange:down WithWhite ] sfx3
-down  [ Shot:orange:down  | WithWhite ] -> [ ColorToggle | Portal:orange:up WithWhite ] sfx3
+(Create the portal)
+portal_color [ Shot:portal_color:> | WithWhite ] -> [ ColorToggle | Portal:portal_color:< WithWhite ] sfx3
 
 
 ( Prevent overlapping portals )
 directions portal_color [ Portal:blue:directions  Portal:orange:directions  ][ Player:portal_color   ] -> [ Portal:portal_color:directions   ][ Player:portal_color   ]
 
-(Draw portal shot sprite when it hits something that can't open a portal)
-left  [ Shot:blue:left    | WithCollision ] -> [ | Shot1ParticleSprite1R WithCollision ]
-right [ Shot:blue:right   | WithCollision ] -> [ | Shot1ParticleSprite1L WithCollision ]
-up    [ Shot:blue:up      | WithCollision ] -> [ | Shot1ParticleSprite1D WithCollision ]
-down  [ Shot:blue:down    | WithCollision ] -> [ | Shot1ParticleSprite1U WithCollision ]
-left  [ Shot:orange:left  | WithCollision ] -> [ | Shot2ParticleSprite1R WithCollision ]
-right [ Shot:orange:right | WithCollision ] -> [ | Shot2ParticleSprite1L WithCollision ]
-up    [ Shot:orange:up    | WithCollision ] -> [ | Shot2ParticleSprite1D WithCollision ]
-down  [ Shot:orange:down  | WithCollision ] -> [ | Shot2ParticleSprite1U WithCollision ]
+(Draw portal particle sprite when it hits something that can't open a portal)
+portal_color [ Shot:portal_color:>    | WithCollision ] -> [ | ParticleSprite1:portal_color:< WithCollision ]
 
 (Toggle the portal gun's color)
 portal_color player_face [ ColorToggle ][ Player:portal_color:player_face ] -> [ ][ Player:toggle_portal_color:player_face ]
 
-[ RigidNextToPortal ] -> []
-
-right [ Portal:blue:right   ActivePortal:right | With:left ] -> [  Portal:blue:right   ActivePortal:right | With:left RigidLNextToPortal ]
-left  [ Portal:blue:left    ActivePortal:left  | With:right ] -> [  Portal:blue:left    ActivePortal:left  | With:right RigidRNextToPortal ]
-up    [ Portal:blue:up      ActivePortal:up    | With:down ] -> [  Portal:blue:up      ActivePortal:up    | With:down RigidDNextToPortal ]
-down  [ Portal:blue:down    ActivePortal:down  | With:up ] -> [  Portal:blue:down    ActivePortal:down  | With:up RigidUNextToPortal ]
-right [ Portal:orange:right ActivePortal:right | With:left ] -> [  Portal:orange:right ActivePortal:right | With:left RigidLNextToPortal ]
-left  [ Portal:orange:left  ActivePortal:left  | With:right ] -> [  Portal:orange:left  ActivePortal:left  | With:right RigidRNextToPortal ]
-up    [ Portal:orange:up    ActivePortal:up    | With:down ] -> [  Portal:orange:up    ActivePortal:up    | With:down RigidDNextToPortal ]
-down  [ Portal:orange:down  ActivePortal:down  | With:up ] -> [  Portal:orange:down  ActivePortal:down  | With:up RigidUNextToPortal ]
-
+(This logic is to make portals unmovable if there's a rigid going through them)
 
 
 [ UnmovablePortal ] -> []
-[ RigidNextToPortal ][ Portal:blue ] -> [ RigidNextToPortal ][ Portal:blue UnmovablePortal ]
-[ RigidNextToPortal ][ Portal:orange ] -> [ RigidNextToPortal ][ Portal:orange UnmovablePortal ]
+[ RigidNextToPortal ] -> []
+portal_color [ Portal:portal_color:> ActivePortal:> | With:< ] -> [ Portal:portal_color:> ActivePortal:> UnmovablePortal | With:< RigidNexttoPortal:< ]
+
+
+(===========================================================================================
+BEGINNING OF MOVEMENT LOGIC
+
+Before rewrite, it generated 14437 instructions
+)
 
 
 (  spread  )
@@ -3280,10 +2929,8 @@ startloop
   up   [ wantU No Error WithHorizontal | ActivePortal:down  ] -> [ wantU Error WithHorizontal | ActivePortal:down ])
 
   ( Cant cut )
-  [ WantH RigidUNextToPortal ] -> [ WantH RigidUNextToPortal Error ]
-  [ WantH RigidDNextToPortal ] -> [ WantH RigidDNextToPortal Error ]
-  [ WantV RigidRNextToPortal ] -> [ WantV RigidRNextToPortal Error ]
-  [ WantV RigidLNextToPortal ] -> [ WantV RigidLNextToPortal Error ]
+  [ Want:vertical   RigidNextToPortal:horizontal ] -> [ Want:vertical RigidNextToPortal:horizontal Error ]
+  [ Want:horizontal RigidNextToPortal:vertical   ] -> [ Want:horizontal  RigidNextToPortal:vertical Error ]
   
   right [ ActivePortal:right | WantL WithVertical ] -> [ ActivePortal:right | WantL WithVertical Error ] 
   left  [ ActivePortal:left  | WantR WithVertical ] -> [ ActivePortal:left  | WantR WithVertical Error ] 
@@ -3624,43 +3271,46 @@ endloop
 [ BPLeavingPortal1 ] -> []
 [ BPLeavingPortal2 ] -> []
 
-
-
-
 [ NoPortal1 ] -> []
 [ NoPortal2 ] -> []
+
+
+(END OF MOVEMENT LOGIC
+===========================================================================================
+)
+
 
 ( Rotation ! )
  [ Rotate ] -> [ Rotate ] sfx4 (a bit of a hack, but this is always created after a teleportation)
 
- color [ RotateCNW  Block___R:color ] -> [  Block_D__:color ]
- color [ RotateCNW  Block_D__:color] -> [  Block__L_:color ]
- color [ RotateCNW  Block__L_:color] -> [  BlockU___:color ]
- color [ RotateCNW  BlockU___:color] -> [  Block___R:color ]
+ color [ RotateCNW  Block:__:__:__:_R:color] -> [  Block:__:_D:__:__:color ]
+ color [ RotateCNW  Block:__:_D:__:__:color] -> [  Block:__:__:_L:__:color ]
+ color [ RotateCNW  Block:__:__:_L:__:color] -> [  Block:_U:__:__:__:color ]
+ color [ RotateCNW  Block:_U:__:__:__:color] -> [  Block:__:__:__:_R:color ]
  
  directions [ RotateCNW Player:blue:directions   ]-> [ Player:blue:rotate_directions_cw ]
  directions [ RotateCNW Player:orange:directions ]-> [ Player:orange:rotate_directions_cw ]
 
 
- color [ RotateCW   Block_D__:color] -> [  Block___R:color ]
- color [ RotateCW   Block__L_:color] -> [  Block_D__:color ]
- color [ RotateCW   BlockU___:color] -> [  Block__L_:color ]
- color [ RotateCW   Block___R:color] -> [  BlockU___:color ]
+ color [ RotateCW   Block:__:_D:__:__:color] -> [  Block:__:__:__:_R:color ]
+ color [ RotateCW   Block:__:__:_L:__:color] -> [  Block:__:_D:__:__:color ]
+ color [ RotateCW   Block:_U:__:__:__:color] -> [  Block:__:__:_L:__:color ]
+ color [ RotateCW   Block:__:__:__:_R:color] -> [  Block:_U:__:__:__:color ]
 
  directions [ RotateCW Player:blue:directions   ]-> [ Player:blue:rotate_directions_cnw ]
  directions [ RotateCW Player:orange:directions ]-> [ Player:orange:rotate_directions_cnw ]
 
- color [ RotatePerpendicular   BlockUD__:color] -> [  Block__LR:color ]
- color [ RotatePerpendicular   Block__LR:color] -> [  BlockUD__:color ]
+ color [ RotatePerpendicular   Block:_U:_D:__:__:color] -> [  Block:__:__:_L:_R:color ]
+ color [ RotatePerpendicular   Block:__:__:_L:_R:color] -> [  Block:_U:_D:__:__:color ]
  
  vertical_tag   [ FlipVertical Player:blue:vertical_tag   ]-> [ Player:blue:flip_vertical ]
  vertical_tag   [ FlipVertical Player:orange:vertical_tag ]-> [ Player:orange:flip_vertical ]
 
 
- color [ FlipVertical    Block_D__:color ] -> [  BlockU___:color ]
- color [ FlipVertical    BlockU___:color ] -> [  Block_D__:color ]
- color [ FlipHorizontal  Block___R:color ] -> [  Block__L_:color ]
- color [ FlipHorizontal  Block__L_:color ] -> [  Block___R:color ]
+ color [ FlipVertical    Block:__:_D:__:__:color ] -> [  Block:_U:__:__:__:color ]
+ color [ FlipVertical    Block:_U:__:__:__:color ] -> [  Block:__:_D:__:__:color ]
+ color [ FlipHorizontal  Block:__:__:__:_R:color ] -> [  Block:__:__:_L:__:color ]
+ color [ FlipHorizontal  Block:__:__:_L:__:color ] -> [  Block:__:__:__:_R:color ]
  
  horizontal_tag [ FlipHorizontal Player:blue:horizontal_tag ] -> [ Player:blue:flip_horizontal ]
  horizontal_tag [ FlipHorizontal Player:orange:horizontal_tag ] -> [ Player:orange:flip_horizontal ]
@@ -3670,41 +3320,17 @@ endloop
 
 
 ( detect broken rigids )
-right [ With:right | With:left ] -> [ With:right OkRigidR | With:left OkRigidL ] 
-up    [ With:up | With:down ] -> [ With:up OkRigidU | With:down OkRigidD ] 
+[ OkRigid ] -> []
+[ With:> | With:< ] -> [ With:> OkRigid:> | With:< OkRigid:< ]
+[ With:> | ActivePortal:< ] -> [ With:> | action ActivePortal:< ]
+[ action Portal ][ stationary Portal ] -> [ stationary Portal  ][ stationary Portal ]
+
+[ With:> | action ActivePortal:< ] -> [ With:> OkRigid:> | ActivePortal:< ]
 
 
-right [ With:right | Portal:blue:left]  -> [ RigidEnteringPortal1 With:right | Portal:blue:left]
-left  [ With:left | Portal:blue:right]  -> [ RigidEnteringPortal1 With:left | Portal:blue:right]
-up    [ With:up | Portal:blue:down]  -> [ RigidEnteringPortal1 With:up | Portal:blue:down]
-down  [ With:down | Portal:blue:up]  -> [ RigidEnteringPortal1 With:down | Portal:blue:up]
-right [ With:right | Portal:orange:left]  -> [ RigidEnteringPortal2 With:right | Portal:orange:left]
-left  [ With:left | Portal:orange:right]  -> [ RigidEnteringPortal2 With:left | Portal:orange:right]
-up    [ With:up | Portal:orange:down]  -> [ RigidEnteringPortal2 With:up | Portal:orange:down]
-down  [ With:down | Portal:orange:up]  -> [ RigidEnteringPortal2 With:down | Portal:orange:up]
+[ With:> no OkRigid:> ] -> sfx5
+( [ With:> no OkRigid:> ] -> cancel )
 
-
-right [ With:right | Portal:blue:left][ RigidEnteringPortal2 ] -> [ With:right OkRigidR | Portal:blue:left][ RigidEnteringPortal2 ]
-left  [ With:left | Portal:blue:right][ RigidEnteringPortal2 ] -> [ With:left OkRigidL | Portal:blue:right][ RigidEnteringPortal2 ]
-up    [ With:up | Portal:blue:down][ RigidEnteringPortal2 ] -> [ With:up OkRigidU | Portal:blue:down][ RigidEnteringPortal2 ]
-down  [ With:down | Portal:blue:up][ RigidEnteringPortal2 ] -> [ With:down OkRigidD | Portal:blue:up][ RigidEnteringPortal2 ]
-right [ With:right | Portal:orange:left][ RigidEnteringPortal1 ] -> [ With:right OkRigidR | Portal:orange:left][ RigidEnteringPortal1 ]
-left  [ With:left | Portal:orange:right][ RigidEnteringPortal1 ] -> [ With:left OkRigidL | Portal:orange:right][ RigidEnteringPortal1 ]
-up    [ With:up | Portal:orange:down][ RigidEnteringPortal1 ] -> [ With:up OkRigidU | Portal:orange:down][ RigidEnteringPortal1 ]
-down  [ With:down | Portal:orange:up][ RigidEnteringPortal1 ] -> [ With:down OkRigidD | Portal:orange:up][ RigidEnteringPortal1 ]
-
-[ RigidEnteringPortal1 ] -> []
-[ RigidEnteringPortal2 ] -> []
-
-
-[ With:right no OkRigidR ] -> sfx5
-([ With:right no OkRigidR ] -> cancel)
-[ With:left no OkRigidL ] -> sfx5
-([ With:left no OkRigidL ] -> cancel)
-[ With:up no OkRigidU ] -> sfx5
-([ With:up no OkRigidU ] -> cancel)
-[ With:down no OkRigidD ] -> sfx5
-([ With:down no OkRigidD ] -> cancel)
 
 
 
@@ -3714,7 +3340,7 @@ down  [ With:down | Portal:orange:up][ RigidEnteringPortal1 ] -> [ With:down OkR
 
 [ Want ] -> sfx5
 ([ Want ] -> cancel )
-[ OkRigid ] -> []
+
 
 
 ( Create Light Bridge )
@@ -3740,11 +3366,10 @@ endloop
 (start sink)
 startloop
    [ Block Water no LightBridge ] -> [ Block MightSink Water ]
+   
    ( contiguous to might sink, spread it )
-   left  [ MightSink With:left | With:right no MightSink ] -> [ MightSink With:left | With:right MightSink ]
-   right  [ MightSink With:right | With:left no MightSink ] -> [ MightSink With:right | With:left MightSink ]
-   up  [ MightSink With:up | With:down no MightSink ] -> [ MightSink With:up | With:down MightSink ]
-   down  [ MightSink With:down | With:up no MightSink ] -> [ MightSink With:down | With:up MightSink ]
+   [ MightSink With:> | With:< no MightSink ] -> [ MightSink With:> | With:< MightSink ]
+   
 endloop
 
 startloop
@@ -3752,16 +3377,10 @@ startloop
    [ MightSink no Water ] -> [ Error MightSink ]
 
    ( contiguous to error, spread it )
-   left  [ MightSink With:left Error | With:right MightSink no Error ] -> [ MightSink With:left Error | With:right MightSink Error ]
-   right  [ MightSink With:right Error | With:left MightSink no Error ] -> [ MightSink With:right Error | With:left MightSink Error ]
-   down  [ MightSink With:down Error | With:up MightSink no Error ] -> [ MightSink With:down Error | With:up MightSink Error ]
-   up [ MightSink With:up Error | With:down MightSink no Error ] -> [ MightSink With:up Error | With:down MightSink Error ]
+   [ MightSink With:> Error | With:< MightSink no Error ] -> [ MightSink With:> Error | With:< MightSink Error ]
    
-   left [ MightSink With:left | ActivePortal:right ] -> [ MightSink With:left Error | ActivePortal:right ]
-   right [ MightSink With:right | ActivePortal:left ] -> [ MightSink With:right Error | ActivePortal:left ]
-   up [ MightSink With:up | ActivePortal:down ] -> [ MightSink With:up Error | ActivePortal:down ]
-   down [ MightSink With:down | ActivePortal:up ] -> [ MightSink With:down Error | ActivePortal:up ]
-   
+   (going through a portal, prevent sinking)
+   [ MightSink With:> | ActivePortal:< ] -> [ MightSink With:> Error | ActivePortal:< ]
    
 endloop
 
@@ -3770,27 +3389,8 @@ endloop
 
 [ MightSink LightBridge ] -> [ LightBridge ]
 
-color [ MightSink Block____:color   Water ] -> [ Bridge____:color   ] sfx6
-color [ MightSink Block___R:color   Water ] -> [ Bridge___R:color   ] sfx6
-color [ MightSink Block__L_:color   Water ] -> [ Bridge__L_:color   ] sfx6
-color [ MightSink Block__LR:color   Water ] -> [ Bridge__LR:color   ] sfx6
-color [ MightSink Block_D__:color   Water ] -> [ Bridge_D__:color   ] sfx6
-color [ MightSink Block_D_R_1:color Water ] -> [ Bridge_D_R_1:color ] sfx6
-color [ MightSink Block_D_R_2:color Water ] -> [ Bridge_D_R_2:color ] sfx6
-color [ MightSink Block_DL__1:color Water ] -> [ Bridge_DL__1:color ] sfx6
-color [ MightSink Block_DL__2:color Water ] -> [ Bridge_DL__2:color ] sfx6
-color [ MightSink Block_DLR:color   Water ] -> [ Bridge_DLR:color   ] sfx6
-color [ MightSink BlockU___:color   Water ] -> [ BridgeU___:color   ] sfx6
-color [ MightSink BlockU__R_1:color Water ] -> [ BridgeU__R_1:color ] sfx6
-color [ MightSink BlockU__R_2:color Water ] -> [ BridgeU__R_2:color ] sfx6
-color [ MightSink BlockU_L__1:color Water ] -> [ BridgeU_L__1:color ] sfx6
-color [ MightSink BlockU_L__2:color Water ] -> [ BridgeU_L__2:color ] sfx6
-color [ MightSink BlockU_LR:color   Water ] -> [ BridgeU_LR:color   ] sfx6
-color [ MightSink BlockUD__:color   Water ] -> [ BridgeUD__:color   ] sfx6
-color [ MightSink BlockUD_R:color   Water ] -> [ BridgeUD_R:color   ] sfx6
-color [ MightSink BlockUDL_:color   Water ] -> [ BridgeUDL_:color   ] sfx6
-color [ MightSink BlockUDLR_1:color Water ] -> [ BridgeUDLR_1:color ] sfx6
-color [ MightSink BlockUDLR_2:color Water ] -> [ BridgeUDLR_2:color ] sfx6
+(Sink the blocks, turning them into bridges:)
+color uu dd ll rr [ MightSink Block:uu:dd:ll:rr:color Water ] -> [ Bridge:uu:dd:ll:rr:color ] sfx6
 
 
 [ Portal  no WithWhite ] -> [  ]
@@ -3948,6 +3548,27 @@ directions_tag [ LightBridgeSprite:s0:directions_tag ] -> [ LightBridgeSprite:s1
 
 directions_tag [ LightBridge:directions_tag no LightBridgeSprite:directions_tag ] -> [ LightBridge:directions_tag  LightBridgeSprite:s0:directions_tag ]
 
+
+(Adding corners is easy,  really. You just need to understand that if
+ this shape exists: |_ _| , then there are four corners to add. )
+color vertical horizontal [ BlockCorner:vertical:horizontal:color ] -> []
+
+color down [ Block:uu:_D:_L:rr:color no BlockCorner:down:left:color | Block:_U:dd:_L:rr:color ] -> [ Block:uu:_D:_L:rr:color BlockCorner:down:left:color | Block:_U:dd:_L:rr:color BlockCorner:up:left:color ]
+
+color left [ BlockCorner:down:left:color | no BlockCorner:down:right:color ] -> [ BlockCorner:down:left:color | BlockCorner:down:right:color ]
+
+color down [ BlockCorner:down:right:color | no BlockCorner:up:right:color ] -> [ BlockCorner:down:right:color | BlockCorner:up:right:color ]
+
+(Now we have to do it with bridges as well)
+
+color vertical horizontal [ BridgeCorner:vertical:horizontal:color ] -> []
+
+color down [ Bridge:uu:_D:_L:rr:color no BridgeCorner:down:left:color | Bridge:_U:dd:_L:rr:color ] -> [ Bridge:uu:_D:_L:rr:color BridgeCorner:down:left:color | Bridge:_U:dd:_L:rr:color BridgeCorner:up:left:color ]
+
+color left [ BridgeCorner:down:left:color | no BridgeCorner:down:right:color ] -> [ BridgeCorner:down:left:color | BridgeCorner:down:right:color ]
+
+color down [ BridgeCorner:down:right:color | no BridgeCorner:up:right:color ] -> [ BridgeCorner:down:right:color | BridgeCorner:up:right:color ]
+
 ( /Decorative Rules)
 
 ==============
@@ -3963,20 +3584,21 @@ Some Target
 LEVELS
 =======
 
+section 01
+
 Message Welcome to [Redacted] Science.
 Message Your clearance level is so low that we can't even share the name of the company with you.
 Message Your Job is simple: Relocate the furniture to the marked locations. 'Z' to undo. 'R' to restart.
 
-section 01
 
 %%%%%%%%%%
 %01...@.@%
 %01...@..%
 ###..¡.%.%
 ####...%.%
-####s╎☥%.%
-####pay%.%
-%%%@yyy%.%
+####yyy%.%
+####yy┦%.%
+%%%@⅄ⱬy%.%
 %@@@.....%
 %%%%%%%%%%
 
@@ -4131,6 +3753,17 @@ Message The Previous employee in your role got Terminated because they were taki
 
 Message The records say: "Employee too easily distracted by bright lights". "Employee displays an inability to combine recently-learned concepts."
 
+%%%%%%%%%%%%%%%%
+%@@............%
+%@.............%
+%~~~~~~~~~~~~~~%
+%~~~~~~~~~~~~~~%
+%~~~~~~~~~~~~~~%
+#....ŧ%#....yy.%
+#11.!.%#.ww.y..%
+#11...%%%%%%%%%%
+######%%%%%%%%%%
+
 section 12
 
 Message You appear to be taking quite some time to move a small piece of furniture.
@@ -4140,8 +3773,8 @@ Message Couldn't you be more efficient? If you could do more things at once, tha
 
 %%%%%%%%%%%%%%%%%%%
 %..%%%%.....%%%%..%
-%..YY.%.WWW.%.YY..%
-%..Y..%..W..%..Y..%
+%..YY.%.YYY.%.YY..%
+%..Y..%..Y..%..Y..%
 %...@@%.@@@.%@@...%
 %%%%@%%%%@%%%%@%%%%
 %.................%
@@ -4164,18 +3797,6 @@ Message Maybe what you could do is become more versatile? It's so tragic humans 
 
 
 section someoldone
-
-%%%%%%%%%%%%%%%%
-%@@............%
-%@.............%
-%~~~~~~~~~~~~~~%
-%~~~~~~~~~~~~~~%
-%~~~~~~~~~~~~~~%
-#....ŧ%%....yy.%
-#11.!.%#.ww.y..%
-#11...%%%%%%%%%%
-######%%%%%%%%%%
-
 
 
 
@@ -4206,8 +3827,8 @@ section old04
 %04@@%
 %~~..%
 %..!~%
-%sg..%
-#pn.ñ%
+%yy..%
+#yy.ñ%
 #....%
 %%%%#%
 
