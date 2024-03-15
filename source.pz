@@ -1,4 +1,4 @@
-title Furniture Science 0.9.87
+title Furniture Science 0.9.97
 
 author vexorian
 homepage vexorian.com
@@ -44,12 +44,87 @@ freely, subject to the following restrictions:
 )
 
 
-( Some comments here
+(
 
+Welcome to the source code for Furniture Science. 
 
-1. I really wanted to make logic for when you push a portal against a block, it would teleport the block through the other portal. But this
-has proven really difficult for puzzle script, so for now pushing portals towards other objects won't allow them to push
+  Once there was an attempt to make an open source sequel to the game Kye,
+I'm talking stone age stuff, back when sourceforge was a thing. This was written
+in visual basic. Kye 3.0 wasn't that interesting. It allowed to push stuff 
+diagonally. I dunno what made them thinkg this was a good idea. But as is 
+tradition, unofficial Kye sequels come with new objects. In this case, there
+was a teleporter block. The teleporter block had some janky logic for when it was
+possible to use it to teleport, but it was pushable and pretty interesting.
 
+  Ever since then I've been thinking about puzzles that involve moving teleporters
+around. To the point that when *I* made my own version of the bad idea of making
+Kye sequels, I copied those teleporters. Even so, a couple of years ago, during
+the pandemic, when I started getting into puzzle script, my first puzzle script
+game "Clone Cleanup" also copied those teleporter blocks.
+
+  But the puzzles I kept thinking about were actually getting more ridiculous
+than that. After playing Portal and Gateways. I kept imagining adding a new kind
+of teleporter block, instead of requiring the teleporters to be lining up, they
+would be color based and always be active. More so, their angles would allow you
+to rotate stuff. Many objects in Xye are direction specific, so that felt interesting. One thing in Xye are the 'Large Blocks' which are just rigid blocks
+composed of multiple cells. So one of the idea was rotating these large blocks
+using the teleporter blocks. Huh but this stuff was long after I stopped updating
+Xye, I was kind of over game dev by then. 
+
+  Back to a couple of years ago, Puzzle script was one of my pandemic hobbies and
+I played with it quite a bit. After making 2 or 3 games I was really playing with
+it. I wanted to make a new game and was playing around trying to come up with
+rigid blocks. All while ignoring the fact that Puzzle script had a very throughout
+documentation about how to do rigid blocks. Including an explanation of the
+rigid keyword and that sort of thing. Nevertheless, I found out about
+startloop/endloop so I was actually managing to do things. I was going to make
+some sort of game involving rigid blocks and water and making bridges. But this
+startloop/endloop stuff started looking really interesting. I suddenly thought,
+since the movement logic is so custom, maybe I can actually do things
+like portals... And that's how I figured I had a chance to actually make those
+puzzles I was thinking about for so long.
+
+  It was actually a bad idea, because in order to get it to work, I really had to
+get used to copy pasting the same rule 4 or 8 or even 16 times and rewriting it
+to cover all the variations of each case. The code was a real mess to deal with.
+Worse still, many of the things I wanted to do weren't really doable with my ps
+skills. But I did manage to get something that ressembled a game with some levels.
+
+  To be honest, I thought the mechanics were cool, but was never really happy
+with the levels. Specially the last ones. Maintaining it was also a bit of a
+nightmare due to the overly complex code. I eventually stopped relaly doing
+puzzle script for a while.
+
+  Which brings me to 2024. My new hobby was "retro" handheld consoles. It's small,
+cheap, often Chinese devices that look like a Gameboy or like a Nintendo Switch but
+are really designed to play emulators, mostly. I was playing around with some
+of them and always felt like I wanted to play puzzlescript. Eventually, a
+puzzle script core for retroarch was made and it was added to the custom OS of
+one of my favorite devices, the Miyoo mini+. Would this means I would actually
+be able to play my own games in a tiny console like that? Not really. It turns out
+even my most simple puzzle script games abuse rules so much that they were really slow and glitchy in the Retroarch Puzzlescript core. But nevertheless, this 
+insipired me to go back to playing aroudn with Puzzlescript.
+
+  Furniture Science was always my favorite of the puzzlescript games I made back
+in 2021. So I would sometimes open it and play it. Or get ideas for new objects.
+Many of those ideas were not very good. Some might work but are too much work.
+I also wanted to have better levels. It always bugged me that the first level is
+kind of boring and long to solve considering it doesn't even have portals in it.
+So I started modifying Furniture Science. I learned about Puzzlescript Next, which
+had some parts of Puzzlescript+ which was very useful when making Kye.ps. So I
+gave it a try. The real magic of the new features tunred out to be the tags. The
+code is so much cleaner now, and I feel it is readable. I was able to optimize the
+code quite a bit AND add features AND make it more readable, it's all thanks to
+the Pattern:script features. It's not perfect, but the amount of repetition you
+usually have to deal with when making stuff in puzzlscript is really one of the
+worst things about it, and Pattern:script really tackles it. Then we also have
+all the other features from the other forks. This makes making games a lot more
+viable. Original puzzle script is sort of optimized for fast prototyping and it's
+really good at that. But there's always a lot of friction when it comes to making
+games that you might actually want to make available for people to play even though
+many might actually have the opinion that you shouldn't use puzzlescript for making
+actual non-prototype games. But Puzzlescript Next can really cover a lot of those
+deficiencies. 
 
 )
 
@@ -68,6 +143,7 @@ ll = _L __
 vertical_tag   = down up
 horizontal_tag = left right
 directions_tag = up down left right
+directions_tag2= up down left right
 player_face    = up down left right front
 
 smod3 = s0 s1 s2
@@ -1667,6 +1743,9 @@ red blue
 .....
 
 
+Destination:directions
+transparent
+
 Error
 black
 .....
@@ -1722,54 +1801,8 @@ ActivePortal:directions
 transparent
 
 
-RotateRR
+Rotate:directions_tag:directions_tag2
 transparent
-
-RotateRL
-transparent
-
-RotateRU
-transparent
-
-RotateRD
-transparent
-
-RotateLR
-transparent
-
-RotateLL
-transparent
-
-RotateLU
-transparent
-
-RotateLD
-transparent
-
-RotateUR
-transparent
-
-RotateUL
-transparent
-
-RotateUU
-transparent 
-
-RotateUD
-transparent
-
-RotateDR
-transparent
-
-RotateDL
-transparent
-
-RotateDU
-transparent
-
-RotateDD
-transparent
-
 
 
 
@@ -1788,6 +1821,9 @@ transparent
 RigidLeavingPortal2
 transparent
 
+CanMovePortal:portal_color
+transparent
+
 
 BPEnteringPortal1
 transparent
@@ -1801,11 +1837,6 @@ transparent
 BPLeavingPortal2
 transparent
 
-NoPortal1
-transparent
-
-NoPortal2
-transparent
 
 ColorToggle
 transparent
@@ -2027,9 +2058,6 @@ red
 ThroughPortal:directions
 transparent
 
-FutureUsed
-transparent
-
 RigidNextToPortal:directions
 transparent
 
@@ -2057,14 +2085,6 @@ black
 JustTurned
 transparent
 
-Pointer
-transparent
-
-PointerEnd
-transparent
-
-EmptySpot
-transparent
 
 GoalSoundSprite
 #F7DC43 yellow
@@ -2191,6 +2211,21 @@ rot:left:up
 
 
 LightBridgeEnteringPortal:portal_color
+transparent
+
+BlockClone:uu:dd:ll:rr:color
+yellow
+
+PlayerClone:weapon_status:player_face
+black
+
+CloneWant:portal_color:directions
+transparent
+
+PullingThroughPortal:portal_color
+transparent
+
+Clonify
 transparent
 
 
@@ -2334,6 +2369,17 @@ WantR = Want:right
 WantD = Want:down
 WantU = Want:up
 
+PerpendicularWant:left  = Want:down or Want:up
+PerpendicularWant:right = Want:down or Want:up
+PerpendicularWant:up    = Want:left or Want:right
+PerpendicularWant:down  = Want:left or Want:right
+
+
+ParallelWant:left  = Want:left or Want:right
+ParallelWant:right = Want:left or Want:right
+ParallelWant:up    = Want:down or Want:up
+ParallelWant:down  = Want:down or Want:up
+
 Want = WantL or WantR or WantU or WantD
 WantNotD = WantR or WantL or WantU
 WantNotU = WantR or WantL          or WantD
@@ -2368,6 +2414,29 @@ PortalExit = PortalExit:portal_color:directions
 
 ActivePortal = ActivePortal:directions
 
+RotateUU = Rotate:up:up
+RotateUD = Rotate:up:down
+RotateUL = Rotate:up:left
+RotateUR = Rotate:up:right
+
+RotateDU = Rotate:down:up
+RotateDD = Rotate:down:down
+RotateDL = Rotate:down:left
+RotateDR = Rotate:down:right
+
+RotateLU = Rotate:left:up
+RotateLD = Rotate:left:down
+RotateLL = Rotate:left:left
+RotateLR = Rotate:left:right
+
+RotateRU = Rotate:right:up
+RotateRD = Rotate:right:down
+RotateRL = Rotate:right:left
+RotateRR = Rotate:right:right
+
+
+
+
 RotateCW  = RotateLU or RotateUR or RotateRD or RotateDL
 RotateCNW = RotateUL or RotateRU or RotateDR or RotateLD
 RotatePerpendicular = RotateCW or RotateCNW
@@ -2377,9 +2446,6 @@ Rotate = RotateRR or RotateRL or RotateRU or RotateRD or RotateLR or RotateLL or
 
 
 OkRigid = OkRigid:directions
-
-Portal1OrNothing = Portal:blue    or NoPortal1
-Portal2OrNothing = Portal:orange  or NoPortal2
 
 BlueShot = Shot:blue:directions
 OrangeShot = Shot:orange:directions
@@ -2419,7 +2485,9 @@ LightBridgeSprite:right = LightBridgeSprite:smod3:right
 LightBridgeSprite:up = LightBridgeSprite:smod3:up
 LightBridgeSprite:down = LightBridgeSprite:smod3:down
 
+Clone = PlayerClone:weapon_status:player_face or BlockClone:uu:dd:ll:rr:color
 
+Destination = Destination:directions
 
 =======
 SOUNDS
@@ -2432,7 +2500,7 @@ sfx4 45276302:2 (teleport)
 sfx5 24968106:2 (error)
 sfx6 50609104:2 (sinkx)
 sfx7 38799704:2 (player sink)
-sfx8 22930307:2 (push block)
+Block create 22930307:2 (push block)
 sfx9 47474505:2 (light error)
 sfx10 57390700:2 (goal)
 sfx11 86141708:2 (light bridge)
@@ -2480,6 +2548,7 @@ LightBridgeStarter:directions
 
 
 BlockPlayer, Wall, DarkWall , PortalGunTM
+Clone, Clonify
 DarkWallSprite
 BlockCorner:up:left:color
 BlockCorner:down:left:color
@@ -2542,8 +2611,6 @@ RigidEnteringPortal2
 RigidLeavingPortal2
 BPEnteringPortal1, BPLeavingPortal1
 BPEnteringPortal2, BPLeavingPortal2
-NoPortal1
-NoPortal2
 Shot:portal_color:directions, ShotF:portal_color:directions
 ColorToggle
 MouseButton:horizontal
@@ -2561,7 +2628,6 @@ ThroughPortal:right
 ThroughPortal:left
 ThroughPortal:down
 
-FutureUsed
 RigidNextToPortal
 UnmovablePortal
 
@@ -2569,11 +2635,18 @@ ErrorSprite
 ConveyorLeft
 
 JustTurned
-Pointer
-PointerEnd, EmptySpot
 GoalSoundSprite
 CellOdd, CellEven
 MissingPlayer
+
+PullingThroughPortal:orange
+PullingThroughPortal:blue
+CloneWant:portal_color:directions
+Destination:left
+Destination:right
+Destination:up
+Destination:down
+CanMovePortal:portal_color
 
 ======
 RULES
@@ -2657,20 +2730,20 @@ is dead and thus undo will work in one press )
 directions weapon_status [ Want:directions Player:weapon_status     no Player:directions ] -> [ Player:weapon_status:directions     JustTurned ]
 
 (Add Origin to the direction)
-directions [ Player:directions Want:directions ] -> [ Player:directions Want:directions Origin:directions ]
+directions [ Player:directions Want:directions ] -> [ Player:directions Want:directions  ]
 
 
 (Move player after turning unless there was water or a white object next )
 [ Background water no LightBridge ] -> [ water action Background ]
-[ Player:> JustTurned | no WithWhite stationary Background ] -> [ Player:> Want:> Origin:> | Background ]
+[ Player:> JustTurned | no WithWhite stationary Background ] -> [ Player:> Want:>  | Background ]
 [ action Background ] -> [ Background ]
 
 
 (..)
-[ ConveyorLeft Block ] -> [ OriginL WantL Block ConveyorLeft ]
+[ ConveyorLeft Block ] -> [ WantL Block ConveyorLeft ]
 
 (If a disarmed player moves towards the portal gun, add the GotGun helper and play fx)
-[ Player:disarmed:> Origin Want:> | PortalGunTM ] -> [ | Player:disarmed:front GotGun ] sfx1
+[ Player:disarmed:> Want:> | PortalGunTM ] -> [ | Player:disarmed:front GotGun ] sfx1
 
 (A disarmed player gets a portal gun, thus gains the blue property. Man I love PatternScript )
 [ Player:disarmed GotGun ] -> [ Player:blue:front ] checkpoint message After aiming, press 'X' to shoot. You can change the color with a mouse click.
@@ -2760,524 +2833,7 @@ portal_color player_face [ ColorToggle ][ Player:portal_color:player_face ] -> [
 portal_color [ Portal:portal_color:> ActivePortal:> | With:< ] -> [ Portal:portal_color:> ActivePortal:> UnmovablePortal | With:< RigidNexttoPortal:< ]
 
 
-(===========================================================================================
-BEGINNING OF MOVEMENT LOGIC
-
-Before rewrite, it generated 14437 instructions
-)
-
-
-(  spread  )
-startloop
-
-
-
-  left  [ BlockPlayer WantL No ActivePortal:left  | Block No WantL No ActivePortal:right No UnmovablePortal ] -> [ BlockPlayer WantL | Block WantL ]
-  right [ BlockPlayer WantR No ActivePortal:right | Block No WantR No ActivePortal:left  No UnmovablePortal ] -> [ BlockPlayer WantR | Block WantR ]
-  down  [ BlockPlayer WantD No ActivePortal:down  | Block No WantD No ActivePortal:up    No UnmovablePortal ] -> [ BlockPlayer WantD | Block WantD ]
-  up    [ BlockPlayer WantU No ActivePortal:up    | Block No WantU No ActivePortal:down  No UnmovablePortal ] -> [ BlockPlayer WantU | Block WantU ]
-
-
-  left  [ WantL With:left | With:right no WantL ] -> [ WantL With:left | With:right WantL ]
-  right [ WantL With:right | With:left no WantL ] -> [ WantL With:right | With:left WantL ]
-  up    [ WantL With:up | With:down no WantL ] -> [ WantL With:up | With:down WantL ]
-  down  [ WantL With:down | With:up no WantL ] -> [ WantL With:down | With:up WantL ]
-
-  left  [ WantR With:left | With:right no WantR ] -> [ WantR With:left | With:right WantR ]
-  right [ WantR With:right | With:left no WantR ] -> [ WantR With:right | With:left WantR ]
-  up    [ WantR With:up | With:down no WantR ] -> [ WantR With:up | With:down WantR ]
-  down  [ WantR With:down | With:up no WantR ] -> [ WantR With:down | With:up WantR ]
-
-  left  [ WantU With:left | With:right no WantU ] -> [ WantU With:left | With:right WantU ]
-  right [ WantU With:right | With:left no WantU ] -> [ WantU With:right | With:left WantU ]
-  up    [ WantU With:up | With:down no WantU ] -> [ WantU With:up | With:down WantU ]
-  down  [ WantU With:down | With:up no WantU ] -> [ WantU With:down | With:up WantU ]
-
-  left  [ WantD With:left | With:right no WantD ] -> [ WantD With:left | With:right WantD ]
-  right [ WantD With:right | With:left no WantD ] -> [ WantD With:right | With:left WantD ]
-  up    [ WantD With:up | With:down no WantD ] -> [ WantD With:up | With:down WantD ]
-  down  [ WantD With:down | With:up no WantD ] -> [ WantD With:down | With:up WantD ]
-
-
-
-  ( Spread rigidity through portals )
-  right [ Portal:blue:right| WantR With:left no RigidLeavingPortal1 ] -> [ Portal:blue:right UnmovablePortal | WantR With:left RigidLeavingPortal1 ]
-  left  [ Portal:blue:left| WantL With:right no RigidLeavingPortal1 ] -> [ Portal:blue:left UnmovablePortal | WantL With:right RigidLeavingPortal1 ]
-  up    [ Portal:blue:up| WantU With:down no RigidLeavingPortal1 ] -> [ Portal:blue:up UnmovablePortal | WantU With:down RigidLeavingPortal1 ]
-  down  [ Portal:blue:down| WantD With:up no RigidLeavingPortal1 ] -> [ Portal:blue:down UnmovablePortal | WantD With:up RigidLeavingPortal1 ]
-  right [ Portal:orange:right| WantR With:left no RigidLeavingPortal2 ] -> [ Portal:orange:right UnmovablePortal | WantR With:left RigidLeavingPortal2 ]
-  left  [ Portal:orange:left| WantL With:right no RigidLeavingPortal2 ] -> [ Portal:orange:left UnmovablePortal | WantL With:right RigidLeavingPortal2 ]
-  up    [ Portal:orange:up| WantU With:down no RigidLeavingPortal2 ] -> [ Portal:orange:up UnmovablePortal | WantU With:down RigidLeavingPortal2 ]
-  down  [ Portal:orange:down| WantD With:up no RigidLeavingPortal2 ] -> [ Portal:orange:down UnmovablePortal | WantD With:up RigidLeavingPortal2 ]
-  
-  right [ Portal:blue:right| WantL With:left no RigidEnteringPortal1] -> [ Portal:blue:right UnmovablePortal | WantL With:left RigidEnteringPortal1]
-  left  [ Portal:blue:left| WantR With:right no RigidEnteringPortal1] -> [ Portal:blue:left UnmovablePortal | WantR With:right RigidEnteringPortal1]
-  up    [ Portal:blue:up| WantD With:down no RigidEnteringPortal1] -> [ Portal:blue:up UnmovablePortal | WantD With:down RigidEnteringPortal1]
-  down  [ Portal:blue:down| WantU With:up no RigidEnteringPortal1] -> [ Portal:blue:down UnmovablePortal | WantU With:up RigidEnteringPortal1]
-  right [ Portal:orange:right| WantL With:left no RigidEnteringPortal2] -> [ Portal:orange:right UnmovablePortal | WantL With:left RigidEnteringPortal2]
-  left  [ Portal:orange:left| WantR With:right no RigidEnteringPortal2] -> [ Portal:orange:left UnmovablePortal | WantR With:right RigidEnteringPortal2]
-  up    [ Portal:orange:up| WantD With:down no RigidEnteringPortal2] -> [ Portal:orange:up UnmovablePortal | WantD With:down RigidEnteringPortal2]
-  down  [ Portal:orange:down| WantU With:up no RigidEnteringPortal2] -> [ Portal:orange:down UnmovablePortal | WantU With:up RigidEnteringPortal2]  
-  
-  right [ Portal:blue:right| With:left no WantR ][ RigidEnteringPortal2 ] -> [ Portal:blue:right UnmovablePortal | With:left WantR ][ RigidEnteringPortal2 ]
-  left  [ Portal:blue:left| With:right no WantL ][ RigidEnteringPortal2 ] -> [ Portal:blue:left UnmovablePortal | With:right WantL ][ RigidEnteringPortal2 ]
-  up    [ Portal:blue:up| With:down no WantU ][ RigidEnteringPortal2 ] -> [ Portal:blue:up UnmovablePortal | With:down WantU ][ RigidEnteringPortal2 ]
-  down  [ Portal:blue:down| With:up no WantD ][ RigidEnteringPortal2 ] -> [ Portal:blue:down UnmovablePortal | With:up WantD ][ RigidEnteringPortal2 ]
-  right [ Portal:orange:right| With:left no WantR ][ RigidEnteringPortal1 ] -> [ Portal:orange:right UnmovablePortal | With:left WantR ][ RigidEnteringPortal1 ]
-  left  [ Portal:orange:left| With:right no WantL ][ RigidEnteringPortal1 ] -> [ Portal:orange:left UnmovablePortal | With:right WantL ][ RigidEnteringPortal1 ]
-  up    [ Portal:orange:up| With:down no WantU ][ RigidEnteringPortal1 ] -> [ Portal:orange:up UnmovablePortal | With:down WantU ][ RigidEnteringPortal1 ]
-  down  [ Portal:orange:down| With:up no WantD ][ RigidEnteringPortal1 ] -> [ Portal:orange:down UnmovablePortal | With:up WantD ][ RigidEnteringPortal1 ]
-
-  right [ Portal:blue:right| With:left no WantL ][ RigidLeavingPortal2  ] -> [ Portal:blue:right UnmovablePortal | With:left WantL ][ RigidLeavingPortal2  ]
-  left  [ Portal:blue:left| With:right no WantR ][ RigidLeavingPortal2  ] -> [ Portal:blue:left UnmovablePortal | With:right WantR ][ RigidLeavingPortal2  ]
-  up    [ Portal:blue:up| With:down no WantD ][ RigidLeavingPortal2  ] -> [ Portal:blue:up UnmovablePortal | With:down WantD ][ RigidLeavingPortal2  ]
-  down  [ Portal:blue:down| With:up no WantU ][ RigidLeavingPortal2  ] -> [ Portal:blue:down UnmovablePortal | With:up WantU ][ RigidLeavingPortal2  ]
-  right [ Portal:orange:right| With:left no WantL ][ RigidLeavingPortal1  ] -> [ Portal:orange:right UnmovablePortal | With:left WantL ][ RigidLeavingPortal1  ]
-  left  [ Portal:orange:left| With:right no WantR ][ RigidLeavingPortal1  ] -> [ Portal:orange:left UnmovablePortal | With:right WantR ][ RigidLeavingPortal1  ]
-  up    [ Portal:orange:up| With:down no WantD ][ RigidLeavingPortal1  ] -> [ Portal:orange:up UnmovablePortal | With:down WantD ][ RigidLeavingPortal1  ]
-  down  [ Portal:orange:down| With:up no WantU ][ RigidLeavingPortal1  ] -> [ Portal:orange:down UnmovablePortal | With:up WantU ][ RigidLeavingPortal1  ]
-  
-  ( BlockPlayer pushing through portal )
-  right [ Portal:blue:right ActivePortal:right | BlockPlayer WantL no BPEnteringPortal1 no With:up no With:down ] -> [ Portal:blue:right ActivePortal:right UnmovablePortal | BlockPlayer WantL BPEnteringPortal1 ]
-  left  [ Portal:blue:left ActivePortal:left  | BlockPlayer WantR no BPEnteringPortal1 no With:up no With:down ] -> [ Portal:blue:left ActivePortal:left  UnmovablePortal | BlockPlayer WantR BPEnteringPortal1 ]
-  up    [ Portal:blue:up ActivePortal:up    | BlockPlayer WantD no BPEnteringPortal1 no With:right no With:left ] -> [ Portal:blue:up ActivePortal:up    UnmovablePortal | BlockPlayer WantD BPEnteringPortal1 ]
-  down  [ Portal:blue:down ActivePortal:down  | BlockPlayer WantU no BPEnteringPortal1 no With:right no With:left ] -> [ Portal:blue:down ActivePortal:down  UnmovablePortal | BlockPlayer WantU BPEnteringPortal1 ]
-  right [ Portal:orange:right ActivePortal:right | BlockPlayer WantL no BPEnteringPortal2 no With:up no With:down ] -> [ Portal:orange:right ActivePortal:right UnmovablePortal | BlockPlayer WantL BPEnteringPortal2 ]
-  left  [ Portal:orange:left ActivePortal:left  | BlockPlayer WantR no BPEnteringPortal2 no With:up no With:down ] -> [ Portal:orange:left ActivePortal:left  UnmovablePortal | BlockPlayer WantR BPEnteringPortal2 ]
-  up    [ Portal:orange:up ActivePortal:up    | BlockPlayer WantD no BPEnteringPortal2 no With:right no With:left ] -> [ Portal:orange:up ActivePortal:up    UnmovablePortal | BlockPlayer WantD BPEnteringPortal2 ]
-  down  [ Portal:orange:down ActivePortal:down  | BlockPlayer WantU no BPEnteringPortal2 no With:right no With:left ] -> [ Portal:orange:down ActivePortal:down  UnmovablePortal | BlockPlayer WantU BPEnteringPortal2 ]
-  
-  right [ Portal:blue:right| BlockPlayer No WantR ][ BPEnteringPortal2 ] -> [ Portal:blue:right UnmovablePortal | BlockPlayer WantR ][ BPEnteringPortal2 ]
-  left  [ Portal:blue:left| BlockPlayer No WantL ][ BPEnteringPortal2 ] -> [ Portal:blue:left UnmovablePortal | BlockPlayer WantL ][ BPEnteringPortal2 ]
-  up    [ Portal:blue:up| BlockPlayer No WantU ][ BPEnteringPortal2 ] -> [ Portal:blue:up UnmovablePortal | BlockPlayer WantU ][ BPEnteringPortal2 ]
-  down  [ Portal:blue:down| BlockPlayer No WantD ][ BPEnteringPortal2 ] -> [ Portal:blue:down UnmovablePortal | BlockPlayer WantD ][ BPEnteringPortal2 ]
-  right [ Portal:orange:right| BlockPlayer No WantR ][ BPEnteringPortal1 ] -> [ Portal:orange:right UnmovablePortal | BlockPlayer WantR ][ BPEnteringPortal1 ]
-  left  [ Portal:orange:left| BlockPlayer No WantL ][ BPEnteringPortal1 ] -> [ Portal:orange:left UnmovablePortal | BlockPlayer WantL ][ BPEnteringPortal1 ]
-  up    [ Portal:orange:up| BlockPlayer No WantU ][ BPEnteringPortal1 ] -> [ Portal:orange:up UnmovablePortal | BlockPlayer WantU ][ BPEnteringPortal1 ]
-  down  [ Portal:orange:down| BlockPlayer No WantD ][ BPEnteringPortal1 ] -> [ Portal:orange:down UnmovablePortal | BlockPlayer WantD ][ BPEnteringPortal1 ]
-
-  [ Portal:blue    UnmovablePortal ][ Portal:orange No UnmovablePortal ] -> [ Portal:blue UnmovablePortal ][ Portal:orange UnmovablePortal ]
-  [ Portal:blue No UnmovablePortal ][ Portal:orange    UnmovablePortal ] -> [ Portal:blue UnmovablePortal ][ Portal:orange UnmovablePortal ]
-
-endloop
-
-(  detect error )
-
-
-
-[ FutureUsed ] -> []
-( detect objects moving to the same place )
-right [ WantR no BPEnteringPortal1 no BPEnteringPortal2 | FutureUsed ] -> [ WantR | FutureUsed Error ]
-right [ WantR no BPEnteringPortal1 no BPEnteringPortal2 |            ] -> [       WantR | FutureUsed ]
-
-left  [ WantL no BPEnteringPortal1 no BPEnteringPortal2 | FutureUsed ] -> [ WantL | FutureUsed Error ]
-left  [ WantL no BPEnteringPortal1 no BPEnteringPortal2 |            ] -> [       WantL | FutureUsed ]
-
-up    [ WantU no BPEnteringPortal1 no BPEnteringPortal2 | FutureUsed ] -> [ WantU | FutureUsed Error ]
-up    [ WantU no BPEnteringPortal1 no BPEnteringPortal2 |            ] -> [       WantU | FutureUsed ]
-
-down  [ WantD no BPEnteringPortal1 no BPEnteringPortal2 | FutureUsed ] -> [  WantD | FutureUsed Error ]
-down  [ WantD no BPEnteringPortal1 no BPEnteringPortal2 |            ] -> [       WantD | FutureUsed ]
-
-
-right [ WantR BPEnteringPortal1 ][ PortalExit:orange FutureUsed ] -> [ Error WantR BPEnteringPortal1 ][ PortalExit:orange FutureUsed ]
-right [ WantR BPEnteringPortal1 ][ PortalExit:orange            ] -> [       WantR BPEnteringPortal1 ][ PortalExit:orange FutureUsed ]
-right [ WantR BPEnteringPortal2 ][ PortalExit:blue   FutureUsed ] -> [ Error WantR BPEnteringPortal2 ][ PortalExit:blue   FutureUsed ]
-right [ WantR BPEnteringPortal2 ][ PortalExit:blue              ] -> [       WantR BPEnteringPortal2 ][ PortalExit:blue   FutureUsed ]
-
-left  [ WantL BPEnteringPortal1 ][ PortalExit:orange FutureUsed ] -> [ Error WantL BPEnteringPortal1 ][ PortalExit:orange FutureUsed ]
-left  [ WantL BPEnteringPortal1 ][ PortalExit:orange            ] -> [       WantL BPEnteringPortal1 ][ PortalExit:orange FutureUsed ]
-left  [ WantL BPEnteringPortal2 ][ PortalExit:blue   FutureUsed ] -> [ Error WantL BPEnteringPortal2 ][ PortalExit:blue   FutureUsed ]
-left  [ WantL BPEnteringPortal2 ][ PortalExit:blue              ] -> [       WantL BPEnteringPortal2 ][ PortalExit:blue   FutureUsed ]
-
-up    [ WantU BPEnteringPortal1 ][ PortalExit:orange FutureUsed ] -> [ Error WantU BPEnteringPortal1 ][ PortalExit:orange FutureUsed ]
-up    [ WantU BPEnteringPortal1 ][ PortalExit:orange            ] -> [       WantU BPEnteringPortal1 ][ PortalExit:orange FutureUsed ]
-up    [ WantU BPEnteringPortal2 ][ PortalExit:blue   FutureUsed ] -> [ Error WantU BPEnteringPortal2 ][ PortalExit:blue   FutureUsed ]
-up    [ WantU BPEnteringPortal2 ][ PortalExit:blue              ] -> [       WantU BPEnteringPortal2 ][ PortalExit:blue   FutureUsed ]
-
-down  [ WantD BPEnteringPortal1 ][ PortalExit:orange FutureUsed ] -> [ Error WantD BPEnteringPortal1 ][ PortalExit:orange FutureUsed ]
-down  [ WantD BPEnteringPortal1 ][ PortalExit:orange            ] -> [       WantD BPEnteringPortal1 ][ PortalExit:orange FutureUsed ]
-down  [ WantD BPEnteringPortal2 ][ PortalExit:blue   FutureUsed ] -> [ Error WantD BPEnteringPortal2 ][ PortalExit:blue   FutureUsed ]
-down  [ WantD BPEnteringPortal2 ][ PortalExit:blue              ] -> [       WantD BPEnteringPortal2 ][ PortalExit:blue   FutureUsed ]
-
-( /detect objects moving to the same place )
-
-
-
-startloop
-  [ BPEnteringPortal1 ][ Portal:blue ] -> [ BPEnteringPortal1 ][ UnmovablePortal Portal:blue ]
-  [ BPEnteringPortal2 ][ Portal:orange ] -> [ BPEnteringPortal2 ][ UnmovablePortal Portal:orange ]
-
-  (   hit something then add error)
-  left  [ WantL No Error | WithCollision no WantL no ActivePortal:right ] -> [ WantL Error PostError | WithCollision ]
-  right [ WantR No Error | WithCollision no WantR no ActivePortal:left  ] -> [ WantR Error PostError | WithCollision ]
-  down  [ WantD No Error | WithCollision no WantD no ActivePortal:up    ] -> [ WantD Error PostError | WithCollision ]
-  up    [ WantU No Error | WithCollision no WantU no ActivePortal:down  ] -> [ WantU Error PostError | WithCollision ]
-
-
-  left  [ WantL No Error UnmovablePortal ] -> [ WantL Error PostError UnmovablePortal ]
-  right [ WantR No Error UnmovablePortal ] -> [ WantR Error PostError UnmovablePortal ]
-  down  [ WantD No Error UnmovablePortal ] -> [ WantD Error PostError UnmovablePortal ]
-  up    [ WantU No Error UnmovablePortal ] -> [ WantU Error PostError UnmovablePortal ]
-
-
-  ( Attempt to push rigid through portal )
-
-  (left [ wantL No Error WithVertical   | ActivePortal:right ] -> [ wantL Error WithVertical   | ActivePortal:right ]
-  right[ wantR No Error WithVertical   | ActivePortal:left  ] -> [ wantR Error WithVertical   | ActivePortal:left ]
-  down [ wantD No Error WithHorizontal | ActivePortal:up    ] -> [ wantD Error WithHorizontal | ActivePortal:up ]
-  up   [ wantU No Error WithHorizontal | ActivePortal:down  ] -> [ wantU Error WithHorizontal | ActivePortal:down ])
-
-  ( Cant cut )
-  [ Want:vertical   RigidNextToPortal:horizontal ] -> [ Want:vertical RigidNextToPortal:horizontal Error ]
-  [ Want:horizontal RigidNextToPortal:vertical   ] -> [ Want:horizontal  RigidNextToPortal:vertical Error ]
-  
-  right [ ActivePortal:right | WantL WithVertical ] -> [ ActivePortal:right | WantL WithVertical Error ] 
-  left  [ ActivePortal:left  | WantR WithVertical ] -> [ ActivePortal:left  | WantR WithVertical Error ] 
-  up    [ ActivePortal:up    | WantD WithHorizontal]-> [ ActivePortal:up    | WantD WithHorizontal Error ] 
-  down  [ ActivePortal:down  | WantU WithHorizontal]-> [ ActivePortal:down  | WantU WithHorizontal Error ] 
-
-
-
-
-  ( Cant push and cut )
-  [ Want Portal:blue No Error ][ RigidNextToPortal ] -> [ Want Portal:blue Error ][ RigidNextToPortal ] 
-  [ Want Portal:orange No Error ][ RigidNextToPortal ] -> [ Want Portal:orange Error ][ RigidNextToPortal ] 
-  
-  ( Contradiction, then add error )
-  [ WantL WantNotL ] -> [ WantL WantNotL Error ]
-  [ WantR WantNotR ] -> [ WantR WantNotR Error ]
-  [ WantD WantNotD ] -> [ WantD WantNotD Error ]
-  [ WantU WantNotU ] -> [ WantU WantNotU Error ]
-
-  (   hit error , then add error)
-  left [ WantL No Error | WithCollision Error ] -> [ WantL Error PostError | WithCollision Error ]
-  right [ WantR No Error | WithCollision Error ] -> [ WantR Error PostError | WithCollision Error ]
-  down [ WantD No Error | WithCollision Error ] -> [ WantD Error PostError | WithCollision Error ]
-  up [ WantU No Error | WithCollision Error ] -> [ WantU Error PostError | WithCollision Error ]
-
-
-  (   player attempting to push error, then add error)
-  left [ BlockPlayer WantL no Error | Block WantL Error ] -> [  BlockPlayer WantL Error | Block WantL Error ]
-  right [  BlockPlayer WantR no Error | Block WantR Error ] -> [  BlockPlayer WantR Error | Block WantR Error ]
-  down [  BlockPlayer WantD no Error | Block WantD Error ] -> [  BlockPlayer WantD Error | Block WantD Error ]
-  up [  BlockPlayer WantU no Error | Block WantU Error ] -> [  BlockPlayer WantU Error | Block WantU Error ]
-
-
-  (   contiguous to error, then add error)
-  left  [ Want With:left Error | With:right Want no Error ] -> [ Want With:left Error | With:right Want Error ]
-  right  [ Want With:right Error | With:left Want no Error ] -> [ Want With:right Error | With:left Want Error ]
-  down  [ Want With:down Error | With:up Want no Error ] -> [ Want With:down Error | With:up Want Error ]
-  up  [ Want With:up Error | With:down Want no Error ] -> [ Want With:up Error | With:down Want Error ]
-
-  ( Portal attempting to enter another portal )
-  right [ Portal:blue wantR | Portal:orange:left] -> [ Portal:blue wantR Error | Portal:orange:left]
-  left  [ Portal:blue wantL | Portal:orange:right] -> [ Portal:blue wantL Error | Portal:orange:right]
-  up    [ Portal:blue wantU | Portal:orange:down] -> [ Portal:blue wantU Error | Portal:orange:down]
-  down  [ Portal:blue wantD | Portal:orange:up] -> [ Portal:blue wantD Error | Portal:orange:up]
-  right [ Portal:orange wantR | Portal:blue:left] -> [ Portal:orange wantR Error | Portal:blue:left]
-  left  [ Portal:orange wantL | Portal:blue:right] -> [ Portal:orange wantL Error | Portal:blue:right]
-  up    [ Portal:orange wantU | Portal:blue:down] -> [ Portal:orange wantU Error | Portal:blue:down]
-  down  [ Portal:orange wantD | Portal:blue:up] -> [ Portal:orange wantD Error | Portal:blue:up]
-
-
-  ( > spread errors through portals )
-  right [ Portal:blue:right| BlockPlayer WantR no BPLeavingPortal1 ] -> [ Portal:blue:right| BlockPlayer WantR BPLeavingPortal1 ]
-  left  [ Portal:blue:left| BlockPlayer WantL no BPLeavingPortal1 ] -> [ Portal:blue:left| BlockPlayer WantL BPLeavingPortal1 ]
-  up    [ Portal:blue:up| BlockPlayer WantU no BPLeavingPortal1 ] -> [ Portal:blue:up| BlockPlayer WantU BPLeavingPortal1 ]
-  down  [ Portal:blue:down| BlockPlayer WantD no BPLeavingPortal1 ] -> [ Portal:blue:down| BlockPlayer WantD BPLeavingPortal1 ]
-  right [ Portal:orange:right| BlockPlayer WantR no BPLeavingPortal2 ] -> [ Portal:orange:right| BlockPlayer WantR BPLeavingPortal2 ]
-  left  [ Portal:orange:left| BlockPlayer WantL no BPLeavingPortal2 ] -> [ Portal:orange:left| BlockPlayer WantL BPLeavingPortal2 ]
-  up    [ Portal:orange:up| BlockPlayer WantU no BPLeavingPortal2 ] -> [ Portal:orange:up| BlockPlayer WantU BPLeavingPortal2 ]
-  down  [ Portal:orange:down| BlockPlayer WantD no BPLeavingPortal2 ] -> [ Portal:orange:down| BlockPlayer WantD BPLeavingPortal2 ]
-  
-  [ BPEnteringPortal1 no Error ][ BPLeavingPortal2 Error ] -> [ BPEnteringPortal1 Error ][ BPLeavingPortal2 Error ]
-  [ BPEnteringPortal2 no Error ][ BPLeavingPortal1 Error ] -> [ BPEnteringPortal2 Error ][ BPLeavingPortal1 Error ]
-  
-
-endloop
-
-
-
-
-( Remove wants)
-[ Want ] -> [  ]
-
-( Spread Wants again , but this time can't spread through errors)
-
-[ OriginL no Error ] -> [WantL]
-[ OriginR no Error ] -> [WantR]
-[ OriginD no Error ] -> [WantD]
-[ OriginU no Error ] -> [WantU]
-
-
-[ Origin ] -> []
-
-[ RigidEnteringPortal1 ] -> []
-[ RigidEnteringPortal2 ] -> []
-[ RigidLeavingPortal1 ] -> []
-[ RigidLeavingPortal2 ] -> []
-[ BPEnteringPortal1 ] -> []
-[ BPEnteringPortal2 ] -> []
-[ BPLeavingPortal1 ] -> []
-[ BPLeavingPortal2 ] -> []
-
-
-
-(  spread again, blocked by errors )
-
-
-startloop
-  left  [ BlockPlayer WantL No BPEnteringPortal1 No BPEnteringPortal2 | Block No WantL No Error No UnmovablePortal No ActivePortal:right ] -> [ BlockPlayer WantL | Block WantL ]
-  right [ BlockPlayer WantR No BPEnteringPortal1 No BPEnteringPortal2 | Block No WantR No Error No UnmovablePortal No ActivePortal:left ] -> [ BlockPlayer WantR | Block WantR ]
-  down  [ BlockPlayer WantD No BPEnteringPortal1 No BPEnteringPortal2 | Block No WantD no Error No UnmovablePortal No ActivePortal:up ] -> [ BlockPlayer WantD | Block WantD ]
-  up    [ BlockPlayer WantU No BPEnteringPortal1 No BPEnteringPortal2 | Block No WantU no Error No UnmovablePortal No ActivePortal:down ] -> [ BlockPlayer WantU | Block WantU ]
-
-
-
-  left  [ Want With:left | With:right no Want no Error ] -> [ Want With:left | With:right Want ]
-  right  [ Want With:right | With:left no Want no Error ] -> [ Want With:right | With:left Want ]
-  up  [ Want With:up | With:down no Want no Error ] -> [ Want With:up | With:down Want ]
-  down  [ Want With:down | With:up no Want no Error ] -> [ Want With:down | With:up Want ]
- 
-  ( Spread rigidity through portals minus error )
-  right [ Portal:blue:right| WantR With:left no RigidLeavingPortal1  ] -> [ Portal:blue:right| WantR With:left RigidLeavingPortal1 ]
-  left  [ Portal:blue:left| WantL With:right no RigidLeavingPortal1 ] -> [ Portal:blue:left| WantL With:right RigidLeavingPortal1 ]
-  up    [ Portal:blue:up| WantU With:down no RigidLeavingPortal1 ] -> [ Portal:blue:up| WantU With:down RigidLeavingPortal1 ]
-  down  [ Portal:blue:down| WantD With:up no RigidLeavingPortal1 ] -> [ Portal:blue:down| WantD With:up RigidLeavingPortal1 ]
-  right [ Portal:orange:right| WantR With:left no RigidLeavingPortal2   ] -> [ Portal:orange:right| WantR With:left RigidLeavingPortal2 ]
-  left  [ Portal:orange:left| WantL With:right no RigidLeavingPortal2   ] -> [ Portal:orange:left| WantL With:right RigidLeavingPortal2 ]
-  up    [ Portal:orange:up| WantU With:down no RigidLeavingPortal2 ] -> [ Portal:orange:up| WantU With:down RigidLeavingPortal2 ]
-  down  [ Portal:orange:down| WantD With:up no RigidLeavingPortal2 ] -> [ Portal:orange:down| WantD With:up RigidLeavingPortal2 ]
-  
-  right [ Portal:blue:right| WantL With:left no RigidEnteringPortal1 no WithVertical  ] -> [ Portal:blue:right| WantL With:left RigidEnteringPortal1]
-  left  [ Portal:blue:left| WantR With:right no RigidEnteringPortal1 no WithVertical  ] -> [ Portal:blue:left| WantR With:right RigidEnteringPortal1]
-  up    [ Portal:blue:up| WantD With:down no RigidEnteringPortal1 no WithHorizontal] -> [ Portal:blue:up| WantD With:down RigidEnteringPortal1]
-  down  [ Portal:blue:down| WantU With:up no RigidEnteringPortal1 no WithHorizontal] -> [ Portal:blue:down| WantU With:up RigidEnteringPortal1]
-  right [ Portal:orange:right| WantL With:left no RigidEnteringPortal2 no WithVertical  ] -> [ Portal:orange:right| WantL With:left RigidEnteringPortal2]
-  left  [ Portal:orange:left| WantR With:right no RigidEnteringPortal2 no WithVertical  ] -> [ Portal:orange:left| WantR With:right RigidEnteringPortal2]
-  up    [ Portal:orange:up| WantD With:down no RigidEnteringPortal2 no WithHorizontal] -> [ Portal:orange:up| WantD With:down RigidEnteringPortal2]
-  down  [ Portal:orange:down| WantU With:up no RigidEnteringPortal2 no WithHorizontal] -> [ Portal:orange:down| WantU With:up RigidEnteringPortal2]  
-  
-  right [ Portal:blue:right| With:left no WantR no Error ][ RigidEnteringPortal2 ] -> [ Portal:blue:right| With:left WantR ][ RigidEnteringPortal2 ]
-  left  [ Portal:blue:left| With:right no WantL no Error ][ RigidEnteringPortal2 ] -> [ Portal:blue:left| With:right WantL ][ RigidEnteringPortal2 ]
-  up    [ Portal:blue:up| With:down no WantU no Error ][ RigidEnteringPortal2 ] -> [ Portal:blue:up| With:down WantU ][ RigidEnteringPortal2 ]
-  down  [ Portal:blue:down| With:up no WantD no Error ][ RigidEnteringPortal2 ] -> [ Portal:blue:down| With:up WantD ][ RigidEnteringPortal2 ]
-  right [ Portal:orange:right| With:left no WantR no Error ][ RigidEnteringPortal1 ] -> [ Portal:orange:right| With:left WantR ][ RigidEnteringPortal1 ]
-  left  [ Portal:orange:left| With:right no WantL no Error ][ RigidEnteringPortal1 ] -> [ Portal:orange:left| With:right WantL ][ RigidEnteringPortal1 ]
-  up    [ Portal:orange:up| With:down no WantU no Error ][ RigidEnteringPortal1 ] -> [ Portal:orange:up| With:down WantU ][ RigidEnteringPortal1 ]
-  down  [ Portal:orange:down| With:up no WantD no Error ][ RigidEnteringPortal1 ] -> [ Portal:orange:down| With:up WantD ][ RigidEnteringPortal1 ]
-
-  right [ Portal:blue:right| With:left no WantL no Error ][ RigidLeavingPortal2  ] -> [ Portal:blue:right| With:left WantL ][ RigidLeavingPortal2  ]
-  left  [ Portal:blue:left| With:right no WantR no Error ][ RigidLeavingPortal2  ] -> [ Portal:blue:left| With:right WantR ][ RigidLeavingPortal2  ]
-  up    [ Portal:blue:up| With:down no WantD no Error ][ RigidLeavingPortal2  ] -> [ Portal:blue:up| With:down WantD ][ RigidLeavingPortal2  ]
-  down  [ Portal:blue:down| With:up no WantU no Error ][ RigidLeavingPortal2  ] -> [ Portal:blue:down| With:up WantU ][ RigidLeavingPortal2  ]
-  right [ Portal:orange:right| With:left no WantL no Error ][ RigidLeavingPortal1  ] -> [ Portal:orange:right| With:left WantL ][ RigidLeavingPortal1  ]
-  left  [ Portal:orange:left| With:right no WantR no Error ][ RigidLeavingPortal1  ] -> [ Portal:orange:left| With:right WantR ][ RigidLeavingPortal1  ]
-  up    [ Portal:orange:up| With:down no WantD no Error ][ RigidLeavingPortal1  ] -> [ Portal:orange:up| With:down WantD ][ RigidLeavingPortal1  ]
-  down  [ Portal:orange:down| With:up no WantU no Error ][ RigidLeavingPortal1  ] -> [ Portal:orange:down| With:up WantU ][ RigidLeavingPortal1  ]
-  
-  ( BlockPlayer pushing through portal, no error )
-  right [ Portal:blue:right| BlockPlayer WantL no BPEnteringPortal1 no WithVertical   ] -> [ Portal:blue:right| BlockPlayer WantL BPEnteringPortal1 ]
-  left  [ Portal:blue:left| BlockPlayer WantR no BPEnteringPortal1 no WithVertical   ] -> [ Portal:blue:left| BlockPlayer WantR BPEnteringPortal1 ]
-  up    [ Portal:blue:up| BlockPlayer WantD no BPEnteringPortal1 no WithHorizontal ] -> [ Portal:blue:up| BlockPlayer WantD BPEnteringPortal1 ]
-  down  [ Portal:blue:down| BlockPlayer WantU no BPEnteringPortal1 no WithHorizontal ] -> [ Portal:blue:down| BlockPlayer WantU BPEnteringPortal1 ]
-  right [ Portal:orange:right| BlockPlayer WantL no BPEnteringPortal2 no WithVertical   ] -> [ Portal:orange:right| BlockPlayer WantL BPEnteringPortal2 ]
-  left  [ Portal:orange:left| BlockPlayer WantR no BPEnteringPortal2 no WithVertical   ] -> [ Portal:orange:left| BlockPlayer WantR BPEnteringPortal2 ]
-  up    [ Portal:orange:up| BlockPlayer WantD no BPEnteringPortal2 no WithHorizontal ] -> [ Portal:orange:up| BlockPlayer WantD BPEnteringPortal2 ]
-  down  [ Portal:orange:down| BlockPlayer WantU no BPEnteringPortal2 no WithHorizontal ] -> [ Portal:orange:down| BlockPlayer WantU BPEnteringPortal2 ]
-  
-  right [ Portal:blue:right| BlockPlayer No WantR no Error ][ BPEnteringPortal2 ] -> [ Portal:blue:right| BlockPlayer WantR ][ BPEnteringPortal2 ]
-  left  [ Portal:blue:left| BlockPlayer No WantL no Error ][ BPEnteringPortal2 ] -> [ Portal:blue:left| BlockPlayer WantL ][ BPEnteringPortal2 ]
-  up    [ Portal:blue:up| BlockPlayer No WantU no Error ][ BPEnteringPortal2 ] -> [ Portal:blue:up| BlockPlayer WantU ][ BPEnteringPortal2 ]
-  down  [ Portal:blue:down| BlockPlayer No WantD no Error ][ BPEnteringPortal2 ] -> [ Portal:blue:down| BlockPlayer WantD ][ BPEnteringPortal2 ]
-  right [ Portal:orange:right| BlockPlayer No WantR no Error ][ BPEnteringPortal1 ] -> [ Portal:orange:right| BlockPlayer WantR ][ BPEnteringPortal1 ]
-  left  [ Portal:orange:left| BlockPlayer No WantL no Error ][ BPEnteringPortal1 ] -> [ Portal:orange:left| BlockPlayer WantL ][ BPEnteringPortal1 ]
-  up    [ Portal:orange:up| BlockPlayer No WantU no Error ][ BPEnteringPortal1 ] -> [ Portal:orange:up| BlockPlayer WantU ][ BPEnteringPortal1 ]
-  down  [ Portal:orange:down| BlockPlayer No WantD no Error ][ BPEnteringPortal1 ] -> [ Portal:orange:down| BlockPlayer WantD ][ BPEnteringPortal1 ]
-
-
-
-endloop
-
-
-
-
-( perform the move )
-[ no Portal:blue ] -> [ NoPortal1 ]
-[ no Portal:orange ] -> [ NoPortal2 ]
-
-[ Block Want ] -> sfx8
-
-
-( detect up cycles , with the help of an empty spot we can solve them )
-[ Pointer ] -> []
-[ EmptySpot ] -> []
-[ PointerEnd ] -> []
-up [ Portal:up | WantU ] -> [ Portal:up | Pointer WantU ]
-startloop
-  up [ Pointer | Portal:down ] -> [ Pointer PointerEnd | Portal:down ]
-  up [ Pointer | WantU no Pointer no Portal:down ] -> [ Pointer | WantU Pointer ]
-endloop
-
-[ PointerEnd WithCollision WantU ][ No WithCollision ] -> [ ][ EmptySpot WithCollision ] sfx4
-up [ Pointer WantU WithCollision | no WithCollision ][ EmptySpot ] -> [  | WithCollision ][ EmptySpot ]
-up [ Portal:up | ][ EmptySpot WithCollision ] -> [ Portal:up | WithCollision ][]
-( /detect up cycles)
-
-( detect down cycles , with the help of an empty spot we can solve them )
-[ Pointer ] -> []
-[ EmptySpot ] -> []
-[ PointerEnd ] -> []
-down [ Portal:down | WantD ] -> [ Portal:down | Pointer WantD ]
-startloop
-  down [ Pointer | Portal:up ] -> [ Pointer PointerEnd | Portal:up ]
-  down [ Pointer | WantD no Pointer no Portal:up ] -> [ Pointer | WantD Pointer ]
-endloop
-
-[ PointerEnd WithCollision WantD ][ No WithCollision ] -> [ ][ EmptySpot WithCollision ] sfx4
-down [ Pointer WantD WithCollision | no WithCollision ][ EmptySpot ] -> [  | WithCollision ][ EmptySpot ]
-down [ Portal:down | ][ EmptySpot WithCollision ] -> [ Portal:down | WithCollision ][]
-( /detect down cycles)
-
-( detect left cycles , with the help of an empty spot we can solve them )
-[ Pointer ] -> []
-[ EmptySpot ] -> []
-[ PointerEnd ] -> []
-left [ Portal:left | WantL ] -> [ Portal:left | Pointer WantL ]
-startloop
-  left [ Pointer | Portal:right ] -> [ Pointer PointerEnd | Portal:right ]
-  left [ Pointer | WantL no Pointer no Portal:right ] -> [ Pointer | WantL Pointer ]
-endloop
-
-[ PointerEnd WithCollision WantL ][ No WithCollision ] -> [ ][ EmptySpot WithCollision ] sfx4
-left [ Pointer WantL WithCollision | no WithCollision ][ EmptySpot ] -> [  | WithCollision ][ EmptySpot ]
-left [ Portal:left | ][ EmptySpot WithCollision ] -> [ Portal:left | WithCollision ][]
-( /detect left cycles)
-
-( detect right cycles , with the help of an empty spot we can solve them )
-[ Pointer ] -> []
-[ EmptySpot ] -> []
-[ PointerEnd ] -> []
-right [ Portal:right | WantR ] -> [ Portal:right | Pointer WantR ]
-startloop
-  right [ Pointer | Portal:left ] -> [ Pointer PointerEnd | Portal:left ]
-  right [ Pointer | WantR no Pointer no Portal:left ] -> [ Pointer | WantR Pointer ]
-endloop
-
-[ PointerEnd WithCollision WantR ][ No WithCollision ] -> [ ][ EmptySpot WithCollision ] sfx4
-right [ Pointer WantR WithCollision | no WithCollision ][ EmptySpot ] -> [  | WithCollision ][ EmptySpot ]
-right [ Portal:right | ][ EmptySpot WithCollision ] -> [ Portal:right | WithCollision ][]
-( /detect right cycles)
-[ Pointer ] -> []
-[ EmptySpot ] -> []
-[ PointerEnd ] -> []
-
-
-
-startloop
-
-
-  (Move with or without portal )
-  left  [ WantL BlockPlayer Portal1OrNothing Portal2OrNothing | No WithCollision No WantL ] -> [ | BlockPlayer Portal1OrNothing Portal2OrNothing ]
-  right [ WantR BlockPlayer Portal1OrNothing Portal2OrNothing | No WithCollision No WantR ] -> [ | BlockPlayer Portal1OrNothing Portal2OrNothing ]
-  up    [ WantU BlockPlayer Portal1OrNothing Portal2OrNothing | No WithCollision No WantU ] -> [ | BlockPlayer Portal1OrNothing Portal2OrNothing ]
-  down  [ WantD BlockPlayer Portal1OrNothing Portal2OrNothing | No WithCollision No WantD ] -> [ | BlockPlayer Portal1OrNothing Portal2OrNothing ]
- 
- 
-  (Teleportation! )    
-  (1RR)
-  right [ Portal:blue:right| WantL BlockPlayer BPEnteringPortal1 ][ PortalExit:orange:right No WithCollision No WantR ] -> [ Portal:blue:right| ][ PortalExit:orange:right BlockPlayer RotateRR ]
-  (1RL)
-  right [ Portal:blue:right| WantL BlockPlayer BPEnteringPortal1 ][ PortalExit:orange:left No WithCollision No WantL ] -> [ Portal:blue:right| ][ PortalExit:orange:left BlockPlayer RotateRL ]
-  (1RU)
-  right [ Portal:blue:right| WantL BlockPlayer BPEnteringPortal1 ][ PortalExit:orange:up No WithCollision No WantU ] -> [ Portal:blue:right| ][ PortalExit:orange:up BlockPlayer RotateRU ]
-  (1RD)
-  right [ Portal:blue:right| WantL BlockPlayer BPEnteringPortal1 ][ PortalExit:orange:down No WithCollision No WantD ] -> [ Portal:blue:right| ][ PortalExit:orange:down BlockPlayer RotateRD ]
-
-  (1LR)
-  left  [ Portal:blue:left| WantR BlockPlayer BPEnteringPortal1 ][ PortalExit:orange:right No WithCollision No WantR ] -> [ Portal:blue:left| ][ PortalExit:orange:right BlockPlayer RotateLR ]
-  (1LL)
-  left  [ Portal:blue:left| WantR BlockPlayer BPEnteringPortal1 ][ PortalExit:orange:left No WithCollision No WantL ] -> [ Portal:blue:left| ][ PortalExit:orange:left BlockPlayer RotateLL ]
-  (1LU)
-  left  [ Portal:blue:left| WantR BlockPlayer BPEnteringPortal1 ][ PortalExit:orange:up No WithCollision No WantU ] -> [ Portal:blue:left| ][ PortalExit:orange:up BlockPlayer RotateLU ]
-  (1LD)
-  left  [ Portal:blue:left| WantR BlockPlayer BPEnteringPortal1 ][ PortalExit:orange:down No WithCollision No WantD ] -> [ Portal:blue:left| ][ PortalExit:orange:down BlockPlayer RotateLD ]
-
-  (1UR)
-  up    [ Portal:blue:up| WantD BlockPlayer BPEnteringPortal1 ][ PortalExit:orange:right No WithCollision No WantR ] -> [ Portal:blue:up| ][ PortalExit:orange:right BlockPlayer RotateUR ]
-  (1UL)
-  up    [ Portal:blue:up| WantD BlockPlayer BPEnteringPortal1 ][ PortalExit:orange:left No WithCollision No WantL ] -> [ Portal:blue:up| ][ PortalExit:orange:left BlockPlayer RotateUL ]
-  (1UU)
-  up    [ Portal:blue:up| WantD BlockPlayer BPEnteringPortal1 ][ PortalExit:orange:up No WithCollision No WantU ] -> [ Portal:blue:up| ][ PortalExit:orange:up BlockPlayer RotateUU ]
-  (1UD)
-  up    [ Portal:blue:up| WantD BlockPlayer BPEnteringPortal1 ][ PortalExit:orange:down No WithCollision No WantD ] -> [ Portal:blue:up| ][ PortalExit:orange:down BlockPlayer RotateUD ]
-
-  (1DR)
-  down  [ Portal:blue:down| WantU BlockPlayer BPEnteringPortal1 ][ PortalExit:orange:right No WithCollision No WantR ] -> [ Portal:blue:down| ][ PortalExit:orange:right BlockPlayer RotateDR ]
-  (1DL)
-  down  [ Portal:blue:down| WantU BlockPlayer BPEnteringPortal1 ][ PortalExit:orange:left No WithCollision No WantL ] -> [ Portal:blue:down| ][ PortalExit:orange:left BlockPlayer RotateDL ]
-  (1DU)
-  down  [ Portal:blue:down| WantU BlockPlayer BPEnteringPortal1 ][ PortalExit:orange:up No WithCollision No WantU ] -> [ Portal:blue:down| ][ PortalExit:orange:up BlockPlayer RotateDU ]
-  (1DD)
-  down  [ Portal:blue:down| WantU BlockPlayer BPEnteringPortal1 ][ PortalExit:orange:down No WithCollision No WantD ] -> [ Portal:blue:down| ][ PortalExit:orange:down BlockPlayer RotateDD ]
-
-  (2RR)
-  right [ Portal:orange:right| WantL BlockPlayer BPEnteringPortal2 ][ PortalExit:blue:right No WithCollision No WantR ] -> [ Portal:orange:right| ][ PortalExit:blue:right BlockPlayer RotateRR ]
-  (2RL)
-  right [ Portal:orange:right| WantL BlockPlayer BPEnteringPortal2 ][ PortalExit:blue:left No WithCollision No WantL ] -> [ Portal:orange:right| ][ PortalExit:blue:left BlockPlayer RotateRL ]
-  (2RU)
-  right [ Portal:orange:right| WantL BlockPlayer BPEnteringPortal2 ][ PortalExit:blue:up No WithCollision No WantU ] -> [ Portal:orange:right| ][ PortalExit:blue:up BlockPlayer RotateRU ]
-  (2RD)
-  right [ Portal:orange:right| WantL BlockPlayer BPEnteringPortal2 ][ PortalExit:blue:down No WithCollision No WantD ] -> [ Portal:orange:right| ][ PortalExit:blue:down BlockPlayer RotateRD ]
-
-  (2LR)
-  left  [ Portal:orange:left| WantR BlockPlayer BPEnteringPortal2 ][ PortalExit:blue:right No WithCollision No WantR ] -> [ Portal:orange:left| ][ PortalExit:blue:right BlockPlayer RotateLR ]
-  (2LL)
-  left  [ Portal:orange:left| WantR BlockPlayer BPEnteringPortal2 ][ PortalExit:blue:left No WithCollision No WantL ] -> [ Portal:orange:left| ][ PortalExit:blue:left BlockPlayer RotateLL ]
-  (2LU)
-  left  [ Portal:orange:left| WantR BlockPlayer BPEnteringPortal2 ][ PortalExit:blue:up No WithCollision No WantU ] -> [ Portal:orange:left| ][ PortalExit:blue:up BlockPlayer RotateLU ]
-  (2LD)
-  left  [ Portal:orange:left| WantR BlockPlayer BPEnteringPortal2 ][ PortalExit:blue:down No WithCollision No WantD ] -> [ Portal:orange:left| ][ PortalExit:blue:down BlockPlayer RotateLD ]
-
-  (2UR)
-  up    [ Portal:orange:up| WantD BlockPlayer BPEnteringPortal2 ][ PortalExit:blue:right No WithCollision No WantR ] -> [ Portal:orange:up| ][ PortalExit:blue:right BlockPlayer RotateUR ]
-  (2UL)
-  up    [ Portal:orange:up| WantD BlockPlayer BPEnteringPortal2 ][ PortalExit:blue:left No WithCollision No WantL ] -> [ Portal:orange:up| ][ PortalExit:blue:left BlockPlayer RotateUL ]
-  (2UU)
-  up    [ Portal:orange:up| WantD BlockPlayer BPEnteringPortal2 ][ PortalExit:blue:up No WithCollision No WantU ] -> [ Portal:orange:up| ][ PortalExit:blue:up BlockPlayer RotateUU ]
-  (2UD)
-  up    [ Portal:orange:up| WantD BlockPlayer BPEnteringPortal2 ][ PortalExit:blue:down No WithCollision No WantD ] -> [ Portal:orange:up| ][ PortalExit:blue:down BlockPlayer RotateUD ]
-
-  (2DR)
-  down  [ Portal:orange:down| WantU BlockPlayer BPEnteringPortal2 ][ PortalExit:blue:right No WithCollision No WantR ] -> [ Portal:orange:down| ][ PortalExit:blue:right BlockPlayer RotateDR ]
-  (2DL)
-  down  [ Portal:orange:down| WantU BlockPlayer BPEnteringPortal2 ][ PortalExit:blue:left No WithCollision No WantL ] -> [ Portal:orange:down| ][ PortalExit:blue:left BlockPlayer RotateDL ]
-  (2DU)
-  down  [ Portal:orange:down| WantU BlockPlayer BPEnteringPortal2 ][ PortalExit:blue:up No WithCollision No WantU ] -> [ Portal:orange:down|  ][ PortalExit:blue:up BlockPlayer RotateDU ]
-  (2DD)
-  down  [ Portal:orange:down| WantU BlockPlayer BPEnteringPortal2 ][ PortalExit:blue:down No WithCollision No WantD ] -> [ Portal:orange:down| ][ PortalExit:blue:down BlockPlayer RotateDD ]
- 
-endloop
-
-
-(remove these things again)
-[ RigidEnteringPortal1 ] -> []
-[ RigidEnteringPortal2 ] -> []
-[ RigidLeavingPortal1 ] -> []
-[ RigidLeavingPortal2 ] -> []
-[ BPEnteringPortal1 ] -> []
-[ BPEnteringPortal2 ] -> []
-[ BPLeavingPortal1 ] -> []
-[ BPLeavingPortal2 ] -> []
-
-[ NoPortal1 ] -> []
-[ NoPortal2 ] -> []
-
-
-(END OF MOVEMENT LOGIC
-===========================================================================================
-)
+once [] -> gosub MOVEMENT
 
 
 ( Rotation ! )
@@ -3329,6 +2885,7 @@ endloop
 
 
 [ With:> no OkRigid:> ] -> sfx5
+[ With:> no OkRigid:> ][ Target ] -> [With:> no OkRigid:> ][]
 ( [ With:> no OkRigid:> ] -> cancel )
 
 
@@ -3570,6 +3127,168 @@ color left [ BridgeCorner:down:left:color | no BridgeCorner:down:right:color ] -
 color down [ BridgeCorner:down:right:color | no BridgeCorner:up:right:color ] -> [ BridgeCorner:down:right:color | BridgeCorner:up:right:color ]
 
 ( /Decorative Rules)
+
+subroutine MOVEMENT
+
+(===========================================================================================
+BEGINNING OF MOVEMENT LOGIC
+
+
+Before rewrite, it generated 14437 instructions
+After rewrite, 3959 instructions. Fewer lines as well. Oh, and some cyclic
+situations that seemed impossible before, work now!
+)
+
+(Mark the origin of the wants)
+[Origin] -> []
+[Want:>] -> [Want:> Origin:>]
+[Error ] -> []
+
+
+(Basically, we run the logic twice, first to populate the first set of errors, the second time, it is repeated but with the Errors preventing movement.)
+once [Background] -> gosub MOVEMENT PASS
+
+(If there is a clone, unclonify it for the second pass)
+weapon_status player_face [ PlayerClone:weapon_status:player_face ] -> [  Player:weapon_status:player_face ]
+color uu dd ll rr [ BlockClone:uu:dd:ll:rr:color ] -> [  Block:uu:dd:ll:rr:color ]
+
+
+(Remove the wants)
+[ Want:> ] -> []
+
+(Add them back)
+[ Origin:> ] -> [ Want:> Origin:> ]
+
+(Run again)
+once [Background] -> gosub MOVEMENT PASS
+
+
+
+(Remove wants that have errors)
+[ ErrorSprite ] -> []
+([ Error ] -> [ ErrorSprite Error ])
+[ Error Want ] -> [ Error ]
+[ Error ] -> [ ]
+
+
+(Move all the remaining wants, including portals if any)
+
+portal_color once [ Portal:portal_color Want:> | ] -> [ Want:> | Portal:portal_color ]
+[ Want:> BlockPlayer | no BlockPlayer ] -> [ | BlockPlayer ]
+
+
+
+
+
+(Teleportation!! ) (I see this as an absolute win)
+portal_color directions_tag directions_tag2 [ Clone CloneWant:portal_color:directions_tag ][ PortalExit:toggle_portal_color:directions_tag2 No BlockPlayer ] -> [ ][ Clone Rotate:directions_tag:directions_tag2 ]
+
+weapon_status player_face [ PlayerClone:weapon_status:player_face ] -> [ Player:weapon_status:player_face ]
+color uu dd ll rr [ BlockClone:uu:dd:ll:rr:color ] -> [ Block:uu:dd:ll:rr:color ]
+
+
+
+
+
+
+
+subroutine MOVEMENT PASS
+
+  [ action Portal ] -> [ stationary Portal ]
+  portal_color [ CloneWant:portal_color:> ] -> []
+
+  ( Step 1: Spread wants )
+  [ PullingThroughPortal:portal_color ] -> []
+  startloop
+
+      [ Want With:> | With:< ] -> [ Want With:> | Want With:< ]    
+
+      [ BlockPlayer Want:> | Block no Error no ActivePortal:< ] -> [ BlockPlayer Want:> | Block Want:> ]
+
+      (pull from portal)
+      portal_color [ Want:< With:> | ActivePortal:< Portal:portal_color:< ] ->  [ Want:< With:> PullingThroughPortal:portal_color | ActivePortal:< Portal:portal_color:<]
+
+      (Convert pull to push)
+      portal_color [ PullingThroughPortal:portal_color ][ Portal:toggle_portal_color:> | With:< ] -> [ PullingThroughPortal:portal_color ][ Portal:toggle_portal_color:> | With:< Want:< ]
+
+      (push through portal)
+      [ Want:> | ActivePortal:< Portal:< ] -> [ Want:> | ActivePortal:< action Portal:< ]
+
+
+
+
+      portal_color [ action Portal:portal_color ][ Portal:toggle_portal_color:> | Block ] ->  [ action Portal:portal_color ][ Portal:toggle_portal_color:> | Want:> Block ]
+
+
+  endloop
+
+
+  (As a result of Step 1, all the things that want to be pushed have the Want: direction )
+
+  ( If there is an object going through a portal, turn it into a clone )
+  portal_color [ BlockPlayer Want:> | ActivePortal:< Portal:portal_color ] -> [ Clonify BlockPlayer CloneWant:portal_color:< | ActivePortal:< Portal:portal_color ]
+
+  (Don't allow two things entering portals at once)
+  [ Clonify CloneWant:orange:directions ][ Clonify CloneWant:blue:directions ] -> [Error ][ Error ]
+
+  [ UnmovablePortal ] -> [ UnmovablePortal Error ]
+
+
+  ( Do not allow objects that have perpendicular conections go through portals )
+  portal_color [ Clonify CloneWant:portal_color:horizontal With:vertical ] -> [ Error With:vertical ]
+  portal_color [ Clonify CloneWant:portal_color:vertical   With:horizontal ] -> [ Error With:horizontal ]
+
+
+  ( Remove wants from the square the clone lives in )
+  [ Clonify Want ] -> [ Clonify ]
+
+  color uu dd ll rr [ Clonify Block:uu:dd:ll:rr:color ] -> [ BlockClone:uu:dd:ll:rr:color ]
+  weapon_status player_face [ Clonify Player:weapon_status:player_face ] -> [ PlayerClone:weapon_status:player_face ]
+
+  (The clone is identical to the original object but it has no collision )
+
+  ( Things that can't be moved )
+  [ DarkOrWhiteWall ] -> [ DarkOrWhiteWall Error ]
+  [ Want:up Want:down   ] -> [ Want:up Want:down Error ]
+  [ Want:up Want:left   ] -> [ Want:up Want:left Error ]
+  [ Want:up Want:right  ] -> [ Want:up Want:right Error ]
+  [ Want:down Want:left ] -> [ Want:down Want:left Error ]
+  [ Want:down Want:right] -> [ Want:down Want:right Error ]
+  [ Want:left Want:right] -> [ Want:left Want:right Error ]
+
+  ( Do not allow cutting rigids)
+  [ PerpendicularWant:> With:> | ActivePortal:< ] -> [ Error PerpendicularWant:> With:> | ActivePortal:< ]
+
+
+  (Do not allow two objects moving to the same location )
+  [ Destination ] -> []
+  [ Want:> | no Destination ] -> [ Want:> | Destination:> ]
+  [ Want:> no Error | no Destination:> ] -> [ Error Want:> | ]
+  portal_color [ action Portal:portal_color ][ Portal:toggle_portal_color:> | Destination ] ->  [ action Portal:portal_color ][ Portal:toggle_portal_color:> | Destination Error ]
+
+  (Spread error)
+  startloop
+
+     [ Want With:> | Error With:< ] -> [ Error Want With:> | Error Want With:< ]
+
+     [ Want:> | Error ] -> [ Error Want:> | Error ]
+
+     (Can't move the thing next to the portal's exit)
+      portal_color directions_tag directions_tag2 [ Clone CloneWant:portal_color:directions_tag ][ PortalExit:toggle_portal_color:directions_tag2 Error ] -> [ Error Clone ][ PortalExit:toggle_portal_color:directions_tag2 Error ]
+
+      (If there is an error with the clone, unclonify it)
+      weapon_status player_face [ Error PlayerClone:weapon_status:player_face ] -> [ Error Player:weapon_status:player_face ]
+      color uu dd ll rr [ Error BlockClone:uu:dd:ll:rr:color ] -> [ Error Block:uu:dd:ll:rr:color ]
+
+  endloop
+
+
+
+(end subroutine)
+
+(END OF MOVEMENT LOGIC
+===========================================================================================
+)
 
 ==============
 WINCONDITIONS
