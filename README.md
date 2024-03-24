@@ -1,6 +1,6 @@
 # Furniture Science
 
-A turn-based block-pushing puzzle game which is also a bit of a homage. Made in [Puzzle Script](https://www.puzzlescript.net) but actually the [Pancelor fork](https://pancelor.com/PuzzleScript/editor.html) because it has a level selector.
+A turn-based block-pushing puzzle game which is also a bit of a homage. Made in [Puzzle Script Next](https://david-pfx.github.io/PuzzleScriptNext/)
 
 
 ![preview](https://raw.githubusercontent.com/vexorian/furniture-science/main/furniturepreview.gif)
