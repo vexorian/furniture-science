@@ -1292,69 +1292,9 @@ BlockCorner:down:right:white
 .....
 ....0
 
-Bridge:__:__:__:__:white
+Bridge:uu:dd:ll:rr:white
 #1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
-copy:Block:__:__:__:__:white
-
-Bridge:__:__:__:_R:white
-#1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
-copy:Block:__:__:__:_R:white
-
-Bridge:__:__:_L:__:white
-#1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
-copy:Block:__:__:_L:__:white
-
-Bridge:__:__:_L:_R:white
-#1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
-copy:Block:__:__:_L:_R:white
-
-Bridge:__:_D:__:__:white
-#1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
-copy:Block:__:_D:__:__:white
-
-Bridge:__:_D:__:_R:white
-#1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
-copy:Block:__:_D:__:_R:white
-
-Bridge:__:_D:_L:__:white
-#1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
-copy:Block:__:_D:_L:__:white
-
-Bridge:__:_D:_L:_R:white
-#1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
-copy:Block:__:_D:_L:_R:white
-
-Bridge:_U:__:__:__:white
-#1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
-copy:Block:_U:__:__:__:white
-
-Bridge:_U:__:__:_R:white
-#1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
-copy:Block:_U:__:__:_R:white
-
-Bridge:_U:__:_L:__:white
-#1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
-copy:Block:_U:__:_L:__:white
-
-Bridge:_U:__:_L:_R:white
-#1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
-copy:Block:_U:__:_L:_R:white
-
-Bridge:_U:_D:__:__:white
-#1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
-copy:Block:_U:_D:__:__:white
-
-Bridge:_U:_D:__:_R:white
-#1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
-copy:Block:_U:_D:__:_R:white
-
-Bridge:_U:_D:_L:__:white
-#1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
-copy:Block:_U:_D:_L:__:white
-
-Bridge:_U:_D:_L:_R:white
-#1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
-copy:Block:_U:_D:_L:_R:white
+copy:Block:uu:dd:ll:rr:white
 
 BridgeCorner:up:right:white
 #72F1DA
@@ -1372,69 +1312,9 @@ BridgeCorner:down:left:white
 #72F1DA
 copy:BlockCorner:down:left:yellow
 
-Bridge:__:__:__:__:yellow
+Bridge:uu:dd:ll:rr:yellow
 #1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
-copy:Block:__:__:__:__:yellow
-
-Bridge:__:__:__:_R:yellow
-#1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
-copy:Block:__:__:__:_R:yellow
-
-Bridge:__:__:_L:__:yellow
-#1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
-copy:Block:__:__:_L:__:yellow
-
-Bridge:__:__:_L:_R:yellow
-#1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
-copy:Block:__:__:_L:_R:yellow
-
-Bridge:__:_D:__:__:yellow
-#1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
-copy:Block:__:_D:__:__:yellow
-
-Bridge:__:_D:__:_R:yellow
-#1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
-copy:Block:__:_D:__:_R:yellow
-
-Bridge:__:_D:_L:__:yellow
-#1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
-copy:Block:__:_D:_L:__:yellow
-
-Bridge:__:_D:_L:_R:yellow
-#1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
-copy:Block:__:_D:_L:_R:yellow
-
-Bridge:_U:__:__:__:yellow
-#1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
-copy:Block:_U:__:__:__:yellow
-
-Bridge:_U:__:__:_R:yellow
-#1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
-copy:Block:_U:__:__:_R:yellow
-
-Bridge:_U:__:_L:__:yellow
-#1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
-copy:Block:_U:__:_L:__:yellow
-
-Bridge:_U:__:_L:_R:yellow
-#1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
-copy:Block:_U:__:_L:_R:yellow
-
-Bridge:_U:_D:__:__:yellow
-#1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
-copy:Block:_U:_D:__:__:yellow
-
-Bridge:_U:_D:__:_R:yellow
-#1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
-copy:Block:_U:_D:__:_R:yellow
-
-Bridge:_U:_D:_L:__:yellow
-#1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
-copy:Block:_U:_D:_L:__:yellow
-
-Bridge:_U:_D:_L:_R:yellow
-#1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
-copy:Block:_U:_D:_L:_R:yellow
+copy:Block:uu:dd:ll:rr:yellow
 
 BridgeCorner:up:right:yellow
 #38E864
