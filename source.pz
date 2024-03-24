@@ -1,4 +1,7 @@
-title Furniture Science 0.9.97
+
+
+
+title Furniture Science 0.9.117
 
 author vexorian
 homepage vexorian.com
@@ -48,83 +51,6 @@ freely, subject to the following restrictions:
 
 Welcome to the source code for Furniture Science. 
 
-  Once there was an attempt to make an open source sequel to the game Kye,
-I'm talking stone age stuff, back when sourceforge was a thing. This was written
-in visual basic. Kye 3.0 wasn't that interesting. It allowed to push stuff 
-diagonally. I dunno what made them thinkg this was a good idea. But as is 
-tradition, unofficial Kye sequels come with new objects. In this case, there
-was a teleporter block. The teleporter block had some janky logic for when it was
-possible to use it to teleport, but it was pushable and pretty interesting.
-
-  Ever since then I've been thinking about puzzles that involve moving teleporters
-around. To the point that when *I* made my own version of the bad idea of making
-Kye sequels, I copied those teleporters. Even so, a couple of years ago, during
-the pandemic, when I started getting into puzzle script, my first puzzle script
-game "Clone Cleanup" also copied those teleporter blocks.
-
-  But the puzzles I kept thinking about were actually getting more ridiculous
-than that. After playing Portal and Gateways. I kept imagining adding a new kind
-of teleporter block, instead of requiring the teleporters to be lining up, they
-would be color based and always be active. More so, their angles would allow you
-to rotate stuff. Many objects in Xye are direction specific, so that felt interesting. One thing in Xye are the 'Large Blocks' which are just rigid blocks
-composed of multiple cells. So one of the idea was rotating these large blocks
-using the teleporter blocks. Huh but this stuff was long after I stopped updating
-Xye, I was kind of over game dev by then. 
-
-  Back to a couple of years ago, Puzzle script was one of my pandemic hobbies and
-I played with it quite a bit. After making 2 or 3 games I was really playing with
-it. I wanted to make a new game and was playing around trying to come up with
-rigid blocks. All while ignoring the fact that Puzzle script had a very throughout
-documentation about how to do rigid blocks. Including an explanation of the
-rigid keyword and that sort of thing. Nevertheless, I found out about
-startloop/endloop so I was actually managing to do things. I was going to make
-some sort of game involving rigid blocks and water and making bridges. But this
-startloop/endloop stuff started looking really interesting. I suddenly thought,
-since the movement logic is so custom, maybe I can actually do things
-like portals... And that's how I figured I had a chance to actually make those
-puzzles I was thinking about for so long.
-
-  It was actually a bad idea, because in order to get it to work, I really had to
-get used to copy pasting the same rule 4 or 8 or even 16 times and rewriting it
-to cover all the variations of each case. The code was a real mess to deal with.
-Worse still, many of the things I wanted to do weren't really doable with my ps
-skills. But I did manage to get something that ressembled a game with some levels.
-
-  To be honest, I thought the mechanics were cool, but was never really happy
-with the levels. Specially the last ones. Maintaining it was also a bit of a
-nightmare due to the overly complex code. I eventually stopped relaly doing
-puzzle script for a while.
-
-  Which brings me to 2024. My new hobby was "retro" handheld consoles. It's small,
-cheap, often Chinese devices that look like a Gameboy or like a Nintendo Switch but
-are really designed to play emulators, mostly. I was playing around with some
-of them and always felt like I wanted to play puzzlescript. Eventually, a
-puzzle script core for retroarch was made and it was added to the custom OS of
-one of my favorite devices, the Miyoo mini+. Would this means I would actually
-be able to play my own games in a tiny console like that? Not really. It turns out
-even my most simple puzzle script games abuse rules so much that they were really slow and glitchy in the Retroarch Puzzlescript core. But nevertheless, this 
-insipired me to go back to playing aroudn with Puzzlescript.
-
-  Furniture Science was always my favorite of the puzzlescript games I made back
-in 2021. So I would sometimes open it and play it. Or get ideas for new objects.
-Many of those ideas were not very good. Some might work but are too much work.
-I also wanted to have better levels. It always bugged me that the first level is
-kind of boring and long to solve considering it doesn't even have portals in it.
-So I started modifying Furniture Science. I learned about Puzzlescript Next, which
-had some parts of Puzzlescript+ which was very useful when making Kye.ps. So I
-gave it a try. The real magic of the new features tunred out to be the tags. The
-code is so much cleaner now, and I feel it is readable. I was able to optimize the
-code quite a bit AND add features AND make it more readable, it's all thanks to
-the Pattern:script features. It's not perfect, but the amount of repetition you
-usually have to deal with when making stuff in puzzlscript is really one of the
-worst things about it, and Pattern:script really tackles it. Then we also have
-all the other features from the other forks. This makes making games a lot more
-viable. Original puzzle script is sort of optimized for fast prototyping and it's
-really good at that. But there's always a lot of friction when it comes to making
-games that you might actually want to make available for people to play even though
-many might actually have the opinion that you shouldn't use puzzlescript for making
-actual non-prototype games. But Puzzlescript Next can really cover a lot of those
-deficiencies. 
 
 )
 
@@ -133,8 +59,10 @@ deficiencies.
 TAGS
 =======
 color          = yellow white
+color2         = yellow white
 portal_color   = blue orange
 weapon_status  = blue orange disarmed
+wall_color     = white dark
 uu = _U __
 dd = _D __
 rr = _R __
@@ -146,7 +74,11 @@ directions_tag = up down left right
 directions_tag2= up down left right
 player_face    = up down left right front
 
+wrong = up down left
+
 smod3 = s0 s1 s2
+smod4 = s0 s1 s2 s3
+smod5 = s0 s1 s2 s3 s4
 
 =========
 MAPPINGS
@@ -170,6 +102,14 @@ left right     -> right left
 directions         => opposite_directions
 up right down left -> down left up right
 
+smod5          => s5next
+s0 s1 s2 s3 s4 -> s1 s2 s3 s4 s0
+
+smod4       => s4next
+s3 s2 s1 s0 -> s0 s3 s2 s1
+
+smod3 => s3next
+s0 s1 s2 -> s1 s2 s0
 
 ========
 OBJECTS
@@ -178,7 +118,7 @@ OBJECTS
 Background
 #333333
 
-GroundTop
+GroundBorder:up
 #3F3F3F
 00000
 .....
@@ -186,7 +126,7 @@ GroundTop
 .....
 .....
 
-GroundLeft
+GroundBorder:left
 #3F3F3F
 0....
 0....
@@ -194,7 +134,7 @@ GroundLeft
 0....
 0....
 
-GroundRight
+GroundBorder:right
 #292929
 ....0
 ....0
@@ -202,7 +142,7 @@ GroundRight
 ....0
 ....0
 
-GroundBottom
+GroundBorder:down
 #292929
 .....
 .....
@@ -212,7 +152,7 @@ GroundBottom
 
 
 
-Wall
+Wall:white
 #c8c8c8 #efefef #b0b0b0 #ffffff
 00000
 00000
@@ -236,7 +176,7 @@ WallOdd
 10002
 22222)
 
-WallTop:white
+WallBorder:white:up
 #ffffff
 00000
 .....
@@ -244,15 +184,7 @@ WallTop:white
 .....
 .....
 
-(transparent
-#d8d8d8 #efefef #c0c0c0 #ffffff
-33333
-.222.
-.....
-.....
-.....)
-
-WallLeft:white
+WallBorder:white:left
 #ffffff
 0....
 0....
@@ -260,16 +192,7 @@ WallLeft:white
 0....
 0....
 
-
-(transparent
-#d8d8d8 #efefef #c0c0c0 #ffffff
-3....
-32...
-32...
-32...
-3....)
-
-WallRight:white
+WallBorder:white:right
 #d8d8d8 #efefef #c0c0c0 #181818
 ....3
 ....3
@@ -277,7 +200,7 @@ WallRight:white
 ....3
 ....3
 
-WallBottom:white
+WallBorder:white:down
 #d8d8d8 #efefef #c0c0c0 #181818
 .....
 .....
@@ -293,52 +216,13 @@ WallDarkCorner:white
 .....
 ....0
 
-Wallx1:white
-transparent
-
-
-
-
-DarkWall
+Wall:dark
 #222222 #242424 #262626 #282828
 00000
 03010
 00000
 03020
 00000
-
-(
-#222222 #242424 #262626 #282828
-00331
-00130
-31301
-03210
-01232)
-
-(DarkWallSprite1
-#222222 #242424 #262626 #282828
-30022
-22311
-31220
-02012
-22212
-
-DarkWallSprite2
-#222222 #242424 #262626 #282828
-23201
-20201
-03123
-10302
-21222
-
-DarkWallSprite3
-#222222 #242424 #262626 #282828
-01200
-22020
-11002
-22223
-01312)
-
 
 DarkWallSprite1
 #222222 #242424 #262626 #282828
@@ -384,7 +268,7 @@ black #BEA03B #CEB04B
 00000
 
 
-DarkWallTop
+WallBorder:dark:up
 #454545
 00000
 .....
@@ -392,7 +276,7 @@ DarkWallTop
 .....
 .....
 
-DarkWallLeft
+WallBorder:dark:left
 #454545
 0....
 0....
@@ -400,7 +284,7 @@ DarkWallLeft
 0....
 0....
 
-DarkWallRight
+WallBorder:dark:right
 #101010
 ....0
 ....0
@@ -408,7 +292,7 @@ DarkWallRight
 ....0
 ....0
 
-DarkWallBottom
+WallBorder:dark:down
 #101010
 .....
 .....
@@ -416,7 +300,7 @@ DarkWallBottom
 .....
 00000
 
-WallSeparatorD
+WallSeparator:down
 #2B2B2B
 .....
 .....
@@ -424,7 +308,7 @@ WallSeparatorD
 .....
 00000
 
-WallSeparatorU
+WallSeparator:up
 #2B2B2B
 00000
 .....
@@ -432,7 +316,7 @@ WallSeparatorU
 .....
 .....
 
-WallSeparatorL
+WallSeparator:left
 #2B2B2B
 0....
 0....
@@ -442,7 +326,7 @@ WallSeparatorL
 
 
 
-WallSeparatorR
+WallSeparator:right
 #2B2B2B
 ....0
 ....0
@@ -451,14 +335,6 @@ WallSeparatorR
 ....0
 
 
-
-Portal1RS1
-#1A4FDF #073CCF
-....1
-...01
-...01
-...01
-....1
 Portal:blue:right
 #1541B7 #1D57F7
 ....1
@@ -466,206 +342,76 @@ Portal:blue:right
 ...01
 ...01
 ....1
-Portal1RS2
-transparent
-Portal1RS3
-#285BE6 #4B79F9
-....1
-...01
-...01
-...01
-....1
-Portal1RS4
-transparent
 
-Portal1LS1
+PortalSprite:s0:blue:right
 #1A4FDF #073CCF
-1....
-10...
-10...
-10...
-1....
-Portal:blue:left
-#1541B7 #1D57F7
-1....
-10...
-10...
-10...
-1....
-Portal1LS2
-transparent
-Portal1LS3
-#285BE6 #4B79F9
-1....
-10...
-10...
-10...
-1....
-Portal1LS4
+copy:Portal:blue:right
+
+PortalSprite:s1:blue:right
 transparent
 
-Portal1DS1
+PortalSprite:s2:blue:right
+#285BE6 #4B79F9
+copy:Portal:blue:right
+
+PortalSprite:s3:blue:right
+transparent
+
+(It's wrong because it's not right)
+Portal:blue:wrong
+#1541B7 #1D57F7
+copy:Portal:blue:right
+rot:right:wrong
+
+PortalSprite:s0:blue:wrong
 #1A4FDF #073CCF
-.....
-.....
-.....
-.000.
-11111
-Portal:blue:down
-#1541B7 #1D57F7
-.....
-.....
-.....
-.000.
-11111
-Portal1DS2
+copy:Portal:blue:wrong
+
+PortalSprite:s1:blue:wrong
 transparent
-Portal1DS3
+
+PortalSprite:s2:blue:wrong
 #285BE6 #4B79F9
-.....
-.....
-.....
-.000.
-11111
-Portal1DS4
+copy:Portal:blue:wrong
+
+PortalSprite:s3:blue:wrong
 transparent
 
-Portal1US1
-#1A4FDF #073CCF
-11111
-.000.
-.....
-.....
-.....
-Portal:blue:up
-#1541B7 #1D57F7
-11111
-.000.
-.....
-.....
-.....
-Portal1US2
-transparent
-Portal1US3
-#285BE6 #4B79F9
-11111
-.000.
-.....
-.....
-.....
-Portal1US4
-transparent
-
-
-Portal2RS1
-#DF6D1A #CF5B07
-....1
-...01
-...01
-...01
-....1
 Portal:orange:right
 #B75915 #F7791D
-....1
-...01
-...01
-...01
-....1
-Portal2RS2
-transparent
-Portal2RS3
-#E67828 #F9944B
-....1
-...01
-...01
-...01
-....1
-Portal2RS4
-transparent
+copy:Portal:blue:right
 
-Portal2LS1
+PortalSprite:s0:orange:right
 #DF6D1A #CF5B07
-1....
-10...
-10...
-10...
-1....
-Portal:orange:left
-#B75915 #F7791D
-1....
-10...
-10...
-10...
-1....
-Portal2LS2
-transparent
-Portal2LS3
-#E67828 #F9944B
-1....
-10...
-10...
-10...
-1....
-Portal2LS4
+copy:Portal:blue:right
+
+PortalSprite:s1:orange:right
 transparent
 
-Portal2DS1
+PortalSprite:s2:orange:right
+#E67828 #F9944B
+copy:Portal:blue:right
+
+PortalSprite:s3:orange:right
+transparent
+
+Portal:orange:wrong
+#B75915 #F7791D
+copy:Portal:blue:wrong
+
+PortalSprite:s0:orange:wrong
 #DF6D1A #CF5B07
-.....
-.....
-.....
-.000.
-11111
+copy:Portal:blue:wrong
 
-Portal:orange:down
-#B75915 #F7791D
-.....
-.....
-.....
-.000.
-11111
-
-Portal2DS2
+PortalSprite:s1:orange:wrong
 transparent
 
-Portal2DS3
+PortalSprite:s2:orange:wrong
 #E67828 #F9944B
-.....
-.....
-.....
-.000.
-11111
-Portal2DS4
+copy:Portal:blue:wrong
+
+PortalSprite:s3:orange:wrong
 transparent
-
-Portal2US1
-#DF6D1A #CF5B07
-11111
-.000.
-.....
-.....
-.....
-Portal:orange:up
-#B75915 #F7791D
-11111
-.000.
-.....
-.....
-.....
-Portal2US2
-transparent
-Portal2US3
-#E67828 #F9944B
-11111
-.000.
-.....
-.....
-.....
-Portal2US4
-transparent
-
-
-
 
 
 Target
@@ -676,36 +422,35 @@ Target
 .000.
 .....
 
-TargetBorderTop
+TargetBorder:up
 #E8D138
 ..0..
 .....
 .....
 .....
 .....
-TargetBorderBottom
+TargetBorder:down
 #E8D138
-.....
-.....
-.....
-.....
-..0..
+copy:TargetBorder:up
+rot:up:down
 
-TargetBorderLeft
+TargetBorder:left
 #E8D138
-.....
-.....
-0....
-.....
-.....
+copy:TargetBorder:up
+rot:up:left
 
-TargetBorderRight
+TargetBorder:right
 #E8D138
-.....
-.....
-....0
-.....
-.....
+copy:TargetBorder:up
+rot:up:right
+
+ErrorTarget
+#333333 red
+00000
+00100
+00100
+00000
+00100
 
 
 Player:blue:front
@@ -1763,28 +1508,6 @@ red
 .....
 
 
-(
-
-WantL
-transparent
-
-WantR
-transparent
-
-WantU
-transparent
-
-WantD
-transparent
-
-Error
-transparent
-
-PostError
-transparent
-
-
-)
 
 MightSink
 transparent
@@ -1809,35 +1532,6 @@ transparent
 OkRigid:directions
 transparent
 
-RigidEnteringPortal1
-transparent
-
-RigidLeavingPortal1
-transparent
-
-RigidEnteringPortal2
-transparent
-
-RigidLeavingPortal2
-transparent
-
-CanMovePortal:portal_color
-transparent
-
-
-BPEnteringPortal1
-transparent
-
-BPEnteringPortal2
-transparent
-
-BPLeavingPortal1
-transparent
-
-BPLeavingPortal2
-transparent
-
-
 ColorToggle
 transparent
 
@@ -1849,117 +1543,108 @@ GotGun
 transparent
 
 
-HasCellU
+HasCell:directions
 transparent
 
-HasCellD
-transparent
-
-HasCellL
-transparent
-
-HasCellR
-transparent
-
-RealTimeTick
+RealTimeTic
 transparent
 
 U0
 #424242 #333333
-11111
-11111
-11111
-10001
-10101
+.111.
+.111.
+.111.
+.000.
+.010.
 
 D0
 #424242 #333333
-10101
-10101
-10001
-11111
-11111
+.010.
+.010.
+.000.
+.111.
+.111.
 
 U1
 #424242 #333333
-11111
-11111
-11111
-11011
-10011
+.111.
+.111.
+.111.
+.101.
+.001.
 
 D1
 #424242 #333333
-11011
-11011
-10001
-11111
-11111
+.101.
+.101.
+.000.
+.111.
+.111.
 
 U2
 #424242 #333333
-11111
-11111
-11111
-10001
-11101
+.111.
+.111.
+.111.
+.000.
+.110.
 
 D2
 #424242 #333333
-10001
-10111
-10001
-11111
-11111
+.000.
+.011.
+.000.
+.111.
+.111.
 
 D3
 #424242 #333333
-10001
-11101
-10001
-11111
-11111
+.000.
+.110.
+.000.
+.111.
+.111.
 
 U4
 #424242 #333333
-11111
-11111
-11111
-10101
-10101
+.111.
+.111.
+.111.
+.010.
+.010.
 
 D4
 #424242 #333333
-10001
-11101
-11101
-11111
-11111
+.000.
+.110.
+.110.
+.111.
+.111.
 
 U5
 #424242 #333333
-11111
-11111
-11111
-10001
-10111
+.111.
+.111.
+.111.
+.000.
+.011.
 
 D6
 #424242 #333333
-10001
-10101
-10001
-11111
-11111
+.000.
+.010.
+.000.
+.111.
+.111.
 
 
 D7
 #424242 #333333
-11101
-11101
-11101
-11111
-11111
+.110.
+.110.
+.110.
+.111.
+.111.
 
 B0
 #424242
@@ -2074,13 +1759,108 @@ red
 
 
 
-ConveyorLeft
-black
-..0..
-...0.
-..0..
-.0...
+
+Conveyor:right
+#303030 #373737 #292929
+02100
+00210
+00021
+00210
+02100
+
+ConveyorSprite:s0:right
+#303030 #373737 #292929
+copy:Conveyor:right
+
+ConveyorSprite:s1:right
+#303030 #373737 #292929
+copy:Conveyor:right
+shift:right:1
+
+ConveyorSprite:s2:right
+#303030 #373737 #292929
+copy:Conveyor:right
+shift:right:2
+
+ConveyorSprite:s3:right
+#303030 #373737 #292929
+copy:Conveyor:right
+shift:right:3
+
+ConveyorSprite:s4:right
+#303030 #373737 #292929
+copy:Conveyor:right
+shift:right:4
+
+Conveyor:left
+#303030 #373737 #292929
+copy:Conveyor:right
+flip:right
+
+ConveyorSprite:s0:left
+#303030 #373737 #292929
+copy:ConveyorSprite:s0:right
+flip:right
+
+ConveyorSprite:s1:left
+#303030 #373737 #292929
+copy:ConveyorSprite:s1:right
+flip:right
+
+ConveyorSprite:s2:left
+#303030 #373737 #292929
+copy:ConveyorSprite:s2:right
+flip:right
+
+ConveyorSprite:s3:left
+#303030 #373737 #292929
+copy:ConveyorSprite:s3:right
+flip:right
+
+ConveyorSprite:s4:left
+#303030 #373737 #292929
+copy:ConveyorSprite:s4:right
+flip:right
+
+
+Conveyor:vertical
+transparent
+
+ConveyorSprite:smod5:vertical
+transparent
+
+ConveyorBorder:up
+#202020
+00000
+.....
+.....
+.....
+.....
+
+ConveyorBorder:down
+#404040
+.....
+.....
+.....
+.....
+00000
+
+ConveyorBorder:left
+#202020
 0....
+0....
+0....
+0....
+0....
+
+ConveyorBorder:right
+#404040
+....0
+....0
+....0
+....0
+....0
+
 
 JustTurned
 transparent
@@ -2233,45 +2013,29 @@ transparent
 LEGEND
 =======
 
+(I find it really useful when I can tell what a level is by just looking at the ascii represenation. If up to me, I would love to be able to edit levels by just modifying the ascii. That's why there's a big selection of characters here where the priority was for them to make as much sense as possible. The BlockStub system uses a lot of instructions, but it's worth it cause I can describe a large block as a shape of the letter Y, and it just works. Of course, sometimes it doesn't work, because sometimes a level requires blocks to be adjacent to each other, but I think that at least looking for characters that are similar to Y or W but have 'borders' is useful in that case'.
+
+The second set of characters are not intended to be really used in levels, but as a transitory way so that when using the editor, the stuff in the level doesn't get lost just because I had an odd object combination, in those cases the characters used are random unicode stuff without a real requirement for the characters other than having the standard width. So normally, I would only use block stubs for the official level but the other block shapes are useful while using the editor.)
+
 . = Background
-# = Wall
-% = DarkWall
+# = Wall:white
+% = Wall:dark
 ! = Player:blue:front and Background
 ¡ = Player:disarmed:front and Background
 
-ñ = Block:__:__:__:__:yellow
-⅄ = Block:__:__:__:_R:yellow
-☥ = Block:__:__:_L:__:yellow
-ⱬ = Block:__:__:_L:_R:yellow
-┦ = Block:__:_D:__:__:yellow
-⡧ = Block:__:_D:__:_R:yellow
-ℌ = Block:__:_D:_L:__:yellow
-╎ = Block:__:_D:_L:_R:yellow
-⹏ = Block:_U:__:__:__:yellow
-⸔ = Block:_U:__:__:_R:yellow
-A = Block:_U:__:_L:__:yellow
-B = Block:_U:__:_L:_R:yellow
-C = Block:_U:_D:__:__:yellow
-E = Block:_U:_D:_L:__:yellow
-F = Block:_U:_D:_L:_R:yellow
+
+Y = BlockStub:_U:_D:_L:_R:yellow
+Ȳ = BlockStub:__:_D:_L:_R:yellow and WallSeparator:up
+Ý = BlockStub:_U:_D:_L:__:yellow and WallSeparator:right
+ỳ = BlockStub:_U:_D:__:_R:yellow and WallSeparator:left
+Ұ = BlockStub:_U:__:_L:_R:yellow and WallSeparator:down
 
 
-} = Block:__:__:__:__:white
-“ = Block:__:__:__:_R:white
-» = Block:__:__:_L:__:white
-· = Block:__:__:_L:_R:white
-µ = Block:__:_D:__:__:white
-½ = Block:__:_D:__:_R:white
-¬ = Block:__:_D:_L:__:white
-{ = Block:__:_D:_L:_R:white
-¶ = Block:_U:__:__:__:white
-\ = Block:_U:__:__:_R:white
-æ = Block:_U:__:_L:__:white
-” = Block:_U:__:_L:_R:white
-¢ = Block:_U:_D:__:__:white
-ð = Block:_U:_D:__:_R:white
-€ = Block:_U:_D:_L:__:white
-đ = Block:_U:_D:_L:_R:white
+W = BlockStub:_U:_D:_L:_R:white
+Ẅ = BlockStub:__:_D:_L:_R:white and WallSeparator:up
+ẁ = BlockStub:_U:_D:__:_R:white and WallSeparator:left
+ẃ = BlockStub:_U:_D:_L:__:white and WallSeparator:right
+⍹ = BlockStub:_U:__:_L:_R:white and WallSeparator:down
 
 
 ~ = Water
@@ -2279,7 +2043,7 @@ F = Block:_U:_D:_L:_R:yellow
 @ = Target
 T = PortalGunTM
 
-H = HintTerminal1 and DarkWall
+H = HintTerminal1 and Wall:dark
 
 0 = b0
 1 = b1
@@ -2293,17 +2057,58 @@ H = HintTerminal1 and DarkWall
 9 = b9
 
 
-
-_  = ConveyorLeft
-
-↓ = LightBridgeStarter:down
-« = LightBridgeStarter:up
-ħ = LightBridgeStarter:right
-ŧ = LightBridgeStarter:left
+D = LightBridgeStarter:down
+U = LightBridgeStarter:up
+R = LightBridgeStarter:right
+L = LightBridgeStarter:left
 
 
-Y = BlockStub:_U:_D:_L:_R:yellow
-W = BlockStub:_U:_D:_L:_R:white
+(Sorry but these characters are way too useful to be skipping them)
+(IMO, there should be a rule that means that as long as these characters are not used as the start or end of a level's line, there is no problem with using them. Same goes with space.)
+> = Conveyor:right
+< = Conveyor:left
+V = Conveyor:down
+^ = Conveyor:up
+
+(These are the characters included just for editor compatibility)
+
+ა = Block:__:__:__:__:yellow
+ბ = Block:__:__:__:_R:yellow
+გ = Block:__:__:_L:__:yellow
+ე = Block:__:__:_L:_R:yellow
+ვ = Block:__:_D:__:__:yellow
+ი = Block:__:_D:__:_R:yellow
+კ = Block:__:_D:_L:__:yellow
+მ = Block:__:_D:_L:_R:yellow
+ნ = Block:_U:__:__:__:yellow
+პ = Block:_U:__:__:_R:yellow
+ს = Block:_U:__:_L:__:yellow
+ქ = Block:_U:__:_L:_R:yellow
+ყ = Block:_U:_D:__:__:yellow
+ჸ = Block:_U:_D:__:_R:yellow
+ჩ = Block:_U:_D:_L:__:yellow
+ჷ = Block:_U:_D:_L:_R:yellow
+
+
+ᒣ = Block:__:__:__:__:white
+ᒤ = Block:__:__:__:_R:white
+ᒥ = Block:__:__:_L:__:white
+ᒦ = Block:__:__:_L:_R:white
+ᒧ = Block:__:_D:__:__:white
+ᒨ = Block:__:_D:__:_R:white
+ᒪ = Block:__:_D:_L:__:white
+ᒫ = Block:__:_D:_L:_R:white
+ᒬ = Block:_U:__:__:__:white
+ᖰ = Block:_U:__:__:_R:white
+ᖱ = Block:_U:__:_L:__:white
+ᖲ = Block:_U:__:_L:_R:white
+ᖳ = Block:_U:_D:__:__:white
+ᖵ = Block:_U:_D:__:_R:white
+ᖶ = Block:_U:_D:_L:__:white
+ᖷ = Block:_U:_D:_L:_R:white
+
+ჽ = Player:orange:front and Background
+
 
 HintTerminal = HintTerminal1 or HintTerminal2
 
@@ -2360,14 +2165,9 @@ With:down = Block:__:_D:__:__:color or Block:__:_D:__:_R:color or Block:__:_D:_L
 
  
 Block = With:left or With:right or With:up or With:down or Block:__:__:__:__:color or BlockStub:__:__:__:__:color
-WithCollision = Block or Player or Wall or DarkWall
+WithCollision = Block or Player or Wall:wall_color
 
 BlockPlayer = Block or RealPlayer
-
-WantL = Want:left
-WantR = Want:right
-WantD = Want:down
-WantU = Want:up
 
 PerpendicularWant:left  = Want:down or Want:up
 PerpendicularWant:right = Want:down or Want:up
@@ -2380,20 +2180,9 @@ ParallelWant:right = Want:left or Want:right
 ParallelWant:up    = Want:down or Want:up
 ParallelWant:down  = Want:down or Want:up
 
-Want = WantL or WantR or WantU or WantD
-WantNotD = WantR or WantL or WantU
-WantNotU = WantR or WantL          or WantD
-WantNotR =          WantL or WantU or WantD
-WantNotL = WantR          or WantU or WantD
-WantH = WantL or WantR
-WantV = WantD or WantU
+Want = Want:directions
 
-OriginL = Origin:left
-OriginR = Origin:right
-OriginD = Origin:down
-OriginU = Origin:up
-
-Origin = OriginL or OriginR or OriginD or OriginU
+Origin = Origin:directions
 
 Portal:blue   = Portal:blue:directions
 Portal:orange = Portal:orange:directions
@@ -2453,15 +2242,19 @@ OrangeShot = Shot:orange:directions
 
 Block:white = Block:uu:dd:ll:rr:white
 
-WithWhite = Wall or Block:white
+WithWhite = Wall:white or Block:white
+
+Conveyor = Conveyor:directions
+
+ConveyorSprite = ConveyorSprite:smod5:directions
+
 
 Player:front = Player:disarmed:front or Player:blue:front or Player:orange:front
 WaterOrBridge = Water or Bridge
 DarkWallSprite = DarkWallSprite1 or DarkWallSprite2 or DarkWallSprite3 or DarkWallSprite4
 WaterSprite = WaterSprite1 or WaterSprite2 or WaterSprite3 or WaterSprite4
 
-Portal1SPrite = Portal1RS1 or Portal1RS2 or Portal1RS3 or Portal1RS4 or Portal1LS1 or Portal1LS2 or Portal1LS3 or Portal1LS4 or Portal1US1 or Portal1US2 or Portal1US3 or Portal1US4 or Portal1DS1 or Portal1DS2 or Portal1DS3 or Portal1DS4
-Portal2SPrite = Portal2RS1 or Portal2RS2 or Portal2RS3 or Portal2RS4 or Portal2LS1 or Portal2LS2 or Portal2LS3 or Portal2LS4 or Portal2US1 or Portal2US2 or Portal2US3 or Portal2US4 or Portal2DS1 or Portal2DS2 or Portal2DS3 or Portal2DS4
+
 
 ThroughPortal = ThroughPortal:directions
 
@@ -2477,7 +2270,7 @@ Player:right = Player:weapon_status:right
 Player:down  = Player:weapon_status:down
 Player:up    = Player:weapon_status:up
 
-DarkOrWhiteWall = Wall or DarkWall
+
 
 LightBridge = LightBridge:directions
 LightBridgeSprite:left = LightBridgeSprite:smod3:left
@@ -2500,10 +2293,11 @@ sfx4 45276302:2 (teleport)
 sfx5 24968106:2 (error)
 sfx6 50609104:2 (sinkx)
 sfx7 38799704:2 (player sink)
-Block create 22930307:2 (push block)
+sfx8 22930307:2 (push block)
 sfx9 47474505:2 (light error)
 sfx10 57390700:2 (goal)
 sfx11 86141708:2 (light bridge)
+sfx12 41701308 (conveyor)
 
 MouseButton:horizontal Destroy 31656906:10
 
@@ -2513,19 +2307,21 @@ COLLISIONLAYERS
 ================
 
 Background
-GroundTop
-GroundLeft
-GroundRight
-GroundBottom
 
 B0, B1, B2, B3, B4, B5, B6, B7, B8, B9
 D0, D1, D2, D3, D4, D6, D7, U0, U1, U2, U4, U5
 
-Target
-TargetBorderLeft
-TargetBorderRight
-TargetBorderTop
-TargetBorderBottom
+GroundBorder:up
+GroundBorder:down
+GroundBorder:left
+GroundBorder:right
+
+TargetBorder:left
+TargetBorder:right
+TargetBorder:up
+TargetBorder:down
+Target, ErrorTarget
+
 
 Water
 WaterSprite
@@ -2537,6 +2333,13 @@ BridgeCorner:up:right:color
 SinkingPlayerSprite1, SinkingPlayerSprite2, SinkingPlayerSprite3
 
 
+Conveyor:directions
+ConveyorSprite:smod5:directions
+ConveyorBorder:up
+ConveyorBorder:down
+ConveyorBorder:left
+ConveyorBorder:right
+ 
 LightBridge:horizontal
 LightBridge:vertical
 
@@ -2547,7 +2350,7 @@ LightBridgeSprite:smod3:vertical
 LightBridgeStarter:directions
 
 
-BlockPlayer, Wall, DarkWall , PortalGunTM
+BlockPlayer, Wall:wall_color , PortalGunTM
 Clone, Clonify
 DarkWallSprite
 BlockCorner:up:left:color
@@ -2557,43 +2360,38 @@ BlockCorner:up:right:color
 
 HintTerminal1, HintTerminal2
 
-WallSeparatorD
-WallSeparatorU
-WallSeparatorL
-WallSeparatorR
+WallSeparator:down
+WallSeparator:up
+WallSeparator:left
+WallSeparator:right
 
-
-DarkWallTop
-DarkWallLeft
-DarkWallRight
-DarkWallBottom
 WallOdd
-WallTop:white
-WallLeft:white
-WallRight:white
-WallBottom:white
-Wallx1:white
+
+WallBorder:white:up    WallBorder:dark:up
+WallBorder:white:down  WallBorder:dark:down
+WallBorder:white:left  WallBorder:dark:left
+WallBorder:white:right WallBorder:dark:right
 WallDarkCorner:white
 
 
 
 ParticleSprite1:portal_color:directions ParticleSprite2:portal_color:directions
 
-WantL
-WantR
-WantD
-WantU
+Want:left
+Want:right
+Want:down
+Want:up
 Error
 PostError
 MightSink
-OriginL
-OriginR
-OriginD
-OriginU
+Origin:left
+Origin:right
+Origin:down
+Origin:up
 Portal:blue
-Portal1Sprite
+PortalSprite:smod4:blue:directions
 Portal:orange
-Portal2Sprite
+PortalSprite:smod4:orange:directions
 PortalExit:blue
 PortalExit:orange
 ActivePortal:right
@@ -2605,22 +2403,16 @@ OkRigid:left
 OkRigid:right
 OkRigid:down
 OkRigid:up
-RigidEnteringPortal1
-RigidLeavingPortal1
-RigidEnteringPortal2
-RigidLeavingPortal2
-BPEnteringPortal1, BPLeavingPortal1
-BPEnteringPortal2, BPLeavingPortal2
 Shot:portal_color:directions, ShotF:portal_color:directions
 ColorToggle
 MouseButton:horizontal
 GotGun
 
-HasCellU
-HasCellD
-HasCellR
-HasCellL
-RealTimeTick
+HasCell:up
+HasCell:down
+HasCell:right
+HasCell:left
+RealTimeTic
 PlayerNotFound
 
 ThroughPortal:up
@@ -2632,7 +2424,6 @@ RigidNextToPortal
 UnmovablePortal
 
 ErrorSprite
-ConveyorLeft
 
 JustTurned
 GoalSoundSprite
@@ -2646,7 +2437,6 @@ Destination:left
 Destination:right
 Destination:up
 Destination:down
-CanMovePortal:portal_color
 
 ======
 RULES
@@ -2702,22 +2492,10 @@ is dead and thus undo will work in one press )
 
 [ action MissingPlayer ] -> [ ]
 
-[ RealTimeTick ] -> []
-[ stationary Player ] -> [ Player RealTimeTick ]
+[ RealTimeTic ] -> []
+[ stationary Player ] -> [ Player RealTimeTic ]
 
 
-( some decorative stuff )
-  [ HintTerminal2 DarkWall ] -> [ action DarkWall ]
-  [ HintTerminal1          ] -> [ HintTerminal2 ]
-  [ action DarkWall        ] -> [ HintTerminal1 DarkWall ]
-  
-
-  
-  [RealTimeTick][ ParticleSprite2:portal_color:directions ] ->  [RealTimeTick][  ]
-  
-  [RealTimeTick][ ParticleSprite1:portal_color:directions ] ->  [RealTimeTick][ ParticleSprite2:portal_color:directions ]
-  
-( / some decorative stuff )
 
 [ JustTurned ] -> []
 
@@ -2729,18 +2507,19 @@ is dead and thus undo will work in one press )
 ( Turn the player if they are not alrady facing that direction)
 directions weapon_status [ Want:directions Player:weapon_status     no Player:directions ] -> [ Player:weapon_status:directions     JustTurned ]
 
-(Add Origin to the direction)
-directions [ Player:directions Want:directions ] -> [ Player:directions Want:directions  ]
 
 
 (Move player after turning unless there was water or a white object next )
 [ Background water no LightBridge ] -> [ water action Background ]
-[ Player:> JustTurned | no WithWhite stationary Background ] -> [ Player:> Want:>  | Background ]
+[ Player:> JustTurned | no Conveyor no WithWhite stationary Background ] -> [ Player:> Want:>  | Background ]
 [ action Background ] -> [ Background ]
+
+(The player can't move of their own volition when on a conveyor)
+[ Player Want Conveyor no LightBridge ] -> [ Player Conveyor ]
 
 
 (..)
-[ ConveyorLeft Block ] -> [ WantL Block ConveyorLeft ]
+[RealTimeTic][ Conveyor:> BlockPlayer no Want no LightBridge ] -> [RealTimeTic][ Want:> BlockPlayer Conveyor:>  ] sfx12
 
 (If a disarmed player moves towards the portal gun, add the GotGun helper and play fx)
 [ Player:disarmed:> Want:> | PortalGunTM ] -> [ | Player:disarmed:front GotGun ] sfx1
@@ -2756,21 +2535,17 @@ weapon_status [ Player:weapon_status:> | HintTerminal ] -> [ Player:weapon_statu
 
 (Prepare portal helpers)
 
-(The portal exit is the cell a portal points to, it shares direction and color with the portal)
-portal_color [ Portal:portal_color:> | No PortalExit:portal_color:> ] -> [ Portal:portal_color:> | PortalExit:portal_color:> ]
+once[]-> gosub CALCULATE PORTAL EXITS
 
-(In many rules we are just interested in knowing if there is an active portal facing a direction
-at a certain cell, the rest doesn't mater as much, that's what ActivePortal: is for)
-directions portal_color [ Portal:portal_color:directions  ][ Portal:toggle_portal_color] -> [ Portal:portal_color:directions   ActivePortal:directions ][ Portal:toggle_portal_color ]
 
 ( Do not consider a portal active if it is right next to a wall )
 ( This fixes situations in which you try to push a rigid body through a portal
  blocked by a wall, the rigid can disarm in that case)
 (This part uses the action on wall to signify that active portals must be deleted)
-[ ActivePortal:> | DarkOrWhiteWall ] -> [  | action DarkOrWhiteWall ]
+[ ActivePortal:> | Wall:wall_color ] -> [  | action Wall:wall_color ]
 
-[ action DarkOrWhiteWall ][ ActivePortal ] -> [ action DarkOrWhiteWall ][]
-[ action DarkOrWhiteWall ] -> [ stationary DarkOrWhiteWall ]
+[ action Wall:wall_color ][ ActivePortal ] -> [ action Wall:wall_color ][]
+[ action Wall:wall_color ] -> [ stationary Wall:wall_color ]
 
 
 
@@ -2796,13 +2571,9 @@ portal_color directions [ ShotF:portal_color:directions ] -> [ Shot:portal_color
 portal_color directions [ action Player:portal_color:directions ] -> [ Player:portal_color:directions Shot:portal_color:directions ] sfx2
 
 (Do not allow RealTime stuff when there's a shot visible)
-[ BlueShot ][ RealTimeTick ] -> [ BlueShot ][ ]
-[ OrangeShot ][ RealTimeTick ] -> [ OrangeShot ][ ]
-([ BlueShot ][ Portal:blue ] -> [ BlueShot ][ ]
-[ OrangeShot ][ Portal:orange ] -> [ OrangeShot ][ ])
+[ BlueShot   ][ RealTimeTic ] -> [ BlueShot ][ ]
+[ OrangeShot ][ RealTimeTic ] -> [ OrangeShot ][ ]
 
-[ BlueShot   ][ Portal1SPrite ] -> [ BlueShot ][ ]
-[ OrangeShot ][ Portal2SPrite ] -> [ OrangeShot ][ ]
 
 ( Move the portal shot, but use the F sprite and schedule an again)
 ( It's a bit counter intuitive but we have to use > syntax here instead of the directions mapping )
@@ -2884,8 +2655,8 @@ once [] -> gosub MOVEMENT
 [ With:> | action ActivePortal:< ] -> [ With:> OkRigid:> | ActivePortal:< ]
 
 
-[ With:> no OkRigid:> ] -> sfx5
-[ With:> no OkRigid:> ][ Target ] -> [With:> no OkRigid:> ][]
+[ With:> no OkRigid:> ][ Target ] -> [With:> no OkRigid:> ][ ErrorTarget ]
+[ ErrorTarget ] -> [ ErrorTarget ] sfx5
 ( [ With:> no OkRigid:> ] -> cancel )
 
 
@@ -2910,12 +2681,12 @@ once [] -> gosub MOVEMENT
 
 ( Spread light Bridge, including Portals )
 startloop
-   [ LightBridge:> | no LightBridge:> no LightBridge:< no DarkOrWhiteWall no Portal:< ] -> [ LightBridge:> | LightBridge:> ]
+   [ LightBridge:> | no LightBridge:> no LightBridge:< no Wall:wall_color no Portal:< ] -> [ LightBridge:> | LightBridge:> ]
    
    
    portal_color [ LightBridge:> no LightBridgeEnteringPortal:portal_color | Portal:portal_color:< ] -> [ LightBridge:> LightBridgeEnteringPortal:portal_color | Portal:portal_color:< ]
    
-   portal_color [ LightBridgeEnteringPortal:toggle_portal_color ][ Portal:portal_color:> | no LightBridge:< no LightBridge:> no DarkOrWhiteWall ] -> [ LightBridgeEnteringPortal:toggle_portal_color ][ Portal:portal_color:> | LightBridge:> ]
+   portal_color [ LightBridgeEnteringPortal:toggle_portal_color ][ Portal:portal_color:> | no LightBridge:< no LightBridge:> no Wall:wall_color ] -> [ LightBridgeEnteringPortal:toggle_portal_color ][ Portal:portal_color:> | LightBridge:> ]
 
 
 endloop
@@ -2969,128 +2740,56 @@ color uu dd ll rr [ MightSink Block:uu:dd:ll:rr:color Water ] -> [ Bridge:uu:dd:
 
 
 
-(delete portal helpers, see ya next turn)
-[ PortalExit ] -> [ ]
-[ ActivePortal ] -> []
-
 
 ( Decorative rules )
 
 
-[ Portal1Sprite no Portal:blue ] -> []
-[ Portal1RS4 ] -> [  ]
-[ Portal1LS4 ] -> [  ]
-[ Portal1US4 ] -> [  ]
-[ Portal1DS4 ] -> [  ]
-[ Portal1RS3 ] -> [ Portal1RS4 ]
-[ Portal1LS3 ] -> [ Portal1LS4 ]
-[ Portal1US3 ] -> [ Portal1US4 ]
-[ Portal1DS3 ] -> [ Portal1DS4 ]
-[ Portal1RS2 ] -> [ Portal1RS3 ]
-[ Portal1LS2 ] -> [ Portal1LS3 ]
-[ Portal1US2 ] -> [ Portal1US3 ]
-[ Portal1DS2 ] -> [ Portal1DS3 ]
-[ Portal1RS1 ] -> [ Portal1RS2 ]
-[ Portal1LS1 ] -> [ Portal1LS2 ]
-[ Portal1US1 ] -> [ Portal1US2 ]
-[ Portal1DS1 ] -> [ Portal1DS2 ]
-[ Portal:blue:right no Portal1Sprite ] -> [ Portal:blue:right Portal1RS1 ]
-[ Portal:blue:left no Portal1Sprite ] -> [ Portal:blue:left Portal1LS1 ]
-[ Portal:blue:up no Portal1Sprite ] -> [ Portal:blue:up Portal1US1 ]
-[ Portal:blue:down no Portal1Sprite ] -> [ Portal:blue:down Portal1DS1 ]
 
-[ Portal2Sprite no Portal:orange ] -> []
-[ Portal2RS4 ] -> [  ]
-[ Portal2LS4 ] -> [  ]
-[ Portal2US4 ] -> [  ]
-[ Portal2DS4 ] -> [  ]
-[ Portal2RS3 ] -> [ Portal2RS4 ]
-[ Portal2LS3 ] -> [ Portal2LS4 ]
-[ Portal2US3 ] -> [ Portal2US4 ]
-[ Portal2DS3 ] -> [ Portal2DS4 ]
-[ Portal2RS2 ] -> [ Portal2RS3 ]
-[ Portal2LS2 ] -> [ Portal2LS3 ]
-[ Portal2US2 ] -> [ Portal2US3 ]
-[ Portal2DS2 ] -> [ Portal2DS3 ]
-[ Portal2RS1 ] -> [ Portal2RS2 ]
-[ Portal2LS1 ] -> [ Portal2LS2 ]
-[ Portal2US1 ] -> [ Portal2US2 ]
-[ Portal2DS1 ] -> [ Portal2DS2 ]
-[ Portal:orange:right no Portal2Sprite ] -> [ Portal:orange:right Portal2RS1 ]
-[ Portal:orange:left no Portal2Sprite ] -> [ Portal:orange:left Portal2LS1 ]
-[ Portal:orange:up no Portal2Sprite ] -> [ Portal:orange:up Portal2US1 ]
-[ Portal:orange:down no Portal2Sprite ] -> [ Portal:orange:down Portal2DS1 ]
+[ Wall:dark no DarkWallSprite ] -> [ Wall:dark random DarkWallSprite ]
+[ RealTimeTic ] -> gosub ANIMATIONS
+
+[ no HasCell:> | ] -> [ HasCell:> | ]
 
 
-[ DarkWall no DarkWallSprite ] -> [ DarkWall random DarkWallSprite ]
-[ RealTimeTick ][ WaterSprite ] -> [RealTimeTick][]
-[ RealTimeTick ][ Water no WaterSprite ] -> [RealTimeTick][ Water random WaterSprite ]
+directions_tag [ Conveyor:directions_tag no ConveyorBorder:> | no Conveyor:directions_tag no Wall:wall_color ] -> [ Conveyor:directions_tag ConveyorBorder:> | ]
+
+[ Wall:dark no HasCell:> no WallBorder:dark:> ] -> [ Wall:dark  WallBorder:dark:> ]
 
 
-up    [ no HasCellU | ] -> [ HasCellU | ]
-down  [ no HasCellD | ] -> [ HasCellD | ]
-right [ no HasCellR | ] -> [ HasCellR | ]
-left  [ no HasCellL | ] -> [ HasCellL | ]
+[ Wall:dark no WallBorder:dark:> | no Wall:wall_color ] -> [ Wall:dark WallBorder:dark:> |]
 
-up   [ DarkWall no HasCellU no DarkWallTop  ] -> [ DarkWall DarkWallTop ]
-left [ DarkWall no HasCellL no DarkWallLeft ] -> [ DarkWall DarkWallLeft ]
-right[ DarkWall no HasCellR no DarkWallRight ] -> [ DarkWall DarkWallRight ]
-down [ DarkWall no HasCellD no DarkWallBottom] -> [ DarkWall DarkWallBottom ]
+[ Wall:white no WallBorder:white:> | no Wall:wall_color ] -> [ Wall:white WallBorder:white:> | ]
 
 
-up   [ DarkWall no DarkWallTop  | no DarkOrWhiteWall ] -> [ DarkWall DarkWallTop |]
-left [ DarkWall no DarkWallLeft | no DarkOrWhiteWall ] -> [ DarkWall DarkWallLeft|]
-right[ DarkWall no DarkWallRight| no DarkOrWhiteWall ] -> [ DarkWall DarkWallRight|]
-down [ DarkWall no DarkWallBottom | no DarkOrWhiteWall ] -> [ DarkWall DarkWallBottom|]
-
-up   [ Wall no WallTop:white  | no DarkOrWhiteWall ] -> [ Wall WallTop:white |]
-left [ Wall no WallLeft:white | no DarkOrWhiteWall ] -> [ Wall WallLeft:white|]
-right[ Wall no WallRight:white| no DarkOrWhiteWall ] -> [ Wall WallRight:white|]
-down [ Wall no WallBottom:white | no DarkOrWhiteWall ] -> [ Wall WallBottom:white|]
-
-up   [ Wall no HasCellU ] -> [ Wall WallTop:white ]
-left [ Wall no HasCellL ] -> [ Wall WallLeft:white]
-right[ Wall no HasCellR ] -> [ Wall WallRight:white]
-down [ Wall no HasCellD ] -> [ Wall WallBottom:white]
+[ Wall:white no HasCell:> ] -> [ Wall:white WallBorder:white:> ]
 
 
-[ no HasCellU no  HasCellL ] -> [ CellOdd ]
+[ no HasCell:up no  HasCell:left ] -> [ CellOdd ]
 
 startloop
   [ CellOdd  | no CellEven ] -> [ CellOdd  | CellEven ]
   [ CellEven | no CellOdd  ] -> [ CellEven | CellOdd ]
 endloop
 
-[ Wall CellOdd ] -> [ Wall WallOdd CellOdd ]
+[ Wall:white CellOdd ] -> [ Wall:white WallOdd CellOdd ]
+
+
+[ WallSeparator:directions no Wall:wall_color ] -> []
+[ Wall:white | Wall:dark ] -> [ Wall:white | WallSeparator:< Wall:dark ]
 
 
 
-[ WallBottom:white WallTop:white WallLeft:white WallRight:white no Wallx1:white ] -> [ WallBottom:white WallTop:white WallLeft:white WallRight:white Wallx1:white ]
+right [ Wall:white        | WallBorder:white:down ] -> [ action Wall:white | WallBorder:white:down ]
+down  [ action Wall:white | WallBorder:white:right  ] -> [        Wall:white WallDarkCorner:white | WallBorder:white:right  ]
+[ action Wall:white ] -> [ Wall:white ]
 
 
-down  [ Wall | DarkWall ] -> [ Wall | WallSeparatorU DarkWall ]
-up    [ Wall | DarkWall ] -> [ Wall | WallSeparatorD DarkWall ]
-left  [ Wall | DarkWall ] -> [ Wall | WallSeparatorR DarkWall ]
-right [ Wall | DarkWall ] -> [ Wall | WallSeparatorL DarkWall ]
+[ no Water no Bridge no GroundBorder:>   | WaterOrBridge ] -> [ GroundBorder:> | WaterOrBridge ]
+
+[ Target no TargetBorder:> | Target ] -> [ Target TargetBordeR:> | Target ]
 
 
-right [ Wall        | WallBottom:white ] -> [ action Wall | WallBottom:white ]
-down  [ action Wall | WallRight:white  ] -> [        Wall WallDarkCorner:white | WallRight:white  ]
-[ action Wall ] -> [ Wall ]
-
-
-up   [ no Water no Bridge no GroundTop   | WaterOrBridge ] -> [ GroundTop   | WaterOrBridge ]
-left [ no Water no Bridge no GroundLeft  | WaterOrBridge ] -> [ GroundLeft  | WaterOrBridge ]
-right[ no Water no Bridge no GroundRight | WaterOrBridge ] -> [ GroundRight | WaterOrBridge ]
-down [ no Water no Bridge no GroundBottom| WaterOrBridge ] -> [ GroundBottom| WaterOrBridge ]
-
-up   [ Target no TargetBorderTop    | Target ] -> [ Target  TargetBorderTop    | Target ]
-down [ Target no TargetBorderBottom | Target ] -> [ Target  TargetBorderBottom | Target ]
-left [ Target no TargetBorderLeft   | Target ] -> [ Target  TargetBorderLeft   | Target ]
-right[ Target no TargetBorderRight  | Target ] -> [ Target  TargetBorderRight  | Target ]
-
-
-[ Target Block no WithWhite no GoalSoundSprite ] -> [ Target Block GoalSoundSprite ] sfx10
+[ Target Block no WithWhite no GoalSoundSprite no LightBridge ] -> [ Target Block GoalSoundSprite ] sfx10
 [ Target no Block GoalSoundSprite  ] -> [ Target ] sfx9
 [ Target WithWhite GoalSoundSprite ] -> [ Target WithWhite ] sfx9
 
@@ -3099,18 +2798,16 @@ directions_tag [ LightBridgeSprite:smod3:directions_tag no LightBridge:direction
 (play sfx if there are new light bridge sprites)
 [ LightBridge:directions no LightBridgeSprite:smod3:directions ] -> [ LightBridge:directions ] sfx11
 
-directions_tag [ LightBridgeSprite:s2:directions_tag ] -> [ ]
-directions_tag [ LightBridgeSprite:s1:directions_tag ] -> [ LightBridgeSprite:s2:directions_tag ]
-directions_tag [ LightBridgeSprite:s0:directions_tag ] -> [ LightBridgeSprite:s1:directions_tag ]
+smod3 [ LightBridgeSprite:smod3:> stationary LightBridge:> ] -> [ LightBridgeSprite:s3next:> action LightBridge:>  ]
 
-directions_tag [ LightBridge:directions_tag no LightBridgeSprite:directions_tag ] -> [ LightBridge:directions_tag  LightBridgeSprite:s0:directions_tag ]
+[ LightBridge:> no LightBridgeSprite:> ] -> [ LightBridge:>  LightBridgeSprite:s0:> ]
 
 
 (Adding corners is easy,  really. You just need to understand that if
  this shape exists: |_ _| , then there are four corners to add. )
 color vertical horizontal [ BlockCorner:vertical:horizontal:color ] -> []
 
-color down [ Block:uu:_D:_L:rr:color no BlockCorner:down:left:color | Block:_U:dd:_L:rr:color ] -> [ Block:uu:_D:_L:rr:color BlockCorner:down:left:color | Block:_U:dd:_L:rr:color BlockCorner:up:left:color ]
+color down [ Block:uu:_D:_L:rr:color no BlockCorner:down:left:color | Block:_U:dd:_L:rr:color2 ] -> [ Block:uu:_D:_L:rr:color BlockCorner:down:left:color | Block:_U:dd:_L:rr:color2 BlockCorner:up:left:color ]
 
 color left [ BlockCorner:down:left:color | no BlockCorner:down:right:color ] -> [ BlockCorner:down:left:color | BlockCorner:down:right:color ]
 
@@ -3120,13 +2817,38 @@ color down [ BlockCorner:down:right:color | no BlockCorner:up:right:color ] -> [
 
 color vertical horizontal [ BridgeCorner:vertical:horizontal:color ] -> []
 
-color down [ Bridge:uu:_D:_L:rr:color no BridgeCorner:down:left:color | Bridge:_U:dd:_L:rr:color ] -> [ Bridge:uu:_D:_L:rr:color BridgeCorner:down:left:color | Bridge:_U:dd:_L:rr:color BridgeCorner:up:left:color ]
+color down [ Bridge:uu:_D:_L:rr:color no BridgeCorner:down:left:color | Bridge:_U:dd:_L:rr:color2 ] -> [ Bridge:uu:_D:_L:rr:color BridgeCorner:down:left:color | Bridge:_U:dd:_L:rr:color2 BridgeCorner:up:left:color ]
 
 color left [ BridgeCorner:down:left:color | no BridgeCorner:down:right:color ] -> [ BridgeCorner:down:left:color | BridgeCorner:down:right:color ]
 
 color down [ BridgeCorner:down:right:color | no BridgeCorner:up:right:color ] -> [ BridgeCorner:down:right:color | BridgeCorner:up:right:color ]
 
 ( /Decorative Rules)
+
+subroutine ANIMATIONS
+
+  [ HintTerminal2 Wall:dark ] -> [ action Wall:dark ]
+  [ HintTerminal1           ] -> [ HintTerminal2 ]
+  [ action Wall:dark        ] -> [ HintTerminal1 Wall:dark ]
+
+
+  [ ParticleSprite2:portal_color:directions ] ->  [  ]
+  
+  [ ParticleSprite1:portal_color:directions ] ->  [ ParticleSprite2:portal_color:directions ]
+
+  portal_color smod4 [ stationary PortalSprite:smod4:portal_color:> Portal:portal_color:> ActivePortal:> ] -> [ action PortalSprite:s4next:portal_color:> action Portal:portal_color:> ]
+  portal_color       [ stationary Portal:portal_color:> ] -> [ action PortalSprite:s0:portal_color:> Portal:portal_color:> ]
+  (Removal of dangling portal sprites occurs every tic, not just real time tics)
+  
+  
+  smod5 [ ConveyorSprite:smod5:>  stationary Conveyor:> ] -> [ ConveyorSprite:s5next:> action Conveyor:> ]
+  [ stationary Conveyor:> ] -> [ ConveyorSprite:s0:> action Conveyor:> ]
+  
+
+  [ WaterSprite ] -> []
+  [ Water no WaterSprite ] -> [ Water random WaterSprite ]
+(endsubroutine ANIMATIONS2)
+
 
 subroutine MOVEMENT
 
@@ -3146,49 +2868,77 @@ situations that seemed impossible before, work now!
 
 
 (Basically, we run the logic twice, first to populate the first set of errors, the second time, it is repeated but with the Errors preventing movement.)
-once [Background] -> gosub MOVEMENT PASS
+once [] -> gosub MOVEMENT PASS
+[ Error CloneWant:portal_color:> ] -> [ Error ]
 
 (If there is a clone, unclonify it for the second pass)
-weapon_status player_face [ PlayerClone:weapon_status:player_face ] -> [  Player:weapon_status:player_face ]
-color uu dd ll rr [ BlockClone:uu:dd:ll:rr:color ] -> [  Block:uu:dd:ll:rr:color ]
+once [] -> gosub UNCLONIFY
 
 
 (Remove the wants)
 [ Want:> ] -> []
+[ CloneWant:portal_color:directions ] -> []
 
 (Add them back)
 [ Origin:> ] -> [ Want:> Origin:> ]
 
 (Run again)
 once [Background] -> gosub MOVEMENT PASS
-
+[ Error CloneWant:portal_color:> ] -> [ Error ]
 
 
 (Remove wants that have errors)
 [ ErrorSprite ] -> []
 ([ Error ] -> [ ErrorSprite Error ])
 [ Error Want ] -> [ Error ]
+[ Error CloneWant:portal_color:> ] -> [ Error ]
 [ Error ] -> [ ]
+
+
 
 
 (Move all the remaining wants, including portals if any)
 
 portal_color once [ Portal:portal_color Want:> | ] -> [ Want:> | Portal:portal_color ]
-[ Want:> BlockPlayer | no BlockPlayer ] -> [ | BlockPlayer ]
 
+startloop
+  [ Want:> Block  | no BlockPlayer ] -> [ | Block ] sfx8
+  [ Want:> Player | no BlockPlayer ] -> [ | Player ]
+endloop
 
+( Re-evalaute portal exits)
+once[]-> gosub CALCULATE PORTAL EXITS
 
 
 
 (Teleportation!! ) (I see this as an absolute win)
 portal_color directions_tag directions_tag2 [ Clone CloneWant:portal_color:directions_tag ][ PortalExit:toggle_portal_color:directions_tag2 No BlockPlayer ] -> [ ][ Clone Rotate:directions_tag:directions_tag2 ]
 
-weapon_status player_face [ PlayerClone:weapon_status:player_face ] -> [ Player:weapon_status:player_face ]
-color uu dd ll rr [ BlockClone:uu:dd:ll:rr:color ] -> [ Block:uu:dd:ll:rr:color ]
+
+
+[] -> gosub UNCLONIFY
 
 
 
+subroutine UNCLONIFY
+  weapon_status player_face [ PlayerClone:weapon_status:player_face ] -> [  Player:weapon_status:player_face ]
+  color uu dd ll rr [ BlockClone:uu:dd:ll:rr:color ] -> [  Block:uu:dd:ll:rr:color ]
 
+subroutine CALCULATE PORTAL EXITS
+
+
+  (The portal exit is the cell a portal points to, it shares direction and color with the portal)
+  [ PortalExit ] -> [ ]
+  portal_color [ Portal:portal_color:> | No PortalExit:portal_color:> ] -> [ Portal:portal_color:> | PortalExit:portal_color:> ]
+
+  (In many rules we are just interested in knowing if there is an active portal facing a direction
+  at a certain cell, the rest doesn't mater as much, that's what ActivePortal: is for)
+  [ ActivePortal ] -> []
+  
+  directions portal_color [ Portal:portal_color:directions  ][ Portal:toggle_portal_color] -> [ Portal:portal_color:directions   ActivePortal:directions ][ Portal:toggle_portal_color ]
+
+
+  portal_color [ PortalSprite:smod4:portal_color:> no Portal:portal_color:> ] -> []
 
 
 
@@ -3203,13 +2953,16 @@ subroutine MOVEMENT PASS
 
       [ Want With:> | With:< ] -> [ Want With:> | Want With:< ]    
 
-      [ BlockPlayer Want:> | Block no Error no ActivePortal:< ] -> [ BlockPlayer Want:> | Block Want:> ]
+      [ BlockPlayer Want:> no Error | Block no Error no ActivePortal:< ] -> [ BlockPlayer Want:> | Block Want:> ]
 
       (pull from portal)
       portal_color [ Want:< With:> | ActivePortal:< Portal:portal_color:< ] ->  [ Want:< With:> PullingThroughPortal:portal_color | ActivePortal:< Portal:portal_color:<]
 
       (Convert pull to push)
       portal_color [ PullingThroughPortal:portal_color ][ Portal:toggle_portal_color:> | With:< ] -> [ PullingThroughPortal:portal_color ][ Portal:toggle_portal_color:> | With:< Want:< ]
+      
+      (Push Portal towards a block)
+      [ Want:> ActivePortal:> no Error | Block No Error  ] -> [ Want:> ActivePortal:> no Error | Block No Error Want:< ]
 
       (push through portal)
       [ Want:> | ActivePortal:< Portal:< ] -> [ Want:> | ActivePortal:< action Portal:< ]
@@ -3226,7 +2979,7 @@ subroutine MOVEMENT PASS
   (As a result of Step 1, all the things that want to be pushed have the Want: direction )
 
   ( If there is an object going through a portal, turn it into a clone )
-  portal_color [ BlockPlayer Want:> | ActivePortal:< Portal:portal_color ] -> [ Clonify BlockPlayer CloneWant:portal_color:< | ActivePortal:< Portal:portal_color ]
+  portal_color [ BlockPlayer Want:> | ActivePortal:< Portal:portal_color:< ] -> [ Clonify BlockPlayer CloneWant:portal_color:< | ActivePortal:< Portal:portal_color:< ]
 
   (Don't allow two things entering portals at once)
   [ Clonify CloneWant:orange:directions ][ Clonify CloneWant:blue:directions ] -> [Error ][ Error ]
@@ -3248,13 +3001,15 @@ subroutine MOVEMENT PASS
   (The clone is identical to the original object but it has no collision )
 
   ( Things that can't be moved )
-  [ DarkOrWhiteWall ] -> [ DarkOrWhiteWall Error ]
+  [ Wall:wall_color     ] -> [ Wall:wall_color Error ]
   [ Want:up Want:down   ] -> [ Want:up Want:down Error ]
   [ Want:up Want:left   ] -> [ Want:up Want:left Error ]
   [ Want:up Want:right  ] -> [ Want:up Want:right Error ]
   [ Want:down Want:left ] -> [ Want:down Want:left Error ]
   [ Want:down Want:right] -> [ Want:down Want:right Error ]
   [ Want:left Want:right] -> [ Want:left Want:right Error ]
+  (If the player is not moving then nothing can move to their location)
+  [ Want:> | Player no Want] -> [ Error Want:> | Player ]
 
   ( Do not allow cutting rigids)
   [ PerpendicularWant:> With:> | ActivePortal:< ] -> [ Error PerpendicularWant:> With:> | ActivePortal:< ]
@@ -3265,6 +3020,9 @@ subroutine MOVEMENT PASS
   [ Want:> | no Destination ] -> [ Want:> | Destination:> ]
   [ Want:> no Error | no Destination:> ] -> [ Error Want:> | ]
   portal_color [ action Portal:portal_color ][ Portal:toggle_portal_color:> | Destination ] ->  [ action Portal:portal_color ][ Portal:toggle_portal_color:> | Destination Error ]
+  
+  (Do not allow teleporting if there's a stationary player on the other end)
+  portal_color [ action Portal:portal_color ][ Portal:toggle_portal_color:> | Player no Want ] ->  [ action Portal:portal_color ][ Portal:toggle_portal_color:> | Player Error ]
 
   (Spread error)
   startloop
@@ -3276,11 +3034,16 @@ subroutine MOVEMENT PASS
      (Can't move the thing next to the portal's exit)
       portal_color directions_tag directions_tag2 [ Clone CloneWant:portal_color:directions_tag ][ PortalExit:toggle_portal_color:directions_tag2 Error ] -> [ Error Clone ][ PortalExit:toggle_portal_color:directions_tag2 Error ]
 
-      (If there is an error with the clone, unclonify it)
-      weapon_status player_face [ Error PlayerClone:weapon_status:player_face ] -> [ Error Player:weapon_status:player_face ]
-      color uu dd ll rr [ Error BlockClone:uu:dd:ll:rr:color ] -> [ Error Block:uu:dd:ll:rr:color ]
 
   endloop
+  
+  (If the clone has a portal, that's a big mistake)
+  [ Clone Portal ] -> [ Clone Portal Error ]
+  (If there is an error with the clone, unclonify it)
+  once [ Error Clone ] -> gosub UNCLONIFY
+  [ Error CloneWant:portal_color:> ] -> [ Error  ]
+  
+  [ want:> no HasCell:> ] -> [ Error want:> ]
 
 
 
@@ -3295,6 +3058,7 @@ WINCONDITIONS
 ==============
 
 All target on Block
+No LightBridge on Target
 No WithWhite on Target
 Some Player
 Some Target
@@ -3302,6 +3066,7 @@ Some Target
 =======
 LEVELS
 =======
+
 
 section 01
 
@@ -3315,11 +3080,12 @@ Message Your Job is simple: Relocate the furniture to the marked locations. 'Z' 
 %01...@..%
 ###..¡.%.%
 ####...%.%
-####yyy%.%
-####yy┦%.%
-%%%@⅄ⱬy%.%
+####yyұ%.%
+####yyỳ%.%
+%%%@ȳȳy%.%
 %@@@.....%
 %%%%%%%%%%
+
 
 section 02
 
@@ -3361,15 +3127,15 @@ section 04
 
 Message Unsupervised exposure to [Redacted] Science Test Equipment might damage our furniture. It might also lead to death.
 
+
 %%%%%%%%%%%%
 %04....~~~%%
-%04┦.~~~.~@%
-%!.c.~~~.~.%
-%.ñc.~~~.~.%
-%..⹏.~...~.%
+%04y.~~~.~@%
+%!.y.~~~.~.%
+%.ýy.~~~.~.%
+%..y.~...~.%
 %....~...~.%
 ########%%%%
-
 
 
 Message Rest assured that this is not a test. This is a job for humans.
@@ -3377,22 +3143,24 @@ Message There are no records being kept of the number of moves you are using and
 
 section 05
 
+
 %%%%%%%%%%%%%#%
 %05........%.@%
 %05....%~~~~.@%
-%.⡧ⱬⱬℌ┦~~~~~.@%
-%.c⅄☥cc~~~~~.@%
-%.⸔ⱬⱬac~~~~~.%%
-%.....⹏~~~~~~~%
+%.yұұyỳ~~~~~.@%
+%.ýyyỳỳ~~~~~.@%
+%.yȳȳyỳ~~~~~.%%
+%.....ỳ~~~~~~~%
 %...!..~~~~~~~%
 %###########%%%
 
 Message If this was a test, I would have no reason to lie about it. Therefore, this is not a test.
 
 section 06
+
 %%%%%%%%%%%%#%%%%%
 %#....~~.......06%
-%%ñññ.~~.......06%
+%%ýýý.~~.......06%
 %%....~~~~~~~~~~~%
 %%%%%~~~~~~~~~...%
 %.....~~~.%%~..y.%
@@ -3453,7 +3221,7 @@ section 10
 
 Message Our Scientists are busy making important discoveries such as solid light. They don't have time to be moving furniture around.
 %%%%%%#%%%%
-%10↓......%
+%10D......%
 %10.......%
 %~~~~~~~~~%
 %~~~~~~~~~%
@@ -3478,7 +3246,7 @@ Message The records say: "Employee too easily distracted by bright lights". "Emp
 %~~~~~~~~~~~~~~%
 %~~~~~~~~~~~~~~%
 %~~~~~~~~~~~~~~%
-#....ŧ%#....yy.%
+#....L%#....yy.%
 #11.!.%#.ww.y..%
 #11...%%%%%%%%%%
 ######%%%%%%%%%%
@@ -3492,22 +3260,70 @@ Message Couldn't you be more efficient? If you could do more things at once, tha
 
 %%%%%%%%%%%%%%%%%%%
 %..%%%%.....%%%%..%
-%..YY.%.YYY.%.YY..%
-%..Y..%..Y..%..Y..%
+%..yy.%.yyy.%.yy..%
+%..y..%..y..%..y..%
 %...@@%.@@@.%@@...%
 %%%%@%%%%@%%%%@%%%%
 %.................%
 %12......!........%
-%12.....WW}.......%
+%12.....wwẁ.......%
 ###################
 
+
 section 13
+
+Message Perhaps it would increase motivation if you had more inventions to interact with. Check this chamber out, it has an advanced piece of tech called a 'Conveyor Belt'
+
+%%%%%%
+%%%@%%
+%>>@@%
+%.~@@%
+%....%
+%.~~.%
+%yy~.%
+#yy!y%
+#.13.%
+%%%%#%
+
+section 14
+
+Message Humans seem to display a lack of direction. But we know the solution. Focus on your job, and you'll find your direction.
+
+%%%%%%%%%%%~~~%%#%
+%.y@%14....~~~.y.%
+%.y@%14....~~~.y.%
+%.~~%......~~~...%
+%.~~.yyyw..~~~...%
+%%~~......%~~~...%
+%%~~...!..#.....@%
+%%~~......%.....@%
+%%~~%%%%%%%%%%%%%%
+
+
+section 15
+
+Message The following chamber requires humans to think in multiple dimensions. It's unclear if humans are capable of 3D-thinking. If you need help, just imagine there's an axis labelled 'z' right above you.
+
+%%%%%%%%%%%%%%%%%
+%~~~~~~~~~...~..%
+%~~~~~~~~~.ww~@@#
+%...~~~~~~...~..%
+%...~.....%%%~~~%
+%...~....l%%%~~~%
+%...%~~~~~~~~~~.%
+%.!.%%%%%%...~~.%
+%....w.15%.y.~~.%
+%......15%.y.~~~%
+%%%%%%%%%%######%
+
+section 16
+
 
 Message Maybe what you could do is become more versatile? It's so tragic humans couldn't do more with less.
 
 %%%%%%%%%%%%%%
-%13.....~~~~~%
-%13.!...~~~~~%
+%16.....~~~~~%
+%16.!...~~~~~%
 %......%.Y.~~%
 %.W.W..%...~~%
 %.WWWWW.~~~~@%
@@ -3515,221 +3331,281 @@ Message Maybe what you could do is become more versatile? It's so tragic humans 
 %%%%%%%%%%%%%%
 
 
-section someoldone
+section 17
+
+Message Humans really enjoy conveyor belts. That's one way to stop feeling direction-less.
+
+%%%%%%%%%%%%%
+#@@@@~~.%...%
+%y%%%%%.%WW.%
+%y..>>>.%...%
+%y..%%%%%...%
+%y~y~%%#%.17%
+%y.y~%%...17%
+%yyỳ~%%..%%%%
+%...ýұ..!...%
+%%..ȳỳ......%
+%%.....>>>>>#
+%%%%%%%%%%%%%
+
+
+section 18
+
+Message One of the main rules of Test Chamber design is to have as few mechanics as possible. 
+
+Message That's why we've replaced all of the mechanics with automatons.
+
+%%%#%%%%%%%%%%%%%%%%
+%@y..y%.....~~~....%
+%~~~~w%.....~~~..@.%
+%~~~~y%..w.y~~~.@@.%
+%.!..y%..⍹ỳy~~~.@@.%
+%...yy%.ẃẃȳȳ~~~.@..%
+%%%..~~.ẃẃy.~~~..18%
+%%%%.~%.....~~~..18%
+%%%%%%%%%%%%%%%%%%%%
 
 
 
-Message Just because you are not being tested doesn't mean your should slack off.
+section 19
 
-Message As unlikely as it may appear, these chambers took a lot of time to design.
-
-
-section old09
-
-%%%%%%%%%%%%%%
-%............%
-%.“»%%%%%%%%@%
-%........%%%%%
-%...%%..%%...%
-%.ñ........09%
-%%%%%.%.%%.09%
-%%%%..%%%%%%%%
-%%%%.!%%%%%%%%
-%%%%..%%%%%%%%
-%%%%%%%%%%%%%%
-
-section old04
-
-%%%%%%
-%%%@%%
-%04@@%
-%04@@%
-%~~..%
-%..!~%
-%yy..%
-#yy.ñ%
-#....%
-%%%%#%
+%%%%%%%%%%%%%%%%
+%R....#%~~~~.@@%
+%.....~%~~~~~~~%
+%..!..~%~~~~~..%
+%.....~~~~~~~..%
+%.www.~~~~~....%
+%.ẃȳȳ.~~~~~....%
+%.w.ẅ.~~~~~%.19%
+%.www.~~~~~%.19%
+%%%%%%%%%%%%%%%%
 
 
+section 20
 
-section old10
+##%%%%%%%%%%%%%%%%%%
+#......~~..~~~@@@@%%
+%......##.@~~~.....%
+%.yyyy.~~.@~~~.....%
+%......~~..~~~.....%
+%.yyyw.~%y.~~~.....%
+%..!...~%y%~~~...20%
+%......>>>>>>>...20%
+%%%%%%%%%%%%%%#####%
 
+
+section 21
+
+(I love this one)
+
+%%%%%#%%%%%%%%%%%%
+%......%.~~~yyy21%
+%.wẁ.u.%.%%%%%%21%
+%.w%%%%%.~yy@@%.%%
+%..%@..y.~yy@@%.%%
+%%~.~@~yyy%%%%%.%%
+%%.~.~.~.~%%%%yy%%
+%...~.~.~.%..%y..%
+%......~.~@yy%yy.%
+%.......~.~y.%@..%
+%....!...~....@@%%
+%..........%%%%%%%
+%.>>>>>>>>>>>>>>>#
 %%%%%%%%%%%%%%%%%%
-%%%%%%.⅄☥.~....10%
-%%%%%%..%.%....10%
-%....%....%%%%%~%%
-%....%.%%.%%%%%.%%
-#@@..~.%~~~...!..%
-%....~~~~~~..ñ...%
-%~~~~~~~~~~..“·».%
-%~~~~~~~~~~..“·».%
-%%%%%%%%%%%%#%%%%%
+
+
+goto END
+
+
+
+section debug
+
+
+
+
+%%%%%%%%%%%%%%%%%%%
+%~~~~~~~~~~...~...%
+%~~~~~~~~~~.WW~.@@#
+%...~~~~~~~...~...%
+%...~~~....%%%~~~~%
+%...~~~.!.l%%%~~~~%
+%..%%~~~~~~~~~~~~.%
+%.ᒣ%%~~~~~~...~~~~%
+%.66%~~~~~~.ვ.~~~~%
+%.66%~~~~~~.ნ.~~~~%
+%%%%%%%%%%%#######%
+
+
+%%%%%%%%%%%%%%%%%%%%%
+%~~~~~~~~~~~....~...%
+%~~~~~~~~~~~.ᒤᒦᒥ~.@@#
+%...~~~~~~~~....~...%
+%...~~~.....%%%%~~~~%
+%...~~~..!.l%%%%~~~~%
+%..%%~~~~~~~~~~~~~~.%
+%.ᒣ%%~~~~~~~...~~~~~%
+%.66%~~~~~~~.ვ.~~~~~%
+%.66%~~~~~~~.ნ.~~~~~%
+%%%%%%%%%%%%########%
 
 
 
 
 
-section old11
+%%%%%%%%%%%~~~%%#%
+%.ვ@%33....~~~.ვ.%
+%.ნ@%33....~~~.ნ.%
+%.~~%......~~~...%
+%%~~.ბეეᒥ..~~~...%
+%%~~......%~~~...%
+%%~~...!..#.....@%
+%%~~......%.....@%
+%%~~%%%%%%%%%%%%%%
 
-Message As they say, you should aim to have as few mechanics as possible. That's why we've replaced all of the mechanics with repair robots.
+%%%%%%%%%%%%%%~~~%%#%
+%@.....%33....~~~.y.%
+%@.....%33....~~~.y.%
+%...~~~%......~~~...%
+%...~~~...!...~~~...%
+%...~~~.yyyw..~~~...%
+%...~~~......%~~~...%
+%.y.~~~......#.....@%
+%.y.~~~......%.....@%
+%#%%~~~%%%%%%%%%%%%%%
 
-%#%%%%%%%%%%%%%%%%
-%@ñ┦%.....~~~....%
-%..¢%.....~~~..@.%
-%~~c%....┦~~~.@@.%
-%!.c%.“»⅄a~~~.@@.%
-%.⅄a%.“»⡧☥~~~.@..%
-%..~~.“»⹏.~~~..11%
-%%.~%.....~~~..11%
-%%%%%%%%%%%%%%%%%%
 
-Message Reminder to employees: Do not fill safety liquid pools with unused furniture unless absolutely necesssary.
+%%%%%%%%%%%%%%%%%~~~~%%#%
+%@.......%.......~~~~.y.%
+%@.......%.......~~~~.y.%
+%...~~~~%%..!....~~~~...%
+%...~~~~.........~~~~...%
+%...~~~~..yyyyw..~~~~...%
+%...~~~~.......%%~~~~...%
+%.y.~~~~.....33#.......@%
+%.y.~~~~.....33%.......@%
+%#%%~~~~%%%%%%%%%%%%%%%%%
 
-section old12
+
+
+%%%%%%%%%%%%%%%
+%......~~~....%
+%......~~~....%
+%.⍹⍹!y.~~~..@.%
+%.⍹⍹ỳy.~~~.@@.%
+%.ẅẃȳ..~~~.@@.%
+%...yy.~~~.@..%
+%......~~~..00%
+%......~~~..00%
+%%%%%%%%%%%%%%%
 
 %%%%%%%##%%%%%%%%
-%%@%%%%~~.....12%
-%%@%%%%~~..@@.12%
+%%@%%%%~~.....00%
+%%@%%%%~~..@@.00%
 %%.....~~..@....%
 %%.....~~.......%
 %%~~~~~~~~~~~~~~%
 %...............%
-%..⡧☥#.!.“·»....%
-%..⹏.%...⅄ⱬⱬⱬℌ..%
-%....%.......⹏..%
+%..yy#.!.www....%
+%..y.%...ȳȳȳyy..%
+%....%.......y..%
 %%%%%%%%%%%%%%%%%
 
-Message [Redacted] Science would like to thank our surviving employees. Your efforts are noted.
-
-section 13
-
-%%%%%%%%%%%%%%%
-%......~~~....%
-%......~~~....%
-%.“»!┦.~~~..@.%
-%.“»⅄a.~~~.@@.%
-%.“»┦..~~~.@@.%
-%...⸔☥.~~~.@..%
-%......~~~..13%
-%......~~~..13%
-%%%%%%%%%%%%%%%
-
-Message Congratulations on making this far. If this was a test, the results would be very satisfactory.
-
-section 14
-
-%%%%%%%%%%%%%%%
-%%%%%~~~......%
-%%%%%~%~%%┦...%
-%%%..~.~.%c...%
-%%%.ñ~.~@%⹏.14%
-%%%..~~~.%┦.14%
-%%%%%~~~~%c..%%
-%...#...#.⹏..%%
-%.}}.~~.%...%%%
-%.......%.┦.%%%
-%%~~~~~~%.c.%%%
-%%~~~~~~..⹏.%%%
-%%...!.~..#.%%%
-%%%%%%#%%%%%%%%
-
-
-
-
-Message [ You've finished placing the furniture. Our test chambers are finally ready. ]
-
-Message Good Job, Human.
-
-section 15
-
-%%%%%%%%%%%%%%%%%%%%
-%..................%
-%..................%
-%.....ñ.ñ.ñ........%
-%.....µ.µ.µ........%
-%....┦\·”·æ┦.......%
-%....⸔ⱬⱬⱬⱬⱬa.......%
-%.............!....%
-%..................%
-%................66%
-%................00%
-%%%%%%%%%%%%%%%%%%%%
-
-
-
-(
-
-level_select_point (08)
-
-Message joke
-
-%%%%%%%%%%%%%%%
-%o⑧.....~~@@@~%
-%ö⑻⡧ⱬⱬⱬⱬℌ~..@~%
-%..c....c~~~~~%
-%..c....c~~~~~%
-%..c....⹏~~~~~%
-%..c....%.ñ~~~%
-%..⹏.!..%..~~~%
-%........~~~~@%
-%.“···»..~~~~.%
-%........~~~~~%
-%........%%%%%%
-%%%%%%%%%%%%%%%
-
-
-Message sadsg
-
-%%%%%%%%%%%%%%%
-%.......~~@@@~%
-%.......~~..@~%
-%⡧ⱬⱬⱬⱬℌ.~~~~~~%
-%c....c.~~~~~~%
-%c....c.~~~~~~%
-%c....⹏.%..o⑦~%
-%c......%.ñö⑺~%
-%⹏.“···».~~~~@%
-%........~~~~.%
-%...!....~~~~~%
-%........~~~~~%
-%%%%%%%%%%%%%%%
-
-
-Message [ End of playtest, big congrats ]
-
-
-(
-
-
-
-#################
-~...............#
-~.......⡧ⱬℌ..!..#
-~.......⹏.⹏.....#
-~...#############
-~...#############
-~...#############
-~............@@@#
-~............@.@#
-#################
 
 #################
 #...............#
-#..⅄☥...⡧ⱬℌ⅄ⱬℌ..#
-#....!..⹏.⹏..⸔6.#
-#...####......c.#
-#...###⅄☥..⅄ⱬⱬa.#
-#...###..###.####
+#.!..yyyy..y....#
+#...#..ұ........#
+#....ұýұұýỳy..~.#
+#..yyýyýy.....~.#
+#..y.ý4ýyỳy..~~.#
+#.....yȳyỳy.~~~.#
+#......y..~~~~~.#
+#...............#
+#################
+
+
+#################
+#...............#
+#.......yyy.....#
+#.......y.y.....#
+#...######......#
+#...######..!...#
+#...#############
 #............@@@#
 #............@.@#
 #################
 
+#################
+#...............#
+#.......YYY.....#
+#.......Y.Y.....#
+#...######......#
+#...######..!...#
+#...#############
+#............@@@#
+#............@.@#
+#################
 
 #################
 #...............#
-#..⅄☥...⡧ⱬℌ.....#
-#.......⹏.⹏.....#
+#...........@...#
+#...............#
+#....yyy........#
+#....y!y........#
+#....yyy........#
+#...............#
+#...............#
+#################
+
+#################
+#.......##......#
+#...............#
+#........yy.yyyy#
+#....yyy.y..y..y#
+#....y!yyy......#
+#####yyy........#
+#####.......#...#
+#####...........#
+#################
+
+#################
+#...............#
+#.......yyy.....#
+#.......y.y.....#
+#...######......#
+#...######..!...#
+#...#############
+#............@@@#
+#............@.@#
+#################
+
+#################
+#...............#
+#.......YYY.....#
+#.......Y.Y.....#
+#...######......#
+#...######..!...#
+#...#############
+#............@@@#
+#............@.@#
+#################
+
+###################
+############.....##
+#..........#.....@#
+#.!........#~~~~.##
+#...#.yұұy..~~~~..#
+#.....ýyyỳ..~~~~..#
+#...y.yȳȳy..~~~~.##
+#...............~##
+#...............~##
+#...............###
+###################
+
+#################
+#...............#
+#..yy...yyy.....#
+#.......y.y.....#
 #...####........#
 #...######..!...#
 #...######.#.####
@@ -3741,81 +3617,160 @@ Message [ End of playtest, big congrats ]
 
 
 
-###################
-############.....##
-#..........#.....@#
-#.!........#~~~~.##
-#...#.⡧ⱬⱬℌ..~~~~..#
-#.....c⅄☥c..~~~~..#
-#...ñ.⸔ⱬⱬa..~~~~.##
-#...............~##
-#...............~##
-#...............###
-###################
-
-#################
-#...............#
-#.......⡧ⱬℌ.....#
-#.......⹏.⹏.....#
-#...######......#
-#...######..!...#
-#...#############
-#............@@@#
-#............@.@#
-#################
 
 
 
 
 
-
-
-#################
-#@@@@...##......#
-#@..@...........#
-#........⡧☥.⡧ⱬⱬℌ#
-#....⡧ⱬℌ.c..⹏..⹏#
-#....c!dⱬa......#
-#####⸔ⱬa........#
-#####.......#...#
-#####...........#
-#################
 
 
 
 #################
 #...............#
-#...........@...#
-#...............#
-#....⡧ⱬℌ........#
-#....c!c........#
-#....⸔ⱬa........#
+#..yy...yyýyyy..#
+#....!..y.y..y6.#
+#...####......y.#
+#...###yy..yyyy.#
+#...###..###.####
 #...............#
 #...............#
 #################
 
+#################
+~...............#
+~.......yyy..!..#
+~.......y.y.....#
+~...#############
+~...#############
+~...#############
+~............@@@#
+~............@.@#
+#################
 
-#################
-#...............#
-#.......⡧ⱬℌ.....#
-#.......⹏.⹏.....#
-#...######......#
-#...######..!...#
-#...#############
-#............@@@#
-#............@.@#
-#################
+%%%%%%%%%%%%%%%
+%.......~~@@@~%
+%.......~~..@~%
+%yyyyyy.~~~~~~%
+%y....y.~~~~~~%
+%y....y.~~~~~~%
+%y....y.%..00~%
+%y......%.y00~%
+%y.wwwww.~~~~@%
+%........~~~~.%
+%...!....~~~~~%
+%........~~~~~%
+%%%%%%%%%%%%%%%
 
 
-#################
-#...............#
-#.!..⅄ⱬ╎☥..ñ....#
-#...#..⹏........#
-#....⅄ℌ⅄ⱬ☥⅄☥..~.#
-#..⡧ⱬℌ⸔ℌ┦.....~.#
-#..⹏.⹏4⹏csg..~~.#
-#.....⸔╎apn.~~~.#
-#......⹏..~~~~~.#
-#@..............#
-#################
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%
+%%%%%%.yy.~....00%
+%%%%%%..%.%....00%
+%....%....%%%%%~%%
+%....%.%%.%%%%%.%%
+#@@..~.%~~~...!..%
+%....~~~~~~..ұ...%
+%~~~~~~~~~~..⍹⍹⍹.%
+%~~~~~~~~~~..www.%
+%%%%%%%%%%%%#%%%%%
+
+%%%%%%%%%%%%%%
+%............%
+%.ww%%%%%%%%@%
+%........%%%%%
+%...%%..%%...%
+%.y........00%
+%%%%%.%.%%.00%
+%%%%..%%%%%%%%
+%%%%.!%%%%%%%%
+%%%%..%%%%%%%%
+%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%
+%%%%%~~~......%
+%%%%%~%~%%y...%
+%%%..~.~.%y...%
+%%%.y~.~@%y.00%
+%%%..~~~.%ȳ.00%
+%%%%%~~~~%y..%%
+%...#...#.y..%%
+%.wẁ.~~.%...%%%
+%.......%.y.%%%
+%%~~~~~~%.y.%%%
+%%~~~~~~..y.%%%
+%%...!.~..#.%%%
+%%%%%%#%%%%%%%%
+
+Message Just because you are not being tested doesn't mean your should slack off.
+
+Message As unlikely as it may appear, these chambers took a lot of time to design.
+
+
+
+
+
+Message Reminder to employees: Do not fill safety liquid pools with unused furniture unless absolutely necesssary.
+
+
+
+Message [Redacted] Science would like to thank our surviving employees. Your efforts are noted.
+
+
+
+Message Congratulations on making this far. If this was a test, the results would be very satisfactory.
+
+
+
+
+
+
+
+Message [ You've finished placing the furniture. Our test chambers are finally ready. ]
+
+Message Good Job, Human.
+
+
+
+
+
+(
+
+level_select_point (08)
+
+Message joke
+
+
+
+
+Message sadsg
+
+
+
+Message [ End of playtest, big congrats ]
+
+
 )
+
+
+section END
+
+Message Congratulations Human
+
+
+%%%%%%%%%%%%%%%%%%%%
+%..................%
+%..................%
+%.....y.y.y........%
+%.....w.w.w........%
+%....ywywywy.......%
+%....yyyyyyy.......%
+%.............!....%
+%..................%
+%................66%
+%................00%
+%%%%%%%%%%%%%%%%%%%%
+
