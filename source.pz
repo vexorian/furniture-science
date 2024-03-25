@@ -1,8 +1,7 @@
 
 
 
-title Furniture Science 0.9.117
-
+title Furniture Science 0.9.120
 author vexorian
 homepage vexorian.com
 
@@ -79,6 +78,7 @@ wrong = up down left
 smod3 = s0 s1 s2
 smod4 = s0 s1 s2 s3
 smod5 = s0 s1 s2 s3 s4
+smod2 = s0 s1
 
 =========
 MAPPINGS
@@ -114,6 +114,12 @@ s0 s1 s2 -> s1 s2 s0
 ========
 OBJECTS
 ========
+
+(Workaround so that we can use Block:uu:dd:ll:rr:white when copying sprites for bridges)
+Block:uu:dd:ll:rr:yellow
+red
+Block:uu:dd:ll:rr:white
+red
 
 Background
 #333333
@@ -422,27 +428,17 @@ Target
 .000.
 .....
 
-TargetBorder:up
-#E8D138
-..0..
-.....
-.....
-.....
-.....
-TargetBorder:down
-#E8D138
-copy:TargetBorder:up
-rot:up:down
-
-TargetBorder:left
-#E8D138
-copy:TargetBorder:up
-rot:up:left
-
 TargetBorder:right
 #E8D138
-copy:TargetBorder:up
-rot:up:right
+.....
+.....
+....0
+.....
+.....
+TargetBorder:wrong
+#E8D138
+copy:TargetBorder:right
+rot:right:wrong
 
 ErrorTarget
 #333333 red
@@ -620,7 +616,7 @@ black blue orange white
 .030.
 ..0..
 
-
+(workarounds)
 Shot:blue:right
 blue
 .....
@@ -629,32 +625,7 @@ blue
 ...0.
 .....
 
-ParticleSprite1:blue:left
-blue
-.....
-0....
-.....
-0....
-.....
-
-ParticleSprite2:blue:left
-blue
-0....
-.....
-.....
-.....
-0....
-
-
-Shot:blue:left
-blue
-.....
-.0...
-0....
-.0...
-.....
-
-ParticleSprite1:blue:right
+ParticleSprite:s0:blue:right
 blue
 .....
 ....0
@@ -662,7 +633,7 @@ blue
 ....0
 .....
 
-ParticleSprite2:blue:right
+ParticleSprite:s1:blue:right
 blue
 ....0
 .....
@@ -670,233 +641,44 @@ blue
 .....
 ....0
 
-
-Shot:blue:up
+Shot:blue:wrong
 blue
-..0..
-.0.0.
-.....
-.....
-.....
+copy:Shot:blue:right
+rot:right:wrong
 
 
-ParticleSprite1:blue:down
+Shot:blue:directions
+transparent
+
+ShotF:blue:directions
 blue
-.....
-.....
-.....
-.....
-.0.0.
+copy:Shot:blue:directions
 
-ParticleSprite2:blue:down
+Shot:orange:directions
+orange
+copy:Shot:blue:directions
+
+ShotF:orange:directions
+orange
+copy:Shot:blue:directions
+
+(workaround)
+ParticleSprite:smod2:blue:right
+transparent
+
+ParticleSprite:smod2:blue:wrong
 blue
-.....
-.....
-.....
-.....
-0...0
+copy:ParticleSprite:smod2:blue:right
+rot:right:wrong
+
+(workaround)
+ParticleSprite:smod2:blue:directions
+transparent
 
 
-Shot:blue:down
-blue
-.....
-.....
-.....
-.0.0.
-..0..
-
-ParticleSprite1:blue:up
-blue
-.0.0.
-.....
-.....
-.....
-.....
-
-ParticleSprite2:blue:up
-blue
-0...0
-.....
-.....
-.....
-.....
-
-
-ShotF:blue:right
-blue
-.....
-...0.
-....0
-...0.
-.....
-
-ShotF:blue:left
-blue
-.....
-.0...
-0....
-.0...
-.....
-
-
-ShotF:blue:up
-blue
-..0..
-.0.0.
-.....
-.....
-.....
-
-ShotF:blue:down
-blue
-.....
-.....
-.....
-.0.0.
-..0..
-
-
-
-
-Shot:orange:right
-Orange
-.....
-...0.
-....0
-...0.
-.....
-
-ParticleSprite1:orange:left
-Orange
-.....
-0....
-.....
-0....
-.....
-
-ParticleSprite2:orange:left
-Orange
-0....
-.....
-.....
-.....
-0....
-
-
-Shot:orange:left
-Orange
-.....
-.0...
-0....
-.0...
-.....
-
-ParticleSprite1:orange:right
-Orange
-.....
-....0
-.....
-....0
-.....
-
-ParticleSprite2:orange:right
-Orange
-....0
-.....
-.....
-.....
-....0
-
-
-Shot:orange:up
-Orange
-..0..
-.0.0.
-.....
-.....
-.....
-
-
-ParticleSprite1:orange:down
-Orange
-.....
-.....
-.....
-.....
-.0.0.
-
-ParticleSprite2:orange:down
-Orange
-.....
-.....
-.....
-.....
-0...0
-
-
-Shot:orange:down
-Orange
-.....
-.....
-.....
-.0.0.
-..0..
-
-ParticleSprite1:orange:up
-Orange
-.0.0.
-.....
-.....
-.....
-.....
-
-ParticleSprite2:orange:up
-Orange
-0...0
-.....
-.....
-.....
-.....
-
-
-ShotF:orange:right
-Orange
-.....
-...0.
-....0
-...0.
-.....
-
-ShotF:orange:left
-Orange
-.....
-.0...
-0....
-.0...
-.....
-
-
-ShotF:orange:up
-Orange
-..0..
-.0.0.
-.....
-.....
-.....
-
-ShotF:orange:down
-Orange
-.....
-.....
-.....
-.0.0.
-..0..
-
-
-
-
-
-
+ParticleSprite:smod2:orange:directions
+orange
+copy:ParticleSprite:smod2:blue:directions
 
 Water
 #1D7C6B #83867A
@@ -1114,11 +896,7 @@ BlockStub:uu:dd:ll:rr:yellow
 
 BlockStub:uu:dd:ll:rr:white
 #FFFFFF #e0e0e0 #232323 #e0e0e0 #e0e0e0
-1.1.1
-.111.
-11341
-.141.
-1.1.1
+copy:BlockStub:uu:dd:ll:rr:yellow
 
 
 
@@ -1292,69 +1070,9 @@ BlockCorner:down:right:white
 .....
 ....0
 
-Bridge:__:__:__:__:white
+Bridge:uu:dd:ll:rr:white
 #1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
-copy:Block:__:__:__:__:white
-
-Bridge:__:__:__:_R:white
-#1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
-copy:Block:__:__:__:_R:white
-
-Bridge:__:__:_L:__:white
-#1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
-copy:Block:__:__:_L:__:white
-
-Bridge:__:__:_L:_R:white
-#1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
-copy:Block:__:__:_L:_R:white
-
-Bridge:__:_D:__:__:white
-#1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
-copy:Block:__:_D:__:__:white
-
-Bridge:__:_D:__:_R:white
-#1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
-copy:Block:__:_D:__:_R:white
-
-Bridge:__:_D:_L:__:white
-#1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
-copy:Block:__:_D:_L:__:white
-
-Bridge:__:_D:_L:_R:white
-#1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
-copy:Block:__:_D:_L:_R:white
-
-Bridge:_U:__:__:__:white
-#1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
-copy:Block:_U:__:__:__:white
-
-Bridge:_U:__:__:_R:white
-#1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
-copy:Block:_U:__:__:_R:white
-
-Bridge:_U:__:_L:__:white
-#1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
-copy:Block:_U:__:_L:__:white
-
-Bridge:_U:__:_L:_R:white
-#1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
-copy:Block:_U:__:_L:_R:white
-
-Bridge:_U:_D:__:__:white
-#1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
-copy:Block:_U:_D:__:__:white
-
-Bridge:_U:_D:__:_R:white
-#1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
-copy:Block:_U:_D:__:_R:white
-
-Bridge:_U:_D:_L:__:white
-#1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
-copy:Block:_U:_D:_L:__:white
-
-Bridge:_U:_D:_L:_R:white
-#1B7162 #72F1DA #1B7162 #72F1DA #72F1DA #1D7C6B
-copy:Block:_U:_D:_L:_R:white
+copy:Block:uu:dd:ll:rr:white
 
 BridgeCorner:up:right:white
 #72F1DA
@@ -1372,69 +1090,10 @@ BridgeCorner:down:left:white
 #72F1DA
 copy:BlockCorner:down:left:yellow
 
-Bridge:__:__:__:__:yellow
+Bridge:uu:dd:ll:rr:yellow
 #1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
-copy:Block:__:__:__:__:yellow
+copy:Block:uu:dd:ll:rr:yellow
 
-Bridge:__:__:__:_R:yellow
-#1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
-copy:Block:__:__:__:_R:yellow
-
-Bridge:__:__:_L:__:yellow
-#1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
-copy:Block:__:__:_L:__:yellow
-
-Bridge:__:__:_L:_R:yellow
-#1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
-copy:Block:__:__:_L:_R:yellow
-
-Bridge:__:_D:__:__:yellow
-#1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
-copy:Block:__:_D:__:__:yellow
-
-Bridge:__:_D:__:_R:yellow
-#1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
-copy:Block:__:_D:__:_R:yellow
-
-Bridge:__:_D:_L:__:yellow
-#1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
-copy:Block:__:_D:_L:__:yellow
-
-Bridge:__:_D:_L:_R:yellow
-#1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
-copy:Block:__:_D:_L:_R:yellow
-
-Bridge:_U:__:__:__:yellow
-#1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
-copy:Block:_U:__:__:__:yellow
-
-Bridge:_U:__:__:_R:yellow
-#1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
-copy:Block:_U:__:__:_R:yellow
-
-Bridge:_U:__:_L:__:yellow
-#1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
-copy:Block:_U:__:_L:__:yellow
-
-Bridge:_U:__:_L:_R:yellow
-#1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
-copy:Block:_U:__:_L:_R:yellow
-
-Bridge:_U:_D:__:__:yellow
-#1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
-copy:Block:_U:_D:__:__:yellow
-
-Bridge:_U:_D:__:_R:yellow
-#1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
-copy:Block:_U:_D:__:_R:yellow
-
-Bridge:_U:_D:_L:__:yellow
-#1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
-copy:Block:_U:_D:_L:__:yellow
-
-Bridge:_U:_D:_L:_R:yellow
-#1B7162 #38E864 #1B7162 #34D95D #4EE874 #1D7C6B
-copy:Block:_U:_D:_L:_R:yellow
 
 BridgeCorner:up:right:yellow
 #38E864
@@ -1452,14 +1111,6 @@ BridgeCorner:down:left:yellow
 #38E864
 copy:BlockCorner:down:left:yellow
 
-Want:left
-red blue
-.....
-.....
-.01..
-.....
-.....
-
 
 Want:right
 red blue
@@ -1469,23 +1120,10 @@ red blue
 .....
 .....
 
-
-Want:up
+Want:wrong
 red blue
-.....
-..0..
-..1..
-.....
-.....
-
-
-Want:down
-red blue
-.....
-.....
-..1..
-..0..
-.....
+copy:Want:right
+rot:right:wrong
 
 
 Destination:directions
@@ -1758,8 +1396,6 @@ red
 00.00
 
 
-
-
 Conveyor:right
 #303030 #373737 #292929
 02100
@@ -1767,6 +1403,10 @@ Conveyor:right
 00021
 00210
 02100
+
+(workaround)
+ConveyorSprite:smod5:right
+red
 
 ConveyorSprite:s0:right
 #303030 #373737 #292929
@@ -1792,42 +1432,16 @@ ConveyorSprite:s4:right
 copy:Conveyor:right
 shift:right:4
 
-Conveyor:left
+Conveyor:wrong
 #303030 #373737 #292929
 copy:Conveyor:right
-flip:right
+rot:right:wrong
 
-ConveyorSprite:s0:left
+ConveyorSprite:smod5:wrong
 #303030 #373737 #292929
-copy:ConveyorSprite:s0:right
-flip:right
+copy:ConveyorSprite:smod5:right
+rot:right:wrong
 
-ConveyorSprite:s1:left
-#303030 #373737 #292929
-copy:ConveyorSprite:s1:right
-flip:right
-
-ConveyorSprite:s2:left
-#303030 #373737 #292929
-copy:ConveyorSprite:s2:right
-flip:right
-
-ConveyorSprite:s3:left
-#303030 #373737 #292929
-copy:ConveyorSprite:s3:right
-flip:right
-
-ConveyorSprite:s4:left
-#303030 #373737 #292929
-copy:ConveyorSprite:s4:right
-flip:right
-
-
-Conveyor:vertical
-transparent
-
-ConveyorSprite:smod5:vertical
-transparent
 
 ConveyorBorder:up
 #202020
@@ -1919,7 +1533,11 @@ gray
 LightBridge:directions
 transparent
 
-LightBridgeSprite:s0:left
+(workaround)
+LightBridgeSprite:smod3:right
+red
+
+LightBridgeSprite:s0:right
 #A8006A #B80074 #E0008E #FF2EB3
 .....
 33333
@@ -1927,68 +1545,20 @@ LightBridgeSprite:s0:left
 33333
 .....
 
-LightBridgeSprite:s1:left
-#A8006A #B80074 #E0008E #FF29B1
-.....
-33333
-12100
-33333
-.....
-
-LightBridgeSprite:s2:left
-#A8006A #B80074 #E0008E #FF33B5
-.....
-33333
-10012
-33333
-.....
-
-LightBridgeSprite:s0:right
-#A8006A #B80074 #E0008E #FF33B5
-copy:LightBridgeSprite:s0:left
-flip:v
-
 LightBridgeSprite:s1:right
-#A8006A #B80074 #E0008E #FF33B5
-copy:LightBridgeSprite:s1:left
-flip:v
+#A8006A #B80074 #E0008E #FF29B1
+copy:LightBridgeSprite:s0:right
+shift:right:1
 
 LightBridgeSprite:s2:right
-#A8006A #B80074 #E0008E #FF33B5
-copy:LightBridgeSprite:s2:left
-flip:v
+#A8006A #B80074 #E0008E #FF29B1
+copy:LightBridgeSprite:s0:right
+shift:right:3
 
-
-LightBridgeSprite:s0:down
-#A8006A #B80074 #E0008E #FF33B5
-copy:LightBridgeSprite:s0:left
-rot:left:down
-
-LightBridgeSprite:s1:down
-#A8006A #B80074 #E0008E #FF33B5
-copy:LightBridgeSprite:s1:left
-rot:left:down
-
-LightBridgeSprite:s2:down
-#A8006A #B80074 #E0008E #FF33B5
-copy:LightBridgeSprite:s2:left
-rot:left:down
-
-LightBridgeSprite:s0:up
-#A8006A #B80074 #E0008E #FF33B5
-copy:LightBridgeSprite:s0:left
-rot:left:up
-
-LightBridgeSprite:s1:up
-#A8006A #B80074 #E0008E #FF33B5
-copy:LightBridgeSprite:s1:left
-rot:left:up
-
-LightBridgeSprite:s2:up
-#A8006A #B80074 #E0008E #FF33B5
-copy:LightBridgeSprite:s2:left
-rot:left:up
-
+LightBridgeSprite:smod3:wrong
+#A8006A #B80074 #E0008E #FF29B1
+copy:LightBridgeSprite:smod3:right
+rot:right:wrong
 
 LightBridgeEnteringPortal:portal_color
 transparent
@@ -2108,6 +1678,7 @@ V = Conveyor:down
 ᖷ = Block:_U:_D:_L:_R:white
 
 ჽ = Player:orange:front and Background
+
 
 
 HintTerminal = HintTerminal1 or HintTerminal2
@@ -2375,7 +1946,7 @@ WallDarkCorner:white
 
 
 
-ParticleSprite1:portal_color:directions ParticleSprite2:portal_color:directions
+ParticleSprite:s0:portal_color:directions ParticleSprite:s1:portal_color:directions
 
 Want:left
 Want:right
@@ -2518,8 +2089,6 @@ directions weapon_status [ Want:directions Player:weapon_status     no Player:di
 [ Player Want Conveyor no LightBridge ] -> [ Player Conveyor ]
 
 
-(..)
-[RealTimeTic][ Conveyor:> BlockPlayer no Want no LightBridge ] -> [RealTimeTic][ Want:> BlockPlayer Conveyor:>  ] sfx12
 
 (If a disarmed player moves towards the portal gun, add the GotGun helper and play fx)
 [ Player:disarmed:> Want:> | PortalGunTM ] -> [ | Player:disarmed:front GotGun ] sfx1
@@ -2530,8 +2099,6 @@ directions weapon_status [ Want:directions Player:weapon_status     no Player:di
 weapon_status [ Player:weapon_status:> | HintTerminal ] -> [ Player:weapon_status:< | HintTerminal ] sfx1 message You can switch portal colors by shooting at a portal of the same color. Or you can use a mouse click
 
 
-(Cleanup light bridges)
-[ LightBridge ] -> [ ]
 
 (Prepare portal helpers)
 
@@ -2574,6 +2141,14 @@ portal_color directions [ action Player:portal_color:directions ] -> [ Player:po
 [ BlueShot   ][ RealTimeTic ] -> [ BlueShot ][ ]
 [ OrangeShot ][ RealTimeTic ] -> [ OrangeShot ][ ]
 
+(Move stuff on Conveyor belts)
+[RealTimeTic][ Conveyor:> BlockPlayer no Want no LightBridge ] -> [RealTimeTic][ Want:> BlockPlayer Conveyor:>  ] sfx12
+
+
+(Cleanup light bridges)
+[ LightBridge ] -> [ ]
+
+
 
 ( Move the portal shot, but use the F sprite and schedule an again)
 ( It's a bit counter intuitive but we have to use > syntax here instead of the directions mapping )
@@ -2591,7 +2166,7 @@ portal_color [ Shot:portal_color:> | WithWhite ] -> [ ColorToggle | Portal:porta
 directions portal_color [ Portal:blue:directions  Portal:orange:directions  ][ Player:portal_color   ] -> [ Portal:portal_color:directions   ][ Player:portal_color   ]
 
 (Draw portal particle sprite when it hits something that can't open a portal)
-portal_color [ Shot:portal_color:>    | WithCollision ] -> [ | ParticleSprite1:portal_color:< WithCollision ]
+portal_color [ Shot:portal_color:>    | WithCollision ] -> [ | ParticleSprite:s0:portal_color:< WithCollision ]
 
 (Toggle the portal gun's color)
 portal_color player_face [ ColorToggle ][ Player:portal_color:player_face ] -> [ ][ Player:toggle_portal_color:player_face ]
@@ -2832,9 +2407,9 @@ subroutine ANIMATIONS
   [ action Wall:dark        ] -> [ HintTerminal1 Wall:dark ]
 
 
-  [ ParticleSprite2:portal_color:directions ] ->  [  ]
+  [ ParticleSprite:s1:portal_color:directions ] ->  [  ]
   
-  [ ParticleSprite1:portal_color:directions ] ->  [ ParticleSprite2:portal_color:directions ]
+  [ ParticleSprite:s0:portal_color:directions ] ->  [ ParticleSprite:s1:portal_color:directions ]
 
   portal_color smod4 [ stationary PortalSprite:smod4:portal_color:> Portal:portal_color:> ActivePortal:> ] -> [ action PortalSprite:s4next:portal_color:> action Portal:portal_color:> ]
   portal_color       [ stationary Portal:portal_color:> ] -> [ action PortalSprite:s0:portal_color:> Portal:portal_color:> ]
@@ -3400,18 +2975,18 @@ section 21
 
 %%%%%#%%%%%%%%%%%%
 %......%.~~~yyy21%
-%.wẁ.u.%.%%%%%%21%
+%.w..u.%.%%%%%%21%
 %.w%%%%%.~yy@@%.%%
 %..%@..y.~yy@@%.%%
-%%~.~@~yyy%%%%%.%%
-%%.~.~.~.~%%%%yy%%
+%..~~@~yyy%%%%%.%%
+%~~~.~.~.~%%%%yy%%
 %...~.~.~.%..%y..%
 %......~.~@yy%yy.%
-%.......~.~y.%@..%
-%....!...~....@@%%
-%..........%%%%%%%
-%.>>>>>>>>>>>>>>>#
-%%%%%%%%%%%%%%%%%%
+%..!....~~~y.%@..%
+%.............@@%%
+%........~~%%%%%%%
+%>>>>>>>>>>>>>>>>#
+%%%#%%%%%%%%%%%%%%
 
 
 goto END
@@ -3421,7 +2996,20 @@ goto END
 section debug
 
 
-
+%%%%%#%%%%%%%%%%%%
+%......%.~~~ბეგ21%
+%.ᒧ..u.%.%%%%%%21%
+%.ᒬ%%%%%.~იკ@@%.%%
+%..%@..ვ.~პს@@%.%%
+%...~@~პეგ%%%%%.%%
+%~~~.~.~.~%%%%იგ%%
+%...~.~.~.%..%ყ..%
+%......~.~@იგ%პგ.%
+%.......~~~ნ.%@..%
+%.............@@%%
+%........~~%%%%%%%
+%>>>>>>>>>>>>>>>>#
+%%%#%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%
 %~~~~~~~~~~...~...%
