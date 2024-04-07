@@ -1,7 +1,7 @@
 
 
 
-title Furniture Science 0.9.120
+title Furniture Science 0.9.127
 author vexorian
 homepage vexorian.com
 
@@ -115,11 +115,6 @@ s0 s1 s2 -> s1 s2 s0
 OBJECTS
 ========
 
-(Workaround so that we can use Block:uu:dd:ll:rr:white when copying sprites for bridges)
-Block:uu:dd:ll:rr:yellow
-red
-Block:uu:dd:ll:rr:white
-red
 
 Background
 #333333
@@ -428,6 +423,50 @@ Target
 .000.
 .....
 
+TargetSprite:s0
+#000000 #B9B900 #E3E300 #FFFF00 #FFFF89
+.....
+.444.
+.404.
+.444.
+.....
+
+TargetSprite:s1
+#000000 #B9B900 #E3E300 #FFFF00 #FFFF89
+.....
+.333.
+.303.
+.333.
+.....
+
+TargetSprite:s2
+#000000 #B9B900 #E3E300 #FFFF00 #FFFF89
+.....
+.222.
+.202.
+.222.
+.....
+
+TargetSprite:s3
+#000000 #B9B900 #E3E300 #FFFF00 #FFFF89
+.....
+.222.
+.202.
+.222.
+.....
+
+
+TargetSprite:s4
+#000000 #B9B900 #E3E300 #FFFF00 #FFFF89
+.....
+.333.
+.303.
+.333.
+.....
+
+
+
+
 TargetBorder:right
 #E8D138
 .....
@@ -538,7 +577,7 @@ black #DF60E2 #2A0B25 #45113D white Orange
 
 
 
-SinkingPlayerSprite1
+SinkingPlayerSprite:s0
 #0F3318 #3DD162
 .000.
 .000.
@@ -546,7 +585,7 @@ SinkingPlayerSprite1
 .000.
 .0.0.
 
-SinkingPlayerSprite2
+SinkingPlayerSprite:s1
 #0F3318 #3DD162
 ..0..
 .000.
@@ -554,7 +593,7 @@ SinkingPlayerSprite2
 ..00.
 .0...
 
-SinkingPlayerSprite3
+SinkingPlayerSprite:s2
 #0F3318 #3DD162
 ..0..
 .0.0.
@@ -616,7 +655,6 @@ black blue orange white
 .030.
 ..0..
 
-(workarounds)
 Shot:blue:right
 blue
 .....
@@ -662,18 +700,10 @@ ShotF:orange:directions
 orange
 copy:Shot:blue:directions
 
-(workaround)
-ParticleSprite:smod2:blue:right
-transparent
-
 ParticleSprite:smod2:blue:wrong
 blue
 copy:ParticleSprite:smod2:blue:right
 rot:right:wrong
-
-(workaround)
-ParticleSprite:smod2:blue:directions
-transparent
 
 
 ParticleSprite:smod2:orange:directions
@@ -1404,9 +1434,6 @@ Conveyor:right
 00210
 02100
 
-(workaround)
-ConveyorSprite:smod5:right
-red
 
 ConveyorSprite:s0:right
 #303030 #373737 #292929
@@ -1479,15 +1506,6 @@ ConveyorBorder:right
 JustTurned
 transparent
 
-
-GoalSoundSprite
-#F7DC43 yellow
-.....
-.000.
-.010.
-.000.
-.....
-
 CellOdd
 transparent
 
@@ -1532,10 +1550,6 @@ gray
 
 LightBridge:directions
 transparent
-
-(workaround)
-LightBridgeSprite:smod3:right
-red
 
 LightBridgeSprite:s0:right
 #A8006A #B80074 #E0008E #FF2EB3
@@ -1611,6 +1625,8 @@ W = BlockStub:_U:_D:_L:_R:white
 ~ = Water
 
 @ = Target
+ẙ = Target and BlockStub:_U:_D:_L:_R:yellow
+
 T = PortalGunTM
 
 H = HintTerminal1 and Wall:dark
@@ -1686,12 +1702,6 @@ HintTerminal = HintTerminal1 or HintTerminal2
 
 
 
-BlockStubWithU:color = BlockStub:_U:dd:ll:rr:color
-BlockStubWithD:color = BlockStub:uu:_D:ll:rr:color
-BlockStubWithL:color = BlockStub:uu:dd:_L:rr:color
-BlockStubWithR:color = BlockStub:uu:dd:ll:_R:color
-
-
 Bridge:__:__:__:__ = Bridge:__:__:__:__:color
 Bridge:__:__:__:_R = Bridge:__:__:__:_R:color
 Bridge:__:__:_L:__ = Bridge:__:__:_L:__:color
@@ -1727,15 +1737,19 @@ RealPlayer = Player:blue or Player:orange or Player:disarmed
 Player = RealPlayer or MissingPlayer
 
 
-With:left = Block:uu:dd:_L:rr:color or BlockStubWithL:color 
-With:right = Block:__:__:__:_R:color or Block:__:__:_L:_R:color or Block:__:_D:__:_R:color or Block:__:_D:_L:_R:color or Block:_U:__:__:_R:color or Block:_U:__:_L:_R:color or Block:_U:_D:__:_R:color or Block:_U:_D:_L:_R:color or BlockStubWithR:color 
-With:up = Block:_U:__:__:__:color or Block:_U:__:__:_R:color or Block:_U:__:_L:__:color or Block:_U:__:_L:_R:color or Block:_U:_D:__:__:color or Block:_U:_D:__:_R:color or Block:_U:_D:_L:__:color or Block:_U:_D:_L:_R:color or BlockStubWithU:color 
-With:down = Block:__:_D:__:__:color or Block:__:_D:__:_R:color or Block:__:_D:_L:__:color  or Block:__:_D:_L:_R:color  or Block:_U:_D:__:__:color  or Block:_U:_D:__:_R:color  or Block:_U:_D:_L:__:color  or Block:_U:_D:_L:_R:color  or BlockStubWithD:color
+With:left  = Block:uu:dd:_L:rr:color
+With:right = Block:uu:dd:ll:_R:color
+With:down  = Block:uu:_D:ll:rr:color
+With:up    = Block:_U:dd:ll:rr:color
  
+BlockOrStubWith:left  = With:left  or BlockStub:uu:dd:_L:rr:color
+BlockOrStubWith:right = With:right or BlockStub:uu:dd:ll:_R:color
+BlockOrStubWith:down  = With:down  or BlockStub:uu:_D:ll:rr:color
+BlockOrStubWith:up    = With:up    or BlockStub:_U:dd:ll:rr:color
  
 
  
-Block = With:left or With:right or With:up or With:down or Block:__:__:__:__:color or BlockStub:__:__:__:__:color
+Block = Block:uu:dd:ll:rr:color
 WithCollision = Block or Player or Wall:wall_color
 
 BlockPlayer = Block or RealPlayer
@@ -1774,46 +1788,26 @@ PortalExit = PortalExit:portal_color:directions
 
 ActivePortal = ActivePortal:directions
 
-RotateUU = Rotate:up:up
-RotateUD = Rotate:up:down
-RotateUL = Rotate:up:left
-RotateUR = Rotate:up:right
-
-RotateDU = Rotate:down:up
-RotateDD = Rotate:down:down
-RotateDL = Rotate:down:left
-RotateDR = Rotate:down:right
-
-RotateLU = Rotate:left:up
-RotateLD = Rotate:left:down
-RotateLL = Rotate:left:left
-RotateLR = Rotate:left:right
-
-RotateRU = Rotate:right:up
-RotateRD = Rotate:right:down
-RotateRL = Rotate:right:left
-RotateRR = Rotate:right:right
 
 
 
 
-RotateCW  = RotateLU or RotateUR or RotateRD or RotateDL
-RotateCNW = RotateUL or RotateRU or RotateDR or RotateLD
+RotateCW  = Rotate:left:up or Rotate:up:right or Rotate:right:down or Rotate:down:left
+RotateCNW = Rotate:up:left or Rotate:right:up or Rotate:down:right or Rotate:left:down
 RotatePerpendicular = RotateCW or RotateCNW
-FlipVertical = RotateUU or RotateDD
-FlipHorizontal = RotateLL or RotateRR
-Rotate = RotateRR or RotateRL or RotateRU or RotateRD or RotateLR or RotateLL or RotateLU or RotateLD or RotateUR or RotateUL or RotateUU or RotateUD or RotateDR or RotateDL or RotateDU or RotateDD
+FlipVertical = Rotate:up:up or Rotate:down:down
+FlipHorizontal = Rotate:left:left or Rotate:right:right
+Rotate = Rotate:directions_tag:directions_tag2
 
 
 OkRigid = OkRigid:directions
 
-BlueShot = Shot:blue:directions
-OrangeShot = Shot:orange:directions
 
 
 Block:white = Block:uu:dd:ll:rr:white
 
-WithWhite = Wall:white or Block:white
+Colored:white = Wall:white or Block:white
+Colored:yellow = Block:uu:dd:ll:rr:yellow
 
 Conveyor = Conveyor:directions
 
@@ -1829,8 +1823,6 @@ WaterSprite = WaterSprite1 or WaterSprite2 or WaterSprite3 or WaterSprite4
 
 ThroughPortal = ThroughPortal:directions
 
-WithVertical = With:up or With:down
-WithHorizontal = With:left or With:right
 
 RigidHNextToPortal = RigidNextToPortal:horizontal
 RigidVNextToPortal = RigidNextToPortal:vertical
@@ -1870,7 +1862,10 @@ sfx10 57390700:2 (goal)
 sfx11 86141708:2 (light bridge)
 sfx12 41701308 (conveyor)
 
+
 MouseButton:horizontal Destroy 31656906:10
+
+undo 4268907:1
 
 
 ================
@@ -1901,7 +1896,7 @@ BridgeCorner:up:left:color
 BridgeCorner:down:left:color
 BridgeCorner:down:right:color
 BridgeCorner:up:right:color
-SinkingPlayerSprite1, SinkingPlayerSprite2, SinkingPlayerSprite3
+SinkingPlayerSprite:smod3
 
 
 Conveyor:directions
@@ -1921,7 +1916,7 @@ LightBridgeSprite:smod3:vertical
 LightBridgeStarter:directions
 
 
-BlockPlayer, Wall:wall_color , PortalGunTM
+BlockPlayer, Wall:wall_color , PortalGunTM, BlockStub:uu:dd:ll:rr:color
 Clone, Clonify
 DarkWallSprite
 BlockCorner:up:left:color
@@ -1997,7 +1992,7 @@ UnmovablePortal
 ErrorSprite
 
 JustTurned
-GoalSoundSprite
+TargetSprite:smod5
 CellOdd, CellEven
 MissingPlayer
 
@@ -2028,16 +2023,16 @@ down [ b6 | b0 ] -> [ b6 u5 | b0 d0 ]
 
 startloop
   (Remove U)
-  down  [ no With:down | BlockStub:_U:dd:ll:rr:color ] -> [ | BlockStub:__:dd:ll:rr:color ]
+  down  [ no BlockOrStubWith:down | BlockStub:_U:dd:ll:rr:color ] -> [ | BlockStub:__:dd:ll:rr:color ]
   
   (Remove D)
-  up    [ no With:up   | BlockStub:uu:_D:ll:rr:color ] -> [ | BlockStub:uu:__:ll:rr:color ]
+  up    [ no BlockOrStubWith:up   | BlockStub:uu:_D:ll:rr:color ] -> [ | BlockStub:uu:__:ll:rr:color ]
   
   (Remove L)
-  right [ no With:right| BlockStub:uu:dd:_L:rr:color ] -> [ | BlockStub:uu:dd:__:rr:color ]
+  right [ no BlockOrStubWith:right| BlockStub:uu:dd:_L:rr:color ] -> [ | BlockStub:uu:dd:__:rr:color ]
   
   (Remove R)
-  left  [ no With:left | BlockStub:uu:dd:ll:_R:color ] -> [ | BlockStub:uu:dd:ll:__:color ]
+  left  [ no BlockOrStubWith:left | BlockStub:uu:dd:ll:_R:color ] -> [ | BlockStub:uu:dd:ll:__:color ]
 
 endloop
 
@@ -2054,9 +2049,7 @@ endloop
 ( This is mostly so that moving the direction keys doesn't change the state when the player
 is dead and thus undo will work in one press )
 [ ] -> [ PlayerNotFound ]
-[ PlayerNotFound ][ SinkingPlayerSprite1 ] -> [][ SinkingPlayerSprite1 ]
-[ PlayerNotFound ][ SinkingPlayerSprite2 ] -> [][ SinkingPlayerSprite2 ]
-[ PlayerNotFound ][ SinkingPlayerSprite3 ] -> [][ SinkingPlayerSprite3 ]
+[ PlayerNotFound ][ SinkingPlayerSprite:smod3 ] -> [][ SinkingPlayerSprite:smod3 ]
 [ PlayerNotFound ][ RealPlayer ] -> [][ RealPlayer ]
 [ PlayerNotFound ][ action MissingPlayer ] -> [][ action MissingPlayer ]
 [ PlayerNotFound  ] -> Cancel
@@ -2082,7 +2075,7 @@ directions weapon_status [ Want:directions Player:weapon_status     no Player:di
 
 (Move player after turning unless there was water or a white object next )
 [ Background water no LightBridge ] -> [ water action Background ]
-[ Player:> JustTurned | no Conveyor no WithWhite stationary Background ] -> [ Player:> Want:>  | Background ]
+[ Player:> JustTurned | no Conveyor no Colored:white stationary Background ] -> [ Player:> Want:>  | Background ]
 [ action Background ] -> [ Background ]
 
 (The player can't move of their own volition when on a conveyor)
@@ -2138,8 +2131,7 @@ portal_color directions [ ShotF:portal_color:directions ] -> [ Shot:portal_color
 portal_color directions [ action Player:portal_color:directions ] -> [ Player:portal_color:directions Shot:portal_color:directions ] sfx2
 
 (Do not allow RealTime stuff when there's a shot visible)
-[ BlueShot   ][ RealTimeTic ] -> [ BlueShot ][ ]
-[ OrangeShot ][ RealTimeTic ] -> [ OrangeShot ][ ]
+[ Shot:portal_color:directions   ][ RealTimeTic ] -> [ Shot:portal_color:directions ][ ]
 
 (Move stuff on Conveyor belts)
 [RealTimeTic][ Conveyor:> BlockPlayer no Want no LightBridge ] -> [RealTimeTic][ Want:> BlockPlayer Conveyor:>  ] sfx12
@@ -2156,10 +2148,10 @@ portal_color [ Shot:portal_color:> | no WithCollision ] -> [ | ShotF:portal_colo
 
 
 (Delete the old Portal if the shot is about to create a new one)
-portal_color [Portal:portal_color][ Shot:portal_color:> | WithWhite ] -> [][ Shot:portal_color:>| WithWhite ]
+portal_color [Portal:portal_color][ Shot:portal_color:> | Colored:white ] -> [][ Shot:portal_color:>| Colored:white ]
 
 (Create the portal)
-portal_color [ Shot:portal_color:> | WithWhite ] -> [ ColorToggle | Portal:portal_color:< WithWhite ] sfx3
+portal_color [ Shot:portal_color:> | Colored:white ] -> [ ColorToggle | Portal:portal_color:< Colored:white ] sfx3
 
 
 ( Prevent overlapping portals )
@@ -2190,8 +2182,7 @@ once [] -> gosub MOVEMENT
  color [ RotateCNW  Block:__:__:_L:__:color] -> [  Block:_U:__:__:__:color ]
  color [ RotateCNW  Block:_U:__:__:__:color] -> [  Block:__:__:__:_R:color ]
  
- directions [ RotateCNW Player:blue:directions   ]-> [ Player:blue:rotate_directions_cw ]
- directions [ RotateCNW Player:orange:directions ]-> [ Player:orange:rotate_directions_cw ]
+ portal_color directions [ RotateCNW Player:portal_color:directions   ]-> [ Player:portal_color:rotate_directions_cw ]
 
 
  color [ RotateCW   Block:__:_D:__:__:color] -> [  Block:__:__:__:_R:color ]
@@ -2199,14 +2190,13 @@ once [] -> gosub MOVEMENT
  color [ RotateCW   Block:_U:__:__:__:color] -> [  Block:__:__:_L:__:color ]
  color [ RotateCW   Block:__:__:__:_R:color] -> [  Block:_U:__:__:__:color ]
 
- directions [ RotateCW Player:blue:directions   ]-> [ Player:blue:rotate_directions_cnw ]
- directions [ RotateCW Player:orange:directions ]-> [ Player:orange:rotate_directions_cnw ]
+ portal_color directions [ RotateCW Player:portal_color:directions   ]-> [ Player:portal_color:rotate_directions_cnw ]
+
 
  color [ RotatePerpendicular   Block:_U:_D:__:__:color] -> [  Block:__:__:_L:_R:color ]
  color [ RotatePerpendicular   Block:__:__:_L:_R:color] -> [  Block:_U:_D:__:__:color ]
  
- vertical_tag   [ FlipVertical Player:blue:vertical_tag   ]-> [ Player:blue:flip_vertical ]
- vertical_tag   [ FlipVertical Player:orange:vertical_tag ]-> [ Player:orange:flip_vertical ]
+ portal_color vertical_tag   [ FlipVertical Player:portal_color:vertical_tag   ]-> [ Player:portal_color:flip_vertical ]
 
 
  color [ FlipVertical    Block:__:_D:__:__:color ] -> [  Block:_U:__:__:__:color ]
@@ -2214,8 +2204,7 @@ once [] -> gosub MOVEMENT
  color [ FlipHorizontal  Block:__:__:__:_R:color ] -> [  Block:__:__:_L:__:color ]
  color [ FlipHorizontal  Block:__:__:_L:__:color ] -> [  Block:__:__:__:_R:color ]
  
- horizontal_tag [ FlipHorizontal Player:blue:horizontal_tag ] -> [ Player:blue:flip_horizontal ]
- horizontal_tag [ FlipHorizontal Player:orange:horizontal_tag ] -> [ Player:orange:flip_horizontal ]
+ portal_color horizontal_tag [ FlipHorizontal Player:portal_color:horizontal_tag ] -> [ Player:portal_color:flip_horizontal ]
  
 
  [ Rotate ] -> [  ] 
@@ -2256,7 +2245,7 @@ once [] -> gosub MOVEMENT
 
 ( Spread light Bridge, including Portals )
 startloop
-   [ LightBridge:> | no LightBridge:> no LightBridge:< no Wall:wall_color no Portal:< ] -> [ LightBridge:> | LightBridge:> ]
+   [ LightBridge:> | no LightBridge:> no LightBridge:< no Wall:wall_color no ActivePortal:< ] -> [ LightBridge:> | LightBridge:> ]
    
    
    portal_color [ LightBridge:> no LightBridgeEnteringPortal:portal_color | Portal:portal_color:< ] -> [ LightBridge:> LightBridgeEnteringPortal:portal_color | Portal:portal_color:< ]
@@ -2296,13 +2285,12 @@ endloop
 color uu dd ll rr [ MightSink Block:uu:dd:ll:rr:color Water ] -> [ Bridge:uu:dd:ll:rr:color ] sfx6
 
 
-[ Portal  no WithWhite ] -> [  ]
+[ Portal  no Colored:white ] -> [  ]
 
 
-[ SinkingPlayerSprite3 ] -> [ ]
-[ SinkingPlayerSprite2 ] -> [ SinkingPlayerSprite3 ] again
-[ SinkingPlayerSprite1 ] -> [ SinkingPlayerSprite2 ] again
-[ RealPlayer Water no LightBridge ] -> [ Water SinkingPlayerSprite1 MissingPlayer ] sfx7 again
+[ SinkingPlayerSprite:s2 ] -> []
+[ stationary SinkingPlayerSprite:smod3 ] -> [ action SinkingPlayerSprite:s3next ] again
+[ RealPlayer Water no LightBridge ] -> [ Water SinkingPlayerSprite:s0 MissingPlayer ] sfx7 again
 
    
 
@@ -2364,9 +2352,9 @@ down  [ action Wall:white | WallBorder:white:right  ] -> [        Wall:white Wal
 [ Target no TargetBorder:> | Target ] -> [ Target TargetBordeR:> | Target ]
 
 
-[ Target Block no WithWhite no GoalSoundSprite no LightBridge ] -> [ Target Block GoalSoundSprite ] sfx10
-[ Target no Block GoalSoundSprite  ] -> [ Target ] sfx9
-[ Target WithWhite GoalSoundSprite ] -> [ Target WithWhite ] sfx9
+[ Target Colored:yellow no TargetSprite:smod5 no LightBridge ] -> [ Target Colored:yellow TargetSprite:s0 ] sfx10
+[ Target no Colored:yellow TargetSprite:smod5  ] -> [ Target ] sfx9
+
 
 directions_tag [ LightBridgeSprite:smod3:directions_tag no LightBridge:directions_tag ]  -> []
 
@@ -2414,6 +2402,9 @@ subroutine ANIMATIONS
   portal_color smod4 [ stationary PortalSprite:smod4:portal_color:> Portal:portal_color:> ActivePortal:> ] -> [ action PortalSprite:s4next:portal_color:> action Portal:portal_color:> ]
   portal_color       [ stationary Portal:portal_color:> ] -> [ action PortalSprite:s0:portal_color:> Portal:portal_color:> ]
   (Removal of dangling portal sprites occurs every tic, not just real time tics)
+  
+  
+  smod5 [ stationary TargetSprite:smod5 ] -> [ action TargetSprite:s5next ]
   
   
   smod5 [ ConveyorSprite:smod5:>  stationary Conveyor:> ] -> [ ConveyorSprite:s5next:> action Conveyor:> ]
@@ -2632,9 +2623,8 @@ subroutine MOVEMENT PASS
 WINCONDITIONS
 ==============
 
-All target on Block
+All target on Colored:yellow
 No LightBridge on Target
-No WithWhite on Target
 Some Player
 Some Target
 
@@ -2713,15 +2703,27 @@ Message Unsupervised exposure to [Redacted] Science Test Equipment might damage 
 ########%%%%
 
 
+section 05
+
+%%#%%%
+%.@%%%
+%.~%%%
+%ẙ!05%
+%..y.%
+%.~#%%
+%#%%%%
+
+
 Message Rest assured that this is not a test. This is a job for humans.
 Message There are no records being kept of the number of moves you are using and we don't look at any leaderboards.
 
-section 05
+
+section 06
 
 
 %%%%%%%%%%%%%#%
-%05........%.@%
-%05....%~~~~.@%
+%06........%.@%
+%06....%~~~~.@%
 %.yұұyỳ~~~~~.@%
 %.ýyyỳỳ~~~~~.@%
 %.yȳȳyỳ~~~~~.%%
@@ -2731,11 +2733,11 @@ section 05
 
 Message If this was a test, I would have no reason to lie about it. Therefore, this is not a test.
 
-section 06
+section 07
 
 %%%%%%%%%%%%#%%%%%
-%#....~~.......06%
-%%ýýý.~~.......06%
+%#....~~.......07%
+%%ýýý.~~.......07%
 %%....~~~~~~~~~~~%
 %%%%%~~~~~~~~~...%
 %.....~~~.%%~..y.%
@@ -2745,7 +2747,7 @@ section 06
 %.....~~%%.......%
 %%%%%#%%%%%%%%%%%%
 
-section 07
+section 08
 
 Message What findings could there possibly be made from a test like this? "Subject can push large objects" "Subject understands object rotation" Statements dreamed up by the utterly deranged.
 
@@ -2755,11 +2757,11 @@ Message What findings could there possibly be made from a test like this? "Subje
 %..%y%..~.~@%
 #.y.y.~.~~~%%
 #...y.~~~.~%%
-#...y.~.07~%%
-#.....~!07~%%
+#...y.~.08~%%
+#.....~!08~%%
 #########%%%%
 
-section 08
+section 09
 
 Message Your Job is to cover all marked areas with furniture that have the [Redacted] Science Design Department-Approved Yellow Color. That's the exact job description.
 
@@ -2769,20 +2771,20 @@ Message Just imagine just how many more tasks a Test Subject would have to do in
 #.#.#...#...#
 #.....#.##@@#
 #.%.yyy..@@.#
-#.%%..y..08##
-#..yy.y!#08.#
+#.%%..y..09##
+#..yy.y!#09.#
 ##yy..y.###.#
 #####@@@#@@@#
 #############
 
 
-section 09
+section 10
 
 Message Pieces of Furniture that are not in [Redacted] Science Interior Design Department-approved Yellow should be ignored.
 
 %#######%%%%%%%%
-%09....@~~~~~~.#
-%09.....~~~~~~.#
+%10....@~~~~~~.#
+%10.....~~~~~~.#
 %.......~~~~~~~%
 %%ww%%..~~~~~~~%
 #....%..~~~~~~~%
@@ -2792,12 +2794,12 @@ Message Pieces of Furniture that are not in [Redacted] Science Interior Design D
 #%%%%%%%%%%####%
 
 
-section 10
+section 11
 
 Message Our Scientists are busy making important discoveries such as solid light. They don't have time to be moving furniture around.
 %%%%%%#%%%%
-%10D......%
-%10.......%
+%11D......%
+%11.......%
 %~~~~~~~~~%
 %~~~~~~~~~%
 %~~~~~~~~~%
@@ -2807,7 +2809,7 @@ Message Our Scientists are busy making important discoveries such as solid light
 %%%##%%#%%%
 
 
-section 11
+section 12
 
 Message * Reviewing Past Performance Records *
 
@@ -2822,11 +2824,11 @@ Message The records say: "Employee too easily distracted by bright lights". "Emp
 %~~~~~~~~~~~~~~%
 %~~~~~~~~~~~~~~%
 #....L%#....yy.%
-#11.!.%#.ww.y..%
-#11...%%%%%%%%%%
+#12.!.%#.ww.y..%
+#12...%%%%%%%%%%
 ######%%%%%%%%%%
 
-section 12
+section 13
 
 Message You appear to be taking quite some time to move a small piece of furniture.
 
@@ -2840,12 +2842,12 @@ Message Couldn't you be more efficient? If you could do more things at once, tha
 %...@@%.@@@.%@@...%
 %%%%@%%%%@%%%%@%%%%
 %.................%
-%12......!........%
-%12.....wwẁ.......%
+%13......!........%
+%13.....wwẁ.......%
 ###################
 
 
-section 13
+section 14
 
 Message Perhaps it would increase motivation if you had more inventions to interact with. Check this chamber out, it has an advanced piece of tech called a 'Conveyor Belt'
 
@@ -2857,16 +2859,16 @@ Message Perhaps it would increase motivation if you had more inventions to inter
 %.~~.%
 %yy~.%
 #yy!y%
-#.13.%
+#.14.%
 %%%%#%
 
-section 14
+section 15
 
 Message Humans seem to display a lack of direction. But we know the solution. Focus on your job, and you'll find your direction.
 
 %%%%%%%%%%%~~~%%#%
-%.y@%14....~~~.y.%
-%.y@%14....~~~.y.%
+%.y@%15....~~~.y.%
+%.y@%15....~~~.y.%
 %.~~%......~~~...%
 %.~~.yyyw..~~~...%
 %%~~......%~~~...%
@@ -2875,7 +2877,7 @@ Message Humans seem to display a lack of direction. But we know the solution. Fo
 %%~~%%%%%%%%%%%%%%
 
 
-section 15
+section 16
 
 Message The following chamber requires humans to think in multiple dimensions. It's unclear if humans are capable of 3D-thinking. If you need help, just imagine there's an axis labelled 'z' right above you.
 
@@ -2887,18 +2889,18 @@ Message The following chamber requires humans to think in multiple dimensions. I
 %...~....l%%%~~~%
 %...%~~~~~~~~~~.%
 %.!.%%%%%%...~~.%
-%....w.15%.y.~~.%
-%......15%.y.~~~%
+%....w.16%.y.~~.%
+%......16%.y.~~~%
 %%%%%%%%%%######%
 
-section 16
+section 17
 
 
 Message Maybe what you could do is become more versatile? It's so tragic humans couldn't do more with less.
 
 %%%%%%%%%%%%%%
-%16.....~~~~~%
-%16.!...~~~~~%
+%17.....~~~~~%
+%17.!...~~~~~%
 %......%.Y.~~%
 %.W.W..%...~~%
 %.WWWWW.~~~~@%
@@ -2906,7 +2908,7 @@ Message Maybe what you could do is become more versatile? It's so tragic humans 
 %%%%%%%%%%%%%%
 
 
-section 17
+section 18
 
 Message Humans really enjoy conveyor belts. That's one way to stop feeling direction-less.
 
@@ -2915,8 +2917,8 @@ Message Humans really enjoy conveyor belts. That's one way to stop feeling direc
 %y%%%%%.%WW.%
 %y..>>>.%...%
 %y..%%%%%...%
-%y~y~%%#%.17%
-%y.y~%%...17%
+%y~y~%%#%.18%
+%y.y~%%...18%
 %yyỳ~%%..%%%%
 %...ýұ..!...%
 %%..ȳỳ......%
@@ -2924,7 +2926,7 @@ Message Humans really enjoy conveyor belts. That's one way to stop feeling direc
 %%%%%%%%%%%%%
 
 
-section 18
+section 19
 
 Message One of the main rules of Test Chamber design is to have as few mechanics as possible. 
 
@@ -2936,13 +2938,13 @@ Message That's why we've replaced all of the mechanics with automatons.
 %~~~~y%..w.y~~~.@@.%
 %.!..y%..⍹ỳy~~~.@@.%
 %...yy%.ẃẃȳȳ~~~.@..%
-%%%..~~.ẃẃy.~~~..18%
-%%%%.~%.....~~~..18%
+%%%..~~.ẃẃy.~~~..19%
+%%%%.~%.....~~~..19%
 %%%%%%%%%%%%%%%%%%%%
 
 
 
-section 19
+section 20
 
 %%%%%%%%%%%%%%%%
 %R....#%~~~~.@@%
@@ -2951,12 +2953,12 @@ section 19
 %.....~~~~~~~..%
 %.www.~~~~~....%
 %.ẃȳȳ.~~~~~....%
-%.w.ẅ.~~~~~%.19%
-%.www.~~~~~%.19%
+%.w.ẅ.~~~~~%.20%
+%.www.~~~~~%.20%
 %%%%%%%%%%%%%%%%
 
 
-section 20
+section 21
 
 ##%%%%%%%%%%%%%%%%%%
 #......~~..~~~@@@@%%
@@ -2964,29 +2966,30 @@ section 20
 %.yyyy.~~.@~~~.....%
 %......~~..~~~.....%
 %.yyyw.~%y.~~~.....%
-%..!...~%y%~~~...20%
-%......>>>>>>>...20%
+%..!...~%y%~~~...21%
+%......>>>>>>>...21%
 %%%%%%%%%%%%%%#####%
 
 
-section 21
+section 22
 
 (I love this one)
 
 %%%%%#%%%%%%%%%%%%
-%......%.~~~yyy21%
-%.w..u.%.%%%%%%21%
-%.w%%%%%.~yy@@%.%%
+%......%.~~~yyy22%
+%.w..u.%.%%%%%%22%
+%..%%%%%.~yy@@%.%%
 %..%@..y.~yy@@%.%%
 %..~~@~yyy%%%%%.%%
 %~~~.~.~.~%%%%yy%%
-%...~.~.~.%..%y..%
-%......~.~@yy%yy.%
+%...~y~@~.%..%y..%
+%....y.~.~@yy%yy.%
 %..!....~~~y.%@..%
 %.............@@%%
-%........~~%%%%%%%
+%........~~~%%%%%%
 %>>>>>>>>>>>>>>>>#
 %%%#%%%%%%%%%%%%%%
+
 
 
 goto END
@@ -2994,6 +2997,7 @@ goto END
 
 
 section debug
+
 
 
 %%%%%#%%%%%%%%%%%%
