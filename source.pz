@@ -1,7 +1,7 @@
 
 
 
-title Furniture Science 0.9.141
+title Furniture Science 0.10.147
 author vexorian
 homepage vexorian.com
 
@@ -19,6 +19,7 @@ realtime_interval 0.25
 level_select
 mouse_left MouseButton:left
 mouse_right MouseButton:right
+status_line
 
 (key_repeat_interval 0.15)
 norepeat_action
@@ -1592,6 +1593,9 @@ transparent
 Clonify
 transparent
 
+ShowShotHint
+transparent
+
 
 =======
 LEGEND
@@ -1889,7 +1893,7 @@ TargetBorder:down
 Target, ErrorTarget
 
 
-Water
+Water ShowShotHint
 WaterSprite
 Bridge
 BridgeCorner:up:left:color
@@ -2039,8 +2043,7 @@ endloop
 
 [ BlockStub:uu:dd:ll:rr:color ] -> [ Block:uu:dd:ll:rr:color ]
 
-
-[ moving MissingPlayer ] -> [ action MissingPlayer] Message You are dead. R = Restart. Z+Z = Undo.
+([ stationary MissingPlayer ] -> cancel)
 
 
 (random [ action PlayerN ] -> [ PlayerN ]  win)
@@ -2052,7 +2055,7 @@ is dead and thus undo will work in one press )
 [ PlayerNotFound ][ SinkingPlayerSprite:smod3 ] -> [][ SinkingPlayerSprite:smod3 ]
 [ PlayerNotFound ][ RealPlayer ] -> [][ RealPlayer ]
 [ PlayerNotFound ][ action MissingPlayer ] -> [][ action MissingPlayer ]
-[ PlayerNotFound  ] -> Cancel
+[ PlayerNotFound  ] -> Cancel status You are dead. R = Restart. Z = Undo.
 
 [ action MissingPlayer ] -> [ ]
 
@@ -2087,7 +2090,11 @@ directions weapon_status [ Want:directions Player:weapon_status     no Player:di
 [ Player:disarmed:> Want:> | PortalGunTM ] -> [ | Player:disarmed:front GotGun ] sfx1
 
 (A disarmed player gets a portal gun, thus gains the blue property. Man I love PatternScript )
-[ Player:disarmed GotGun ] -> [ Player:blue:front ] checkpoint message After aiming, press 'X' to shoot. You can change the color with a mouse click.
+[ Player:disarmed GotGun ] -> [ Player:blue:front ShowShotHint ] checkpoint
+
+[ ShowShotHint ][ Player:front ] -> status up/left/right/down = Aim
+[ ShowShotHint ][ Player:directions ] -> status X = Shoot. Mouse Click = Change Color
+
 
 weapon_status [ Player:weapon_status:> | HintTerminal ] -> [ Player:weapon_status:< | HintTerminal ] sfx1 message You can switch portal colors by shooting at a portal of the same color. Or you can use a mouse click
 
@@ -2603,6 +2610,8 @@ subroutine MOVEMENT PASS
 
   endloop
   
+  [ Clone ][ ShowShotHint ] -> [ Clone ][] (delete the hint requirement once the player used the portal )
+  
   (If the clone has a portal, that's a big mistake)
   [ Clone Portal ] -> [ Clone Portal Error ]
   (If there is an error with the clone, unclonify it)
@@ -2706,6 +2715,8 @@ Message Unsupervised exposure to [Redacted] Science Test Equipment might damage 
 
 section 05
 
+Message Symptoms of prolonged exposure to [Redacted] Science Test Equipment include: Mysterious Feeling Of Familiarity
+
 %%#%%%
 %.@%%%
 %.~%%%
@@ -2717,11 +2728,13 @@ section 05
 
 section 06
 
+Message Other Symptoms include: Reduced Ability to Estimate Longitudes.
 
-#~%%%%%%%%%%%h%
+
+#~%%%%%%%%%%%%%
 #~.......!..06%
 #~.yýyýyy.%%06%
-#~%%%%%.%%%%%%%
+#~%%%%%.%%%H%%%
 #~%####@..@.@##
 #~%####%%%%%%##
 
@@ -2746,19 +2759,7 @@ section 07
 
 Message If this was a test, I would have no reason to lie about it. Therefore, this is not a test.
 
-section 075
 
-%%%%%%%%%%%%#%%%%%
-%#....~~.......07%
-%%ýýý.~~.......07%
-%%....~~~~~~~~~~~%
-%%%%%~~~~~~~~~...%
-%.....~~~.%%~..y.%
-%.~~~!~~~.%%..yy%%
-%.~~@.~~..#%.%#%%%
-%.~~~.~~%..yy.%%h%
-%.....~~%%.......%
-%%%%%#%%%%%%%%%%%%
 
 section 08
 
@@ -2793,7 +2794,7 @@ Message Just imagine just how many more tasks a Test Subject would have to do in
 
 section 10
 
-Message Pieces of Furniture that are not in [Redacted] Science Interior Design Department-approved Yellow should be ignored.
+Message The chamber might be pieces of Furniture that are not in [Redacted] Science Interior Design Department-approved Yellow. They should be ignored.
 
 %#######%%%%%%%%
 %10....@~~~~~~.#
@@ -2806,13 +2807,25 @@ Message Pieces of Furniture that are not in [Redacted] Science Interior Design D
 #..!.%..~~~.y..%
 #%%%%%%%%%%####%
 
-
 section 11
+
+%%%%%%%%%%%%%%%
+%..~~~~~~~~~~~%
+%.w~~~~~~~~...%
+%.w.....~~~.y.%
+%.w!%11@~~~~~~%
+%.w.%11~~~~~~~%
+%.ẅ.%.~~~~~~~~%
+%.....~~~~~~~~%
+%%%%%%%%%%%%%%%
+
+
+section 12
 
 Message Our Scientists are busy making important discoveries such as solid light. They don't have time to be moving furniture around.
 %%%%%%#%%%%
-%11D......%
-%11.......%
+%12D......%
+%12.......%
 %~~~~~~~~~%
 %~~~~~~~~~%
 %~~~~~~~~~%
@@ -2822,7 +2835,7 @@ Message Our Scientists are busy making important discoveries such as solid light
 %%%##%%#%%%
 
 
-section 12
+section 13
 
 Message * Reviewing Past Performance Records *
 
@@ -2837,11 +2850,11 @@ Message The records say: "Employee too easily distracted by bright lights". "Emp
 %~~~~~~~~~~~~~~%
 %~~~~~~~~~~~~~~%
 #....L%#....yy.%
-#12.!.%#.ww.y..%
-#12...%%%%%%%%%%
+#13.!.%#.ww.y..%
+#13...%%%%%%%%%%
 ######%%%%%%%%%%
 
-section 13
+section 14
 
 Message You appear to be taking quite some time to move a small piece of furniture.
 
@@ -2855,12 +2868,12 @@ Message Couldn't you be more efficient? If you could do more things at once, tha
 %...@@%.@@@.%@@...%
 %%%%@%%%%@%%%%@%%%%
 %.................%
-%13......!........%
-%13.....wwẁ.......%
+%14......!........%
+%14.....wwẁ.......%
 ###################
 
 
-section 14
+section 15
 
 Message Perhaps it would increase motivation if you had more inventions to interact with. Check this chamber out, it has an advanced piece of tech called a 'Conveyor Belt'
 
@@ -2872,16 +2885,16 @@ Message Perhaps it would increase motivation if you had more inventions to inter
 %.~~.%
 %yy~.%
 #yy!y%
-#.14.%
+#.15.%
 %%%%#%
 
-section 15
+section 16
 
 Message Humans seem to display a lack of direction. But we know the solution. Focus on your job, and you'll find your direction.
 
 %%%%%%%%%%%~~~%%#%
-%.y@%15....~~~.y.%
-%.y@%15....~~~.y.%
+%.y@%16....~~~.y.%
+%.y@%16....~~~.y.%
 %.~~%......~~~...%
 %.~~.yyyw..~~~...%
 %%~~......%~~~...%
@@ -2890,9 +2903,9 @@ Message Humans seem to display a lack of direction. But we know the solution. Fo
 %%~~%%%%%%%%%%%%%%
 
 
-section 16
+section 17
 
-Message The following chamber requires humans to think in multiple dimensions. It's unclear if humans are capable of 3D-thinking. If you need help, just imagine there's an axis labelled 'z' right above you.
+Message The following chamber requires humans to think in multiple dimensions. It's unclear if humans are capable of 3D-thinking. If you need help, just imagine there's an axis labelled 'z' going through the floor and your head.
 
 %%%%%%%%%%%%%%%%%
 %~~~~~~~~~...~..%
@@ -2902,18 +2915,18 @@ Message The following chamber requires humans to think in multiple dimensions. I
 %...~....l%%%~~~%
 %...%~~~~~~~~~~.%
 %.!.%%%%%%...~~.%
-%....w.16%.y.~~.%
-%......16%.y.~~~%
+%....w.17%.y.~~.%
+%......17%.y.~~~%
 %%%%%%%%%%######%
 
-section 17
+section 18
 
 
 Message Maybe what you could do is become more versatile? It's so tragic humans couldn't do more with less.
 
 %%%%%%%%%%%%%%
-%17.....~~~~~%
-%17.!...~~~~~%
+%18.....~~~~~%
+%18.!...~~~~~%
 %......%.Y.~~%
 %.W.W..%...~~%
 %.WWWWW.~~~~@%
@@ -2921,7 +2934,19 @@ Message Maybe what you could do is become more versatile? It's so tragic humans 
 %%%%%%%%%%%%%%
 
 
-section 18
+section 19
+####%%%%%%%##%%%%%
+##~~...........yy%
+##~........%%...y%
+%@~....%ýұұ.%%%yy%
+%@~.W.!.ýyỳ@..%@@%
+%~~..19.პȳს@.@%.@%
+#@~~.19..%%@@@%@@%
+%%%%%%%%%%%%%%%%%%
+
+
+
+section 20
 
 Message Humans really enjoy conveyor belts. That's one way to stop feeling direction-less.
 
@@ -2930,8 +2955,8 @@ Message Humans really enjoy conveyor belts. That's one way to stop feeling direc
 %y%%%%%.%WW.%
 %y..>>>.%...%
 %y..%%%%%...%
-%y~y~%%#%.18%
-%y.y~%%...18%
+%y~y~%%#%.20%
+%y.y~%%...20%
 %yyỳ~%%..%%%%
 %...ýұ..!...%
 %%..ȳỳ......%
@@ -2939,7 +2964,7 @@ Message Humans really enjoy conveyor belts. That's one way to stop feeling direc
 %%%%%%%%%%%%%
 
 
-section 19
+section 21
 
 Message One of the main rules of Test Chamber design is to have as few mechanics as possible. 
 
@@ -2951,13 +2976,13 @@ Message That's why we've replaced all of the mechanics with automatons.
 %~~~~y%..w.y~~~.@@.%
 %.!..y%..⍹ỳy~~~.@@.%
 %...yy%.ẃẃȳȳ~~~.@..%
-%%%..~~.ẃẃy.~~~..19%
-%%%%.~%.....~~~..19%
+%%%..~~.ẃẃy.~~~..21%
+%%%%.~%.....~~~..21%
 %%%%%%%%%%%%%%%%%%%%
 
 
 
-section 20
+section 22
 
 %%%%%%%%%%%%%%%%
 %R....#%~~~~.@@%
@@ -2966,12 +2991,12 @@ section 20
 %.....~~~~~~~..%
 %.www.~~~~~....%
 %.ẃȳȳ.~~~~~....%
-%.w.ẅ.~~~~~%.20%
-%.www.~~~~~%.20%
+%.w.ẅ.~~~~~%.22%
+%.www.~~~~~%.22%
 %%%%%%%%%%%%%%%%
 
 
-section 21
+section 23
 
 ##%%%%%%%%%%%%%%%%%%
 #......~~..~~~@@@@%%
@@ -2979,18 +3004,18 @@ section 21
 %.yyyy.~~.@~~~.....%
 %......~~..~~~.....%
 %.yyyw.~%y.~~~.....%
-%..!...~%y%~~~...21%
-%......>>>>>>>...21%
+%..!...~%y%~~~...23%
+%......>>>>>>>...23%
 %%%%%%%%%%%%%%#####%
 
 
-section 22
+section 24
 
 (I love this one)
 
 %%%%%#%%%%%%%%%%%%
-%......%.~~~yyy22%
-%.w..u.%.%%%%%%22%
+%......%.~~~yyy24%
+%.w..u.%.%%%%%%24%
 %..%%%%%.~yy@@%.%%
 %..%@..y.~yy@@%.%%
 %..~~@~yyy%%%%%.%%
@@ -3004,12 +3029,48 @@ section 22
 %%%#%%%%%%%%%%%%%%
 
 
+Message Good Job, Human.
 
-goto END
+%%%%%%%%%%%%%%%%%%%%
+%..................%
+%..................%
+%.....y.y.y........%
+%.....w.w.w........%
+%....ywywywy.......%
+%....yyyyyyy.......%
+%.............!....%
+%..................%
+%................66%
+%................00%
+%%%%%%%%%%%%%%%%%%%%
 
 
 
-section debug
+
+(section debug)
+
+
+
+
+
+
+(075)
+
+%%%%%%%%%%%%#%%%%%
+%#....~~.......07%
+%%ýýý.~~.......07%
+%%....~~~~~~~~~~~%
+%%%%%~~~~~~~~~...%
+%.....~~~.%%~..y.%
+%.~~~!~~~.%%..yy%%
+%.~~@.~~..#%.%#%%%
+%.~~~.~~%..yy.%%h%
+%.....~~%%.......%
+%%%%%#%%%%%%%%%%%%
+
+
+
+
 
 %%%%%%%%%%#%%%%%
 %...00~~~...~~~%
@@ -3050,6 +3111,7 @@ section debug
 %~~~~.~~~~~~~~~%
 %%%%%#%%%%%%%%%%
 
+
 %%%%%%#%%#%%
 #.ýý.~yyy.~%
 #....~y.y.~%
@@ -3063,6 +3125,7 @@ section debug
 %....~~~~~~%
 %%%%#%%%%%%%
 
+
 %%%%%%#%%#%
 #.ýy.~yyy.%
 #....~y.y.%
@@ -3074,6 +3137,8 @@ section debug
 %.~~@~....%
 %....~~~~~%
 %%%%#%%%%%%
+
+
 
 %%%%%%%%#%%%%%%%%
 %#...~~~.~~~~~~~%
@@ -3087,21 +3152,6 @@ section debug
 %....~%%%.......%
 %%%%#%%%%%%%%%%%%
 
-#~%%%%%%%%%%%h%
-#~.......!..07%
-#~.yýyýyy.%%07%
-#~%%%%%.%%%%%%%
-#~%####@..@.@##
-#~%####%%%%%%##
-
-
-#~%%%%%%h%%##
-#~07%%%%.%%##
-#~07..!...%@%
-#~.yyỳyỳy.%.%
-#~%%%%%.%%%.%
-#~%####@..@.%
-#~%####%%%%%%
 
 %%%%%%#%%%%%%%%%
 %%%%%%#%%%...%.%
@@ -3116,6 +3166,7 @@ section debug
 %.#%%%%##%...%%%
 %....h%##%~~~~~%
 %%%%%%%##%%%#%%%
+
 
 
 %%%%%%#%%%%%%%%%
@@ -3146,7 +3197,6 @@ section debug
 %.%%%%%##%...%%%
 %....H%##%~~~~~%
 %%%%%%%##%%%#%%%
-
 
 
 
@@ -3190,8 +3240,6 @@ section debug
 %.66%~~~~~~~.ვ.~~~~~%
 %.66%~~~~~~~.ნ.~~~~~%
 %%%%%%%%%%%%########%
-
-
 
 
 
@@ -3366,7 +3414,7 @@ section debug
 
 
 
-
+(section debug2)
 
 #################
 #...............#
@@ -3499,21 +3547,5 @@ Message [ End of playtest, big congrats ]
 )
 
 
-section END
 
-Message Congratulations Human
-
-
-%%%%%%%%%%%%%%%%%%%%
-%..................%
-%..................%
-%.....y.y.y........%
-%.....w.w.w........%
-%....ywywywy.......%
-%....yyyyyyy.......%
-%.............!....%
-%..................%
-%................66%
-%................00%
-%%%%%%%%%%%%%%%%%%%%
 
